@@ -757,16 +757,16 @@ nasty has gone wrong".
 
 <P>You get the idea...
 
-<sect1>proftpd doesn"t show in the processlist
+<sect1>proftpd doesn't show in the processlist
 
-<P>Two possible reasons, first that it"s simply not running, try
+<P>Two possible reasons, first that it is simply not running, try
 proftpd -n -d2 to run in debug mode and see what happens.  The other
 is that it"s running from inetd and there are no active sessions at
 the moment.
 
 <sect1>How do I restart/reload the server?
 
-<P>This depends on the mode you"re running the server in.
+<P>This depends on the mode you are running the server in.
 
 <sect2>Inetd
 <P>Unless you"re making a configuration change to inetd itself nothing 
