@@ -293,6 +293,11 @@ help' group.
 <P>Subscribe by sending a message to proftpd-devel-request@proftpd.net
 with 'subscribe' in the subject.
 
+<sect2>Archives
+<P>The mailing list archives can be found at
+http://www.proftpd.org/proftpd-l-archive/
+http://www.proftpd.org/proftpd-devel-archive/
+
 <sect1>Copyright Issues
 <P>
 The software is currently distributed under the GNU General Public License
@@ -900,6 +905,13 @@ the config.  There is a known issue with Redhat 7, with regard to time
 handling.
 http://www.redhat.com/support/errata/rh7-errata-bugfixes.html
 
+<sect1>Authentication is taking too long
+
+<P>Make sure that ReverseDNS is disabled, turn off ident lookups.
+Additionally check the size of your /etc/passwd (or shadow) file, if
+it is large then the only solution may be to move to another
+authentication scheme.
+
 <!-- -------------------- -->
 <!-- Configuration Issues -->
 <!-- -------------------- -->
@@ -1397,6 +1409,11 @@ In pre9 and earlier Rate* does not work if sendfile is enabled,
 who is allowed to use the CHMOD command.  The default value for this
 directive is off.
 
+<sect1>How can I limit the size of uploaded files?
+
+<P>There is no way within ProFTPD itself to control how large a file
+can be uploaded.  The best solution to this problem at the moment is
+to use whatever disk quota tools are available within your OS.
 
 <!-- SECTION BREAK -->
 
