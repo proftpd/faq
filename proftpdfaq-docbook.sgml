@@ -2183,38 +2183,6 @@ tracking of accesses, and the requesting IP.</para>
     </qandaset>
   </chapter>
 
-  <chapter><?dbhtml filename="faq-ch8.html">
-    <title>Hamster droppings</title>
-    <qandaset defaultlabel="number">
-      <para></para>
-      <qandaentry>
-	<question>
-	  <para>Why...</para>
-	</question>
-	<answer>
-	  <para>This chapter is not meant to be meaningful, it's where I cut
-and paster ideas, comments, code fragments before I work them into the 
-main part of the document.</para>
-	</answer>
-      </qandaentry>
-      <qandaentry>
-	<question>
-	  <para>Odds and ends</para>
-	</question>
-	<answer>
-	  <para>Why can't I delete a directory with dele ?</para>
-	  <para>Port bouncing, ftp bouncing, priv ports</para>
-	  <para>hiding directories</para>
-	  <para>hiding files</para>
-	  <para>authentication methods</para>
-	  <para>user defined permissions in &lt;LIMIT&gt; do not override system level
-permissions.</para>
-	  <para>authuserfile: needs a complete password file, not a cutdown.</para>
-	</answer>
-      </qandaentry>
-    </qandaset>
-  </chapter>
-
   <chapter><?dbhtml filename="faq-ch-notes.html">
     <title>FAQ Notes</title>
     <qandaset defaultlabel="number">
