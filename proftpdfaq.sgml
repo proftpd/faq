@@ -5,7 +5,7 @@
 
 <TITLE>Professional FTP Daemon FAQ
 <author>Mark Lowes <tt/&lt;hamster@vom.tm&gt;/
-<date>v0.6.8, 15 Jan 2001
+<date>v0.6.9, 31 Jan 2001
 
 <abstract>$Id$
 This document sets out many of the FAQs related to the installation,
@@ -525,8 +525,11 @@ to disable sendfile by default ( --disable-sendfile ).
 
 -->
 <sect1>IPv6
-<P>There is currently no support for IPv6, this may be included in the 
-1.3.* development tree.
+<P>There is currently no official support for IPv6 within the 1.2.x
+code tree, however there is an <url
+url="http://www.t17.ds.pwr.wroc.pl/~misiek/ipv6/" name="unofficial
+patch"> and more comprehensive support will probably be developed
+during the 1.3.x development cycle.
 
 <sect1>Filename case sensitivity
 
