@@ -81,13 +81,10 @@ to be much like Apache in concept taking many of the ideas
 	  <answer>
 	    <itemizedlist spacing="compact">
               <listitem>
-		<para>Stable:   1.2.4</para>
+		<para>Stable:   1.2.6</para>
               </listitem>
 	      <listitem>
-		<para>Release Candidate: 1.2.5rc1</para>
-              </listitem>
-              <listitem>
-		<para>Unstable: 1.3.x</para>
+		<para>Release Candidate: 1.2.7rc1</para>
               </listitem>
 	    </itemizedlist>
 	  </answer>
@@ -114,28 +111,28 @@ to be much like Apache in concept taking many of the ideas
 		  </listitem>
 		</varlistentry>
 		<varlistentry>
-		  <term>1.2.0prex</term>
-		  <listitem>
-		    <para>Pre-release testing versions, development code.</para>
-		  </listitem>
-		</varlistentry>
-		<varlistentry>
 		  <term>1.2.0rcx</term>
 		  <listitem>
-		    <para>Release candidate code, these releases are pretty much bug free and are testing releases prior to the final stable code.</para>
+		    <para>Release candidate code, these releases are
+		    pretty much bug free and are testing releases prior
+		    to the final stable code.</para>
 		  </listitem>
 		</varlistentry>
 		<varlistentry>
 		  <term>1.2.x</term>
 		  <listitem>
-		    <para>This will be the stable cycle with the final .x being the incremental patches to fix bugs discovered after the release version is issued.</para>
+		    <para>This will be the stable cycle with the final .x
+		    being the incremental patches to fix bugs discovered
+		    after the release version is issued.</para>
 		  </listitem>
 		</varlistentry>
 		<varlistentry>
 		  <term>1.3.x</term>
 		  <listitem>
-		    <para>1.3.x is in development, nightly tarballs from the CVS tree are
-available from <ulink url="ftp.proftpd.org">ftp.proftpd.org</ulink> and it's mirror sites.</para>
+		    <para>1.3.x is the planned development tree, work
+		    on this has been pushed back while more active
+		    development of 1.2.x is undertaken.
+		    </para>
 		  </listitem>
 		</varlistentry>
 	      </variablelist>
@@ -151,23 +148,28 @@ available from <ulink url="ftp.proftpd.org">ftp.proftpd.org</ulink> and it's mir
 	      <para><ulink url="http://www.proftpd.org">http://www.proftpd.org</ulink> is now online and contains copies of this FAQ, other documentation resources and information on the project.  The documentation is being brought back into shape at the moment, the configuration on the website is now approaching where it should be but more work is required and is ongoing.  There are a number of geographic mirror sites, see <ulink url="http://www.proftpd.org">http://www.proftpd.org</ulink> for details or try www.&lt;isocode&gt;.proftpd.org (ie www.uk.proftpd.org).</para>
 	  <blockquote>
 	    <bridgehead renderas=sect2>Helping with documentation</bridgehead>
-	      <para>Writing documentation is time consuming and requires some
-work but it's not actually difficult.  Get the source code from CVS,
-run "ShowUndocumented" in the doc directory.  This will list what
-needs work.  Grep through the code in the looking for something like</para>
+	      <para>Writing documentation is time consuming and requires
+	      some work but it's not actually difficult.  Look through the
+	      directive list shipped with the source and package builds
+	      of ProFTPD and see what needs work.  Check the source code
+	      to ensure that the context is correct by grepping through
+	      the source code looking for something like</para>
 	      
 	      <programlisting>
 CHECK_CONF(cmd,CONF_ROOT|CONF_VIRTUAL|CONF_ANON|CONF_GLOBAL)
               </programlisting>
-	      <para>to figure out where the directive is valid (server config,
-&lt;VirtualHost&gt;, &lt;Anonymous&gt;, &lt;Global&gt; for the above example).  Once you
-think you understand what it does, test, play, break (if possible).
-Then copy the format in Configuration.html and add the new documentation.</para>
-	      <para>Once the documentation is complete run</para>
-	      <programlisting>
-cvs diff -uw Configuration.html > Configuration.html.patch
-              </programlisting>
-	      <para>and submit it via the bug reporting system.</para>
+	      <para>to figure out where the directive is valid
+	      (server config, &lt;VirtualHost&gt;, &lt;Anonymous&gt;,
+	      &lt;Global&gt; for the above example).  Once you think you
+	      understand what it does, test, play, break (if possible).
+	      </para>
+
+	      <para>
+	      Then either submit a plain text update via the bug reporting
+	      system or a patch against the docbook/sgml source (available
+	      from CVS on sourceforge (Project: pdd)
+	      </para>
+
 	  </blockquote>
 	    </answer>
 	  </qandaentry>
@@ -177,8 +179,11 @@ cvs diff -uw Configuration.html > Configuration.html.patch
 	      <para>Bug reporting</para>
 	    </question>
 	    <answer>
-	  <para>Bug reports should be made via <ulink url="http://bugs.proftpd.org/">http://bugs.proftpd.org/</ulink> which uses the bugzilla tracking system.  Patches should be mailed to the ProFTPD-Devel mailing list or MacGyver directly.
-</para>
+	  <para>Bug reports should be made via <ulink
+	  url="http://bugs.proftpd.org/">http://bugs.proftpd.org/</ulink>
+	  which uses the bugzilla tracking system.  Patches should be
+	  attached to the appropriate bug and not mailed directly to
+	  the mailing lists or any given team member.</para>
 	    </answer>
 	  </qandaentry>
 
