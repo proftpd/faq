@@ -1935,7 +1935,7 @@ is not controllable from within the ftpd code.
    are used to establish the security context for this secure transport.</para>
 	  <para>Generation of certifications is beyond the scope of this document;
    however, more information can be found here:</para>
-	  <para>    <ulink url="http://www.linuxdoc.org/HOWTO/SSL-Certificates-HOWTO/">http://www.linuxdoc.org/HOWTO/SSL-Certificates-HOWTO/</ulink></para>
+	  <para>    <ulink url="http://en.tldp.org/HOWTO/SSL-Certificates-HOWTO/">http://en.tldp.org/HOWTO/SSL-Certificates-HOWTO/</ulink></para>
 	</answer>
       </qandaentry>      
       <qandaentry>
