@@ -1,0 +1,151 @@
+ChangeLog
+
+0.5.2 (18/Jan/2000)
+	Added pre10 
+	chroot()/login bug in pre9 information
+	
+0.5.1 (3/Jan/2000)
+	added howto debug
+	removed	changelog
+	DefaultRoot (pre9) bug added
+	New stuff on FXP	
+
+<tag>21/Dec/1999 - v0.5.0 - ML</tag>
+<itemize>
+<item>added bug information
+<item>LDAP encrypted connections
+<item>Error code 421
+</itemize>
+
+<tag>10/Dec/1999 - v0.4.7 - ML</tag>
+<itemize>
+<item>Y2K issues
+<item>spelling correction
+<item>stickman website
+<item>Discussion on synlinks and chroot()
+</itemize>
+
+<tag>29/Nov/1999 - v0.4.6 - ML</tag>
+<itemize>
+<item>SQL permissions
+<item>Fixed SQL hints linking
+<item>Cleaned sgml mistakes
+</itemize>
+
+<tag>27/Nov/1999 - v0.4.5 - ML</tag>
+<itemize>
+<item>SQL
+</itemize>
+
+<tag>23/Nov/1999 - v0.4.4 - ML</tag>
+<itemize>
+<item>bugs.proftpd.net
+</itemize>
+
+<tag>22/Nov/1999 - v0.4.3 - ML</tag>
+<itemize>
+<item>Minor patch to fix bugs
+<item>Cleaned hamster droppings
+</itemize>
+
+<tag>21/Nov/1999 - v0.4.2 - ML</tag>
+<itemize>
+<item>LDAP
+<item>Y2K
+<item>Radius
+<item>Anon password checking
+</itemize>
+
+<tag>19/Nov/1999 - v0.4.1 - ML</tag>
+<itemize>
+<item>Information about sendfile and Rate*
+<item>updated info to pre9
+<item>bug information on pre9
+<item>external programs
+<item>security information
+</itemize>
+
+<tag>17/Oct/1999 - v0.4.0 - ML</tag>
+<itemize>
+<item>Final section tossed around a bit
+<item>More examples
+<item>mod_ratio and sendfile updates
+<item>authentication updates
+<item>bandwidth section re-write
+<item>hamster ponderings have been pondered.
+<item>Spell checkers.... yup got one of those.
+<item>More security issues considered.
+<item>Copywrite notice
+</itemize>
+
+<tag>12/Oct/1999 - v0.3.12 - ML</tag>
+<itemize>
+<item>Slow logins, multiple session closed errors.
+<item>Development plans
+<item>Patch submission changes.
+<item>tidy ups
+<item>authentication issues
+<item>hamster ponderings added, this is a dumping ground where I toss
+together new bits
+<item>ftpwho
+<item>firewall problems
+<item>Many clean ups
+</itemize>
+
+<tag>7/Oct/1999 - v0.3.11 - ML</tag>
+<itemize>
+<item>bandwidth limitation
+<item>migrated all code fragments to the sgml "code" notation
+<item>cleanups
+<item>sendfile() inforamation
+<item>renamed tips and hints section to server tutorial
+<item>As of this revision I'm only really considering versions
+1.2.0pre1 and better.
+<item>Split authentication away from security
+<item>Improved PAM/authentication section.
+</itemize>
+
+<tag>6/Oct/1999 - v0.3.10 - ML</tag>
+<itemize>
+<item>Added socket binding information.
+<item>Docs on how to write docs <bf>*grin*</bf>
+<item>HOST command information
+<item>Tight binding.
+<item>Numerous fixes and tightening of text.
+</itemize>
+
+<tag>5/Oct/1999 - v0.3.9 - ML</tag>
+<itemize>
+<item>Added security section.
+</itemize>
+
+<tag>30/Sept/1999</tag>
+<itemize>
+<item>Pre8 checklist
+<item>future development
+<item>pre7 bugs
+</itemize>
+
+<tag>23/Sept/1999</tag>
+<itemize>
+<item>Jitterbug and bug reporting info.
+<item>Debian Information.
+<item>Website information.
+</itemize>
+
+<tag>20/Sept/1999</tag>
+<itemize>
+<item>More tidying done, the code fragments should be readable again and
+I think I've removed the last of the cruft left by lynx --dump.
+</itemize>
+
+<tag>15/Sept/1999</tag>
+<itemize>
+<item>Compilation section gets a work out....
+</itemize>
+
+</descrip>
+
+
+</article>
+

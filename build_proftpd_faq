@@ -1,0 +1,39 @@
+#!/bin/bash
+#
+# Proftpd
+#
+export LINUXDOCLIB=`pwd`
+export BASE="$HOME/Repository/"
+export ROOT="$BASE/hamster.wibble.org/proftpd/"
+export FTP="$BASE/ftp.linux.co.uk/proftpd/"
+export FAQ="proftpdfaq"
+##
+##
+##
+# Build the single file
+sgml2html -s 0 -I ${FAQ}.sgml > /dev/null 
+mv ${FAQ}.html ${FAQ}-full.html > /dev/null
+# Build the linked file
+sgml2html -I ${FAQ}.sgml > /dev/null
+# Build the text file
+sgml2txt ${FAQ}.sgml > /dev/null 
+# PDF file
+htmldoc --webpage -f proftpdfaq.pdf proftpdfaq-full.html
+# Postscript
+htmldoc --webpage -f proftpdfaq.ps proftpdfaq-full.html
+#
+rm -f *tgz
+tar -czvf ${FAQ}.tgz *png *pdf *ps
+cp ${FAQ}.tgz ${FAQ}* *png *pdf *ps $ROOT/faq/
+#
+cp -r $ROOT/faq/ $FTP/
+#
+# All built
+#
+for i in *html
+do
+	./fix_faq.pl ${i}
+done
+#
+# End...
+#

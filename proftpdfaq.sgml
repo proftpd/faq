@@ -1,0 +1,2032 @@
+<!doctype linuxdoc system>
+
+<article>
+<!-- Title Information -->
+
+<TITLE>Professional FTP Daemon FAQ
+<author>Mark Lowes <tt/&lt;hamster@vom.tm&gt;/
+<date>v0.6.1, 30 Sept 2000
+
+<abstract>$Id$
+This document sets out many of the FAQs related to the installation,
+functioning and configuration of ProFTPD.  It also provides some guidance
+on policy and security issues.</abstract>
+
+<toc>
+
+<!-- the document proper -->
+
+
+<sect>Introduction to ProFTPD
+
+<P>
+<sect1>What is ProFTPD
+
+<P>
+ProFTPD is a ftp server primarily written for the various unix
+variants though it will now compile under win32.  It has been designed
+to be much like Apache in concept taking many of the ideas
+(configuration format, modular design, etc) from it.
+
+<sect1>What is the current version?
+<p>
+<itemize>
+<item>Stable:   None
+<item>Unstable: 1.2.0rc2
+</itemize>
+
+<sect1>Who codes/maintains it
+
+<P>As with all Open source projects no one person can really lay claim to
+the entire package.  The ProFTPD project was started by Floody who took
+it to approximately 1.2.0pre2/3 before he found that his available time
+was insufficient to handle this project as well as his other commitments.
+Since then (mid-late 1999) MacGyver has taken over the project and is
+pushing towards cleaning up the outstanding patches and getting 1.2.0
+shipped.  
+
+<P>There are also numerous people involved in developing modules, and
+documentation for the project.  A number of these have been merged into
+the core distribution and more are likely to follow.
+
+<sect1>Version numbering scheme
+
+<P>At the moment there is a little irrationality in the numbering scheme however it can be summarised as follows
+
+<sect2>1.0.x
+<P>This is the previous stable version.
+
+<sect2>1.1.x
+<P>Development code
+
+<sect2>1.2.0prex
+<P>Pre-release testing versions, development code.
+
+<sect2>1.2.0rcx
+<P>Release candidate code, these releases are pretty much bug free and are testing releases prior to the final stable code.
+
+<sect2>1.2.x
+<P>This will be the stable cycle with the final .x being the incremental patches to fix bugs discovered after the release version is issued.
+
+<sect2>1.3.x
+<P>Once 1.2.0 is released onward development will start with 1.3.0 much like the Linux Kernel numbering cycle.
+
+<sect1>Website & documentation
+
+<P>http://www.proftpd.net/ is now online and contains copies of this
+FAQ, other documentation resources and information on the project.
+The documentation is being brought back into shape at the moment, the
+configuration on the website is now approaching where it should be but
+more work is required and is ongoing.
+
+<sect2>Helping with documentation
+
+<P>Writing documentation is a little time consuming and requires some
+work but it's not actually difficult.  Get the source code from CVS,
+run "ShowUndocumented" in the doc directory.  This will list what
+needs work.  Grep through the code in the looking for something like
+
+<tscreen>
+<code>
+CHECK_CONF(cmd,CONF_ROOT|CONF_VIRTUAL|CONF_ANON|CONF_GLOBAL)
+</code>
+</tscreen>
+
+<P>to figure out where the directive is valid (server config,
+&lt;VirtualHost&gt;, &lt;Anonymous&gt;, &lt;Global&gt; for the above example).  Once you
+think you understand what it does, test, play, break (if possible).
+Then copy the format in Configuration.html and add the new documentation.
+
+<P>Once the documentation is complete run 
+
+<tscreen><verb>
+cvs diff -uw Configuration.html > Configuration.html.patch
+</verb></tscreen>
+
+<P>and send it to the devel list and MacGyver.
+
+<sect1>Bug reporting?  
+
+<P>Bug reports should be made via http://bugs.proftpd.net/ which uses
+the bugzilla tracking system.  Patches should be mailed to the
+ProFTPD-Devel mailing list or MacGyver directly.
+
+<sect1>Downloading
+
+<P>There are two main methods of getting the software.  Downloading a
+compressed tarball or rpm (there is also a Debian package available in
+the main distribution) from proftpd.net or from a mirror site,
+alternatively if you wish to run the latest bleeding edge code then
+collecting from the cvs server is the best method.
+
+<sect2>Mirror sites
+
+<P>
+<URL url="ftp://ftp.nutt.net.au/pub/proftpd" name="ftp://ftp.nutt.net.au/pub/proftpd"><newline>
+Location: Australia<newline>
+Maintained by: Jarrod Sayers<newline>
+
+<P>
+<URL url="ftp://ftp.linja.net:/pub/mirrors/proftpd/" name="ftp://ftp.linja.net:/pub/mirrors/proftpd/"><newline>
+Location: Finland (Helsinki)<newline>
+Maintained by: vko@linja.net<newline>
+
+<P>
+<URL url="ftp://ftp.free.fr/pub/Networking/proftpd/" name="ftp://ftp.free.fr/pub/Networking/proftpd/"><newline>
+Location: France<newline>
+
+<P>
+<URL url="ftp://de.samba.org/pub/mirror/ftp.proftpd.net/" name="ftp://de.samba.org/pub/mirror/ftp.proftpd.net/"><newline>
+Location: Germany (Bonn)<newline>
+Maintained by: Noel Koethe<newline>
+
+<P>
+<URL url="ftp://ftp.fh-koblenz.de/pub/ProFTPD/" name="ftp://ftp.fh-koblenz.de/pub/ProFTPD/"><newline>
+Location: Germany<newline>
+Maintained by: Michael Schmidt<newline>
+
+<P>
+<URL url="ftp://ftp.franken.de/pub/Linux/proftpd" name="ftp://ftp.franken.de/pub/Linux/proftpd"><newline>
+Location: Germany (Nuremberg)<newline>
+Maintained by: Harald Welte <newline>
+
+<P>
+<URL url="ftp://ftp.taubenschlag.uni-frankfurt.de/pub/mirror/ftp.proftpd.net/" name="ftp://ftp.taubenschlag.uni-frankfurt.de/pub/mirror/ftp.proftpd.net/"><newline>
+Location: Germany (Frankfurt)<newline>
+Maintained by: Bjoern Krueger<newline>
+
+<P>
+<URL url="ftp://ftp.wipol.uni-bonn.de/pub/mirror/ftp.proftpd.net/" name="ftp://ftp.wipol.uni-bonn.de/pub/mirror/ftp.proftpd.net/"><newline>
+Location: Germany (Bonn)<newline>
+Maintained by: Noel Koethe<newline>
+
+<P>
+<URL url="ftp://ftp-stud.fht-esslingen.de/pub/Mirrors/ftp.proftpd.net/" name="ftp://ftp-stud.fht-esslingen.de/pub/Mirrors/ftp.proftpd.net/"><newline>
+Location: Germany (Esslingen)<newline>
+Maintained by: Adrian Reber<newline>
+
+<P>
+<URL url="http://ftp-stud.fht-esslingen.de/pub/Mirrors/ftp.proftpd.net/ " name="http://ftp-stud.fht-esslingen.de/pub/Mirrors/ftp.proftpd.net/ "><newline>
+Location: Germany (Esslingen)<newline>
+Maintained by: Adrian Reber<newline>
+
+<P>
+<URL url="ftp://ftp.fsn.hu/pub/proftpd/" name="ftp://ftp.fsn.hu/pub/proftpd/"><newline>
+Location: Hungary (Budapest)<newline>
+Maintained by: Attila Nagy<newline>
+
+<P>
+<URL url="ftp://ftp.win.ne.jp/pub/network/ftp/proftpd/" name="ftp://ftp.win.ne.jp/pub/network/ftp/proftpd/"><newline>
+Location: Japan (Tokyo)<newline>
+Maintained by: Ayamura Kikuchi <newline>
+
+<P>
+<URL url="ftp://linux.sarang.net/mirror/network/daemon/ftp/proftpd/" name="ftp://linux.sarang.net/mirror/network/daemon/ftp/proftpd/"><newline>
+Location: Korea (Seoul)<newline>
+
+<P>
+<URL url="ftp://vejas.aic.lt/pub/linux/mirrors/proftpd/" name="ftp://vejas.aic.lt/pub/linux/mirrors/proftpd/"><newline>
+Location: Lithuania (Ziezmariai)<newline>
+Maintained by: Simas Mockevicius<newline>
+
+<P>
+<URL url="ftp.nl.uu.net:/pub/unix/ftp/proftpd" name="ftp.nl.uu.net:/pub/unix/ftp/proftpd"><newline>
+Location: Netherlands (Amsterdam)<newline>
+
+<P>
+<URL url="ftp://ftp.task.gda.pl/pub/proftpd/" name="ftp://ftp.task.gda.pl/pub/proftpd/"><newline>
+Location: Poland<newline>
+Maintained by: Robert Milkowski<newline>
+
+<P>
+<URL url="ftp://ftp.solnet.ch/pub/proftpd" name="ftp://ftp.solnet.ch/pub/proftpd"><newline>
+Location: Switzerland (Zurich Telehouse)<newline>
+Maintained by: Erich Hohermuth<newline>
+
+<P>
+<URL url="ftp://ftp.linux.co.uk/mirrors/ftp.proftpd.net/" name="ftp://ftp.linux.co.uk/mirrors/ftp.proftpd.net/"><newline>
+Location: UK (London)<newline>
+Maintained by: Mark Lowes<newline>
+
+<P>
+<URL url="ftp://ftp.compsci.lyon.edu/pub/software/unix/servers/ftp/proftpd/" name="ftp://ftp.compsci.lyon.edu/pub/software/unix/servers/ftp/proftpd/"><newline>
+Location: USA (Batesville, Arkansas)<newline>
+Maintained by: Matt Critcher<newline>
+
+<P>
+<URL url="ftp://ftp.infoteam.com/pub/proftpd/" name="ftp://ftp.infoteam.com/pub/proftpd/"><newline>
+Location: USA (Lexington, KY)<newline>
+Maintained by: Kenn Martin<newline>
+
+<P>
+<URL url="ftp://ftp.kracked.com/pub/proftpd" name="ftp://ftp.kracked.com/pub/proftpd"><newline>
+Location: USA (Johnson City, TN)<newline>
+
+<P>
+<URL url="ftp://ftp.stikman.com:/pub/proftpd/" name="ftp://ftp.stikman.com:/pub/proftpd/"><newline>
+Location: USA (Los Angeles, CA)<newline>
+
+<P>
+<URL url="ftp://ftp.twtelecom.net/pub/proftpd/" name="ftp://ftp.twtelecom.net/pub/proftpd/"><newline>
+Location: USA (Milwaukee, WI)<newline>
+Maintained by: Steve Kaczkowski<newline>
+
+<sect2>CVS
+
+<P>CVS:
+cvs -d :pserver:anonymous@proftpd.org:/var/proftpd login
+(password is proftpd)
+
+Then do:
+
+cvs -d :pserver:anonymous@proftpd.org:/var/proftpd checkout proftpd-1.2
+
+<P>To obtain the latest/greatest updates, just hop into the
+proftpd-1.2 directory and do: cvs update
+
+<P>A couple of sites generate downloadable tarballs of the latest CVS
+code to make obtaining the test code easier.
+
+<sect1>Mailing lists
+<P>
+There are three lists for ProFTPD
+
+<sect2>Announce
+<P>
+proftpd-announce@proftpd.net
+
+<P>This is a very low traffic list where only ProFTPD announcements/changes
+will be announced.
+
+<P>Subscribe by sending a message to proftpd-announce-request@proftpd.net with
+"subscribe" in the subject.
+
+<sect2>Users
+<P>
+proftpd@proftpd.net
+
+<P>This is intended to the the user support channel for the software,
+in most likelihood this is going to be a high traffic list and
+slightly chatty.  Please read the FAQ, the documentation and the list
+archives before posting a question.
+
+<P>Subscribe by sending a message to proftpd-request@proftpd.net with
+"subscribe" in the subject.
+
+<sect2>Development
+<P>
+proftpd-devel@proftpd.net
+
+<P>This list is intended for discussion of development-related issues
+of ProFTPD, and feature design.  It is NOT intended to be a 'user
+help' group.
+
+<P>Subscribe by sending a message to proftpd-devel-request@proftpd.net
+with 'subscribe' in the subject.
+
+<sect1>Copyright Issues
+<P>
+The software is currently distributed under the GNU General Public License
+(version 2 or later) as published by the Free Software Foundation.
+Copyright is held by Public Flood Software.
+
+<sect>Compilation and installing
+
+<P>
+<!-- Basic hints on untaring, rpm's ./configure etc etc -->
+
+<sect1>What platforms will it compile on?
+<P>
+There have been reports of ProFTPD compiling on all the following
+platforms (and versions).
+
+<itemize>
+<item>Linux 2.0.x &amp; 2.2.x (glibc 2.x only)
+<item>BSDI 3.1 & 4.0
+<item>IRIX 6.2, 6.3, 6.4, 6.5
+<item>Solaris 2.5.1, 2.6 & 2.7
+<item>AIX 3.2 & 4.2
+<item>OpenBSD 2.2/2.3
+<item>FreeBSD 2.2.7 
+<item>Digital UNIX 4.0A
+<item>DEC OFS/1
+</itemize>
+
+<sect2>Why not libc5 on Linux?  
+<P>There are several known problems with libc5-based systems,
+including improperly implemented library routines (vsprintf and
+vsnprintf are examples).  There are known problems with the resolver
+library.  For these reasons and others lib5 is not being supported at
+all, the latest versions of the major distributions (inc Debian,
+Redhat and Suse) are all glibc.
+
+<sect1>CVS
+
+<P>CVS (Concurrent Versions System), is a version control system which
+allows multiple developers (scattered across the same room or across
+the world) to maintain a single codebase and keep a record of all
+changes to the work.
+
+<P>The CVS repository for ProFTPD is available for non-developers in
+read-only mode, however this code is right on the bleeding edge and is 
+not guaranteed to even compile let alone work.  Access to CVS is given 
+to allow important security patches out into the wild and to allow
+users and interested users to test out the latest changes on real
+systems. 
+
+<sect2>Recommended ~/.cvsrc settings
+<P>
+<tscreen>
+<verb>
+cvs -z 3
+update -Pd
+diff -uw
+</verb>
+</tscreen>
+
+<sect2>Where can I get information on cvs?
+<P>CVS is produced by Cyclic Software (http://www.cyclic.com/) and
+details on CVS can be found on their website.  The CVS documentation
+is clear, detailed and above all heavy when printed.  I'd recommend
+reading it if you're planning on using CVS a lot.
+
+<sect1>How do I get debug output
+
+<P>The easiest way is to fire up proftpd manually from the command
+line with the debug level cranked up.
+
+<tscreen>
+<verb>
+/usr/local/sbin/proftpd -d9 -n
+</verb>
+</tscreen>
+
+<P>This will result in maximal debug output direct to the
+console. Warning, this can get messy on a busy server, for testing I
+would suggest copying the config and altering the port the server
+binds to and then testing.
+
+<sect1>Patches
+
+<P>Any patches should be submitted in Universal format, this makes
+integrating them into the main cvs source a lot easier.  When
+generating a diff against the current cvs source use "cvs diff -uw" to
+generate the patch.
+
+<tscreen><verb>
+cvs diff -uw filename > filename.patch
+
+or
+
+cvs diff -uw > bigger.patch
+</verb></tscreen>
+
+<P>Patches that add configuration directives without proper
+documentation.  Will be rejected.  New features without documentation
+are less than useless to the community at large.
+
+<sect1>Using non-default modules
+
+<P>Simply configure ProFTPD with 
+
+<tscreen>
+<verb>
+./configure --with-modules=mod_module1:mod_module2:mod_module3
+make
+make install
+</verb>
+</tscreen>
+
+<sect1>Plans for next version (1.3.x)
+
+<P>The new development series will be 1.3.x, using the same number
+scheme as the linux kernel developers.  The targets/goals are:
+
+<itemize>
+<item>refining/redefining the module API to make it more extensible and useful.
+<item>dynamic modules
+<item>security APIs and implementations
+<item>mod_ls rewrite
+<item>Implementing some security-related RFCs
+<item>Creating a web and GUI configuration interface to ProFTPD.
+</itemize>
+
+<P>1.4.x will be the production release of the 1.3.x development set.
+
+<sect1>Longer term development
+
+<P>For 1.9.x/2.0.x there are plans to completely recode some core
+sections of the software and creating an abstract layer to build the
+2.x version on.  The abstract layer will handle all filesystem and
+OS-specific stuff.  This layer will then have backends onto the major
+environments (ie Unix and NT)
+
+<sect1>NT Support
+
+<P>If/when a port is undertaken for NT, it will only be after a near
+complete rethinking of ProFTPD.  This is planned for 2.0 and onwards.
+
+<sect1>New features/modules
+
+<P>While anything new is welcomed it's probably better to at least
+float the idea first on the devel mailing list to ensure that someone
+else isn't already hacking on it.  Also when submitting the patch or
+module for inclusion into the ProFTPD source full documentation is
+needed.
+
+<sect2>Suggestions made for future development
+<P>
+<itemize>
+<item>GUI based configuration tool
+<item>CDB based authentication
+</itemize>
+
+<sect1>Year 2000 Issues
+<P>There have just been discovered some Y2K issues with the code
+(seven in all) a member of the list currently has a report on this and 
+will be passing information/patches back shortly.  The primary use for
+	  dates within Proftpd are the listing commands so the worst
+	  case is that the listings 'break'.
+
+<P>Proftpd does not have a Y2K certification but generally most Y2K
+	   certifications and assurances actually don't mean much more
+	   than the paper their written on.
+
+<P>There is a more formal Y2k statement on http://www.proftpd.net/docs/
+
+<!-- NEW SECTION -->
+
+<sect>Compatibility and Integration
+
+<sect1>SQL
+<P>ProFTPD has support for authentication and logging via SQL databases using the mod_sql module as supplied in the main distribution.   
+
+<sect1>SSH
+<P>Unfortunately while integration into ProFTPD itself might be
+possible it's pretty useless without the corresponding implementation
+within the commonly used ftp clients.
+
+<sect1>sendfile()
+
+<P>sendfile() is a system call which streamlines the copying of data
+between the disk and the tcp socket.  The call copied from the page
+cache directly rather than requiring a kernel -> user space -> kernel
+space copy for every read() and write() call.  Generally the
+advantages are only felt on heavily loaded servers.  The call is
+supported in ProFTPD for Linux and FreeBSD.
+
+<sect2>Linux 2.0.x 
+
+<P>sendfile is not supported under 2.0.x, this is not an issue when
+compiling for 2.0.x on a 2.0.x system. However when compiling on a
+2.2.x system for use on 2.0.x use the --disable-sendfile flag.
+
+<sect2>Runtime detection of sendfile()
+
+<P>There are two patches available for runtime detection of
+sendfile() which gets round the 2.0.x problems.
+
+<P>Johnie Ingram (aka netgod)'s:
+http://www.proftpd.org/proftpd-devel-archive/99-10/msg00073.html
+
+<P>John Pierce &lt;hawkfan@pyrotechnics.com&gt;
+http://www.proftpd.org/proftpd-devel-archive/99-10/msg00112.html
+
+<sect2>What are these log lines in pre8?
+
+<P>The pre8 code has some additional debug logging going on 
+tracking how sendfile is working.  Nothing to get excited 
+about it's probably a case of MacGyver forgetting to comment 
+it out.
+
+<sect2>Problems with sendfile
+<P>There appear to be a number of problems with sendfile()
+particularly with the directives and features which require accurate
+determination of filesize.  Such as the Rate* functions and
+downloading large files, the best advice at the moment appears to be
+to disable sendfile by default ( --disable-sendfile ).
+
+<sect1>Regular expressions
+
+<P>ProFTPD uses POSIX-style regexps.
+
+<!-- need more on regexps -->
+
+<sect1>IPv6
+<P>There is currently no support for IPv6, this may be included in the 
+1.3.* development tree.
+
+<sect1>Filename case sensitivity
+
+<P>ProFTPD is utterly dependant on the underlying OS to handle
+filename case sensitivity.  If the underlying OS is case sensitive
+then ProFTPD will be, there are currently no plans for a module to
+handle this.
+
+<sect1>FXP
+<P>FXP is capable of bouncing data between websites.  There have been
+a number of reports of problems in configuring ProFTPD to function
+cleanly with this program (http://flashfxp.skuz.net/).
+
+<P>To support FXP when connecting as a user place "AllowForeignAddress 
+on" in the Global or VirtualHost context.
+
+<P>To support FXP when connecting as anon "AllowForeignAddress on" must be placed
+in the Anonymous context.
+
+<P>The config will happily support "AllowForeignAddress on" in multiple places
+within the config.
+
+<!-- NEW SECTION -->
+
+<sect>Common Running problems
+
+<sect1>ProFTPD doesn't seem to work.
+
+<P>Starting ProFTPD in standalone mode it doesn't show in 'ps' It
+could be many things, possibly something like not running ProFTPD as
+root (it needs to be run as root initially, but will switch to a
+non-privileged user). Regardless, ProFTPD logs all errors via the
+standard syslog mechanism. You need to check your system logs in order
+to determine what the problem is.
+
+<sect2>It doesn't work!
+
+<P>There are many times when there's a completely random problem which
+appears to be insoluble.  The best place to ask for help is definately
+the mailing list (proftpd-l) but it's not productive to ask for help
+without giving enough information for intelligent debugging.
+
+<P>Have you?
+<itemize>
+<item>Checked your logs
+<item>Tried the server in debug mode
+<item>Read the FAQ?
+<item>Checked the mailing list archive?
+</itemize>
+
+<P>When posting try giving enough information, this might include but
+not be limited to.
+
+<itemize>
+<item>OS and server version (proftpd -v)
+<item>List of included modules (proftpd -l)
+<item>Appropriate log extracts
+<item>Output fom debug mode
+<item>Configration fragments
+</itemize>
+
+<sect1>"inet_create_connection() failed: Operation not permitted".
+
+<P>You aren't starting ProFTPD as root, or you have inetd configured
+to run ProFTPD as a user other than root. The ProFTPD daemon must be
+started as root in order to bind to tcp ports lower than 1024, or to
+open your shadow password file when authenticating users. The daemon
+switches uid/gids to the user and group specified by the User/Group
+directives during normal operation, so a `ps' will show it running as
+the user you specified.
+
+<sect1>Unable to bind to port/Address already in use
+
+<P>You've configured ProFTPD to run as standalone, but you've left the 
+line for the ftp service in /etc/inetd.conf.  Comment out the line
+starting "ftp" in /etc/inetd.conf and restart (killall -HUP inetd or
+something similar should do the trick) and try again.  Alternatively
+check to see if there's another copy of ProFTPD is running.
+
+<sect1>"Fatal: Socket operation on non-socket"
+
+<P>You have ProFTPD configured to run in inetd mode rather than
+standalone. In this mode, ProFTPD expects that it will be run from the
+inetd super-server, which implies that stdin/stdout will be sockets
+instead of terminals. As a result, socket operations will fail and the
+above error will be printed. If you wish to run ProFTPD from the
+shell, in standalone mode, you'll need to modify your proftpd.conf
+configuration file and add or edit the ServerType directive to read:
+
+<tscreen><verb>
+ServerType standalone
+</verb></tscreen>
+
+<sect1>I'm having problems with FTP clients behind firewalls
+
+<P>The FTP Specification defines that two sockets should be used for
+all communications.  The first runs over port 21 and is the control
+channel over which all commands and response codes are sent.  Whenever 
+data is required to be transfered, for example for a file download, a
+directory listing etc etc.  A second channel is created on demand,
+this socket can take one of two forms.
+
+<sect2>non-Passive
+<P>The server end of the data socket uses port 20.  This is nice and
+easy to work into a firewall configuration.
+
+<sect2>Passive
+<P>The port at either end is dynamically allocated.  This is virtually 
+impossible to cater for in a firewall configuration given that the
+port mapping will be different for every data connection.
+
+<P>The solution is to force the users to configure their clients to
+use the non-passive mode (ie port 20)
+
+<sect1>Can I run more that one VirtualHost on a single IP?
+
+<P>No, or at least not in the HTTP/1.1 manner of virtual hosting.
+This is an inbuilt limitation of the current FTP RFC., unlike the
+HTTP/1.1 spec there is no mechanism comparable to the "Host:
+foo.bar.com" HTTP header for specifying which host the connection is
+for.  Therefore the only method for determining which VirtualHost the
+connection is destined for is by the destination IP.
+
+<P>The one exception to this is if you host multiple servers on the same
+IP but using different ports, however this requires that the connecting
+client uses a non-standard port and therefore is probably not a good
+solution for mass hosting.
+
+<sect2>Is there anything in the pipeline to fix this?
+
+<P>There is a draft standard <url
+	      url="http://search.ietf.org/internet-drafts/draft-ietf-ftpext-mlst-08.txt" name="draft standard"> with the IETF which extends and improves on the
+FTP specification including support for a HOST command.  However given
+that the IP crunch is coming from websites and not virtual ftp servers
+this is unlikely to be pushed through any time soon.
+
+<sect1>How do I run ProFTPD from inetd?
+
+<P>Find the line in /etc/inetd.conf that looks something like this:
+<quote>   ftp stream tcp nowait root in.ftpd in.ftpd</quote>
+<P>Replace it with:
+<quote>   ftp stream tcp nowait root in.proftpd in.proftpd</quote>
+
+<P>Then, find your inetd process in the process listing and send it
+the SIGHUP signal so that it will rehash and reconfigure itself.  You
+may also need to add in.ProFTPD to hosts.allow on your system.
+
+<sect1>Can I use tcp-wrappers with ProFTPD?
+<P>
+Yup. Although ProFTPD has built-in IP access control (see the Deny
+and Allow directives), many admins choose to consolidate IP access
+control in one place via in.tcpd. Just configure ProFTPD to run from
+inetd as any other tcp-wrapper wrapped daemon and add the
+appropriate lines to hosts.allow/deny files.
+
+<sect1>Can I run an FTP server on a non-standard port?
+
+<P>Yes. Use a &lt;VirtualHost&gt; block with your machine's FQDN
+(Fully Qualified Domain Name) or IP address, and a Port directive
+inside the &lt;VirtualHost&gt; block. For example, if your host is
+named "myhost.mydomain.com" and you want to run an additional FTP
+server on port 2001, you would:
+
+<tscreen>
+<code>
+...
+&lt;VirtualHost myhost.mydomain.com&gt;
+Port 2001
+...
+&lt;/VirtualHost&gt;
+</code>
+</tscreen>
+
+<sect1>Can control upload/download ratios?
+<P>Yes the mod_ratio module provides for doing just this.
+
+<P>The ratio directives take four numbers: file ratio, initial file
+credit, byte ratio, and initial byte credit.  Setting either ratio
+to 0 disables that check.
+
+<P>The directives are HostRatio (matches FQDN, wildcards allowed),
+AnonRatio (matches password entered at login), UserRatio (accepts "*"
+for 'any user'), and GroupRatio. 
+
+<tscreen>
+<code>
+Ratios on                                    # enable module
+UserRatio ftp 0 0 0 0
+HostRatio master.debian.org 0 0 0 0          # leech access (default)
+GroupRatio proftpd 100 10 5 100000           # 100:1 files, 10 file cred
+5:1 bytes, 100k byte cred
+AnonRatio billg@microsoft.com 1 0 1 0        # 1:1 ratio, no credits
+UserRatio * 5 5 5 50000                      # special default case
+</code>
+</tscreen>
+
+<P>This example is for someone who (1) has downloaded 1 file of 82k,
+(2) has uploaded nothing, (3) has a ratio of 5:1 files and 5:1
+bytes, (4) has 4 files and 17k credit remaining, and (5) is now
+changing directory to /art/nudes/young/carla.  The initial credit,
+not shown, was 5 files and 100k (UserRatio * 5 5 5 100000).
+
+<P>Version 2.0 and above of this module integrate with mod_sql.
+
+<sect2>Limitations of mod_ratio
+
+<P>It appears that the ratio limits in mod_ratio are only maintained
+on a per session basis and there is no ongoing tracking of usage.
+
+<sect1>Slow logins
+
+<P>This is probably caused by a firewall or DNS timeout.  By default
+ProFTPD will try to do both DNS and ident lookups against the incoming 
+connection.  If these are blocked or excessively delayed a slower than 
+normal login will result.  To turn off DNS and ident use:
+
+<tscreen>
+<code>
+  UseReverseDNS off
+  IdentLookups                    off
+</code>
+</tscreen>
+
+<sect2>IdentLookups and tcpwrappers
+***
+
+<sect1>Lots of "FTP session closed" messages
+
+<P>
+
+<tscreen>
+<verb>
+Oct  7 12:30:48 salvage2 proftpd[8874]: FTP session closed.
+Oct  7 12:30:48 salvage2 proftpd[8874]: FTP session closed.
+Oct  7 12:30:48 salvage2 proftpd[8874]: FTP session closed.
+Oct  7 12:30:48 salvage2 proftpd[8874]: FTP session closed.
+</verb>
+</tscreen>
+
+<P>The above log extract is likely to be caused by a local monitoring
+system or a particularly aggressive DoS attack.  Most service
+monitoring systems try opening the ftp port on the target server to
+detect whether it is active and running.  Most of the time these tests 
+are followed by an immediate "QUIT" or disconnection.
+
+<P>TCPdump/TCPshow on the server in question should show which machine
+on your network is is generating these connections.
+
+<sect1>How do I see who is connected?
+
+<P>The ftpwho command lists the state of each ftp connection to the
+server and what it's current activity is.  However this does not
+detail the connection information on a virtual by virtual basis.
+
+<sect1>Can I force ProFTPD to listen on only one IP?
+
+<P>Sort, of it's not quite as clean as the socket binding under Apache 
+but the principle works something like this.
+
+<sect2>Standalone mode
+<P>
+<descrip>
+<tag>To listen on the primary IP of a host</tag>
+Use the SocketBindTight directive
+
+<tag/To listen on a interfaces which are not the primary host interface/
+
+Use the SocketBindTight directive, place your server configuration in
+a &lt;VirtualHost ftp.mydomain.com&gt; block and use "Port 0" for the
+main host configuration and and "Port 21" inside the VirtualHost
+block.
+
+</descrip>
+
+<sect2>inetd
+
+<P>There are two approaches possible, the first is to use the patch
+from Daniel Roesen &lt;droesen@entire-systems.com&gt; (check
+the mailing list archives).
+
+<P>The second method is to run ProFTPD from xinetd
+(http://synack.net/xinetd/), a more advanced replacement of inetd. An
+entry for this in xinetd.conf would be something like this:
+
+<tscreen>
+<code>
+service ftp
+{
+        flags           = REUSE
+        socket_type     = stream
+        instances       = 50
+        wait            = no
+        user            = root
+        server          = /usr/sbin/proftpd
+        bind            = <the-ip-you-wish-to-bind-to>
+        log_on_success  = HOST PID
+        log_on_failure  = HOST RECORD
+}
+</code>
+</tscreen>
+
+<sect1>"FTP server shut down ... please try again later."
+<P>Check for /etc/shutmsg and delete it.
+
+<sect1>How do I shutdown the server without killing proftpd?
+<P>ftpshut, allows the server to disallow connections with a message
+without actually taking down the service.  The shutdown can be
+scheduled for a point in the future or right now, existing connections
+can be allowed to finish, or be terminated now.  Re-enabling is done
+by removing the /etc/shutmsg file.
+
+<sect1>Is is possible to shutdown a single VirtualHost?
+
+<P>No, the shutmsg file works at a daemon level not at a virtual host
+level.
+
+<sect1>Error 421
+
+<P>This appears to be a general catch all error code meaning 'something
+nasty has gone wrong'.
+
+<itemize>
+<item>Connection has timed out
+<item>The DefaultRoot specified doesn't exist
+<item>The parent server has been killed
+<item>Check /etc/services
+<item>Wrong permissions on the DefaultRoot
+</itemize>
+
+<P>You get the idea...
+
+<sect1>proftpd doesn't show in the processlist
+
+<P>Two possible reasons, first that it's simply not running, try
+proftpd -n -d2 to run in debug mode and see what happens.  The other
+is that it's running from inetd and there are no active sessions at
+the moment.
+
+<sect1>How do I restart/reload the server?
+
+<P>This depends on the mode you're running the server in.
+
+<sect2>Inetd
+<P>Unless you're making a configuration change to inetd itself nothing 
+needs doing.  The server reloads the configuration everytime a new
+connection is made.
+
+<sect2>Standalone
+<P>Either stop and start the server completely (a little aggressive
+for most admin's tastes) or send a SIGHUP to the master daemon
+process.
+
+<sect1>503 No PORT command issued
+
+<P>A bug was introduced in 1.2.0rc2 which prevented the PORT command
+working properly and therefore breaking the data socket under certain
+conditions.  The bug was documented as bug 240 and has been fixed in
+CVS. 
+
+<sect1>Fatal: unable to determine IP address of
+
+<P>Proftpd was unable to work out what IP is associated with the
+hostname in the VirtualHost block.  Normally caused by a problem
+with the DNS resolution of the host, check the resolv.conf file
+and that your chosen nameservers are functional.
+
+<!-- -------------------- -->
+<!-- Configuration Issues -->
+<!-- -------------------- -->
+
+<sect>Configuration problems
+
+<P>Problems encountered in trying to make the server behave 
+exactly as required after compilation and installation are 
+complete and the server is running.
+
+<sect1>How do I add another anonymous login or guest account?
+<P>
+You should look in the sample-configurations/ directory from
+your distribution tarball. Basically, you'll need to create another
+user on your system for the guest/anonymous ftp login. For security
+reasons, it's very important that you make sure the user account
+either has a password or has an "unmatchable" password. The root
+directory of the guest/anonymous account doesn't have to be the user's
+directory, but it makes sense to do so. After you have created the
+account, put something like the following in your /etc/proftpd.conf
+file (assuming the new user/group name is private/private):
+
+<tscreen><code>
+&lt;Anonymous ~private&gt;
+AnonRequirePassword off
+User private
+Group private
+RequireValidShell off
+&lt;Directory *&gt;
+&lt;Limit WRITE&gt;
+DenyAll
+&lt;/Limit&gt;
+&lt;/Directory&gt;
+&lt;/Anonymous&gt;
+</code></tscreen>
+
+<P>This will allow ftp clients to login to your site with the username
+"private" and their e-mail address as a password. You can change the
+AnonRequirePassword directive to "on" if you want clients to be
+forced to transmit the correct password for the 'private' account.
+This sample configuration allows clients to change into, list and read
+all directories, but denies write access of any kind.
+
+<sect1>How do I ftp as root?
+
+<P>First off this is a <bf>bad idea</bf> ftping as root is insecure,
+there are better more secure ways of shifting files as root.
+
+<P>To enable root ftp ensure that the directive "RootLogin on" is
+included in your configuration.
+
+<sect1>How do I provide a secure upload facility?
+<P>
+The following snippet from a sample configuration file
+illustrates how to protect an "upload" directory in such a fashion
+(which is a very good idea if you don't want people using your site
+for "warez"):
+
+<tscreen><code>
+&lt;Anonymous /home/ftp&gt;
+  # All files uploaded are set to username.usergroup ownership
+  User username
+  Group usergroup
+  UserAlias ftp username
+  AuthAliasOnly on
+  RequireValidShell off
+
+  &lt;Directory pub/incoming/&gt;
+     &lt;Limit STOR CWD&gt;
+        AllowAll
+     &lt;/Limit&gt;
+     &lt;Limit READ RMD DELE MKD&gt;
+        DenyAll
+     &lt;/Limit&gt;
+  &lt;/Directory&gt;
+&lt;/Anonymous&gt;
+</code></tscreen>
+
+<P>This denies all write operations to the anonymous root directory
+and sub-directories, except "incoming/" where the permissions are
+reversed and the client can store but not read. If you used &lt;Limit
+WRITE&gt; instead of &lt;Limit STOR&gt; on &lt;Directory incoming&gt;,
+ftp clients would be allowed to perform all write operations to the
+sub-dir, including deleting, renaming and creating directories.
+
+<sect1>How can I stop my users from using their space as a warez repository
+
+<P>The above fragment will control anonymous users however if a local
+user with a full account with up and download capability is abusing
+their space then the technical measures which can be taken are
+limited.  Applying a sane system quota is a good start, using the
+mod_quota and mod_ratio modules may control the rates of
+upload/download making it less useful as a warez repository.  In the
+end it comes down to system monitoring and good site AUP's and
+enforcement.
+
+<sect1>Can I rotate files out of an upload directory after upload?
+
+<P>Yes.  You'll need to write a script which either checks the
+contents of the directory regularly and moves once it's detected no
+size change in a file for xyz seconds.  Or a script which monitors an
+upload log.  There is no automatic method for doing this.
+
+<sect1>How can I hide a directory from anonymous clients.
+
+<P>Use the HideUser or HideGroup directive in combination with the
+proper user/group ownership on the directive. For example, if you
+have the follow directory in your anonymous ftp directory tree:
+
+<tscreen><verb>
+	drwxrwxr-x 3 ftp staff 6144 Apr 21 16:40 private
+</verb></tscreen>
+
+<P>You can use a directive such as "HideGroup staff" to hide the private
+directory from a directory listing. For example:
+
+<tscreen><code>
+&lt;Anonymous ~ftp&gt;
+...
+&lt;Directory Private&gt;
+HideGroup staff
+&lt;/Directory&gt;
+...
+&lt;/Anonymous&gt;
+</code></tscreen>
+
+<sect1>File/Directory hiding isn't working for me! 
+<P>
+You need to make sure that the group you are hiding isn't the
+anonymous ftp user's primary group, or HideGroup won't apply.
+
+<sect1>I want to prevent users from accessing a hidden directory
+
+<P>You can either change the permissions on the directory to prevent
+the anonymous FTP user from accessing it, or if you want to make it
+appear completely invisible (as though there is no such directory),
+use the IgnoreHidden directive inside a &lt;Limit&gt; block for one or
+more commands that you want to completely ignore the hidden directory
+entries (ignore = act as if the directory entry does not exist).
+
+<sect1>How do I setup a virtual FTP server?
+
+<P>You'll need to configure your host to be able to handle multiple IP
+addresses. This is often called "aliasing", and can generally be
+configured through an IP alias or dummy interface. You need to read
+your operating system documentation to figure out how to do this. Once
+your have the host configured to accept the additional IP address that
+you wish to offer a virtual FTP server on, use the &lt;VirtualHost&gt;
+configuration directive to create the virtual server:
+
+<tscreen><code>
+&lt;VirtualHost 10.0.0.1&gt;
+ServerName "My virtual FTP server"
+&lt;/VirtualHost&gt;
+</code></tscreen>
+
+<P>You can add additional directive blocks into the &lt;VirtualHost&gt; block
+in order to create anonymous/guest logins and the like which are only
+available on the virtual host.
+
+<sect1>I only want to allow anonymous access to a virtual server.
+
+<P>Use a &lt;Limit LOGIN&gt; block to deny access at the top-level of
+the virtual host, then use &lt;Limit LOGIN&gt; again in your
+&lt;Anonymous&gt; block to allow access to the anonymous login. This
+permits logins to a virtual anonymous server, but denies to everything
+else. Example:
+
+<tscreen><code>
+&lt;VirtualHost 10.0.0.1&gt;
+ServerName "My virtual FTP server"
+&lt;Limit LOGIN&gt;
+DenyAll
+&lt;/Limit&gt;
+&lt;Anonymous /usr/local/private&gt;
+User private
+Group private
+&lt;Limit LOGIN&gt;
+AllowAll
+&lt;/Limit&gt;
+...
+&lt;/Anonymous&gt;
+&lt;/VirtualHost&gt;
+</code></tscreen>
+
+<sect1>How does &lt;Limit LOGIN&gt; work, and where should I use it?
+
+<P>The &lt;LOGIN&gt; directive is used to control connection or login
+access to a particular context (the directive block which contains
+it). When a client initially connects to ProFTPD, the daemon searches
+the configuration tree for &lt;Limit LOGIN&gt; directives, and
+attached parameters (such as Allow, Deny, etc). If it determines that
+there is no possible way for the client to ever be allowed to login,
+such as a "Deny from" matching the client's source address, without an
+overriding "Allow from" at a lower level, the client is disconnected
+without being offered the opportunity to transmit a user and password.
+
+<P>However, if it is possible for the client to be allowed a login,
+ProFTPD continues as per normal, allowing the client to login only if
+the proper &lt;Limit LOGIN&gt; applies. Normally, &lt;Limit&gt; directive blocks
+are allowed in the server config, &lt;VirtualHost&gt;, &lt;Anonymous&gt;
+and &lt;Directory&gt; contexts. However, &lt;Limit LOGIN&gt; should not be
+used in a &lt;Directory&gt; context, as clients do not connect/login to a
+directory (and thus it is meaningless).
+
+<P>By way of example, the following configuration snippet illustrates a
+&lt;Limit LOGIN&gt; deny which will cause any incoming connections from the
+10.1.1.x subnet to be immediately disconnected, without a welcome
+message:
+
+<tscreen><code>
+...
+&lt;Limit LOGIN&gt;
+Order deny,allow
+Deny from 10.1.1.
+Allow from all
+&lt;/Limit&gt;
+...
+</code></tscreen>
+
+<P>Next, an example of a configuration using &lt;Limit LOGIN&gt; that will not
+immediately disconnect an incoming client, but will return "Login
+invalid" for all login attempts except anonymous.
+
+<tscreen><code>
+...
+&lt;Limit LOGIN&gt;
+DenyAll
+&lt;/Limit&gt;
+&lt;Anonymous ~ftp&gt;
+...
+&lt;Limit LOGIN&gt;
+AllowAll
+&lt;/Limit&gt;
+...
+</code></tscreen>
+
+<sect1>How can I limit users to a particular directory tree?
+
+<P>For general open access you can use an &lt;Anonymous&gt; directive context block,
+possibly in combination with a UserPassword/AnonRequirePassword directive. 
+
+<P>However if you wish to jail an entire group (or groups) of users,
+you can use the DefaultRoot directive.  DefaultRoot lets you specify a
+root jailed directory (or '~' for the user's home directory), and an
+optional group-expression argument which can be used to control which
+groups of users the jail will be applied to. For example:
+
+<tscreen><code>
+...
+&lt;VirtualHost myhost.mynet.foo&gt;
+DefaultRoot ~
+...
+&lt;/VirtualHost&gt;
+This creates a configuration where all users who log into
+myhost.mynet.foo are jailed into their home directories (cannot chdir
+into a higher level directory). Alternatively, you could:
+...
+&lt;VirtualHost myhost.mynet.foo&gt;
+DefaultRoot /u2/public users,!staff
+...
+&lt;/VirtualHost&gt;
+</code></tscreen>
+
+<P>In this example, all users who are members of group 'users', but
+not members of group "staff" are jailed into /u2/public. If a user
+does not meet the group-expression requirements, they login as per
+normal (not jailed, default directory is their home).  You can use
+multiple DefaultRoot directives to create multiple jails inside the
+same directive context. If two DefaultRoot directives apply to the
+same user, ProFTPD arbitrarily chooses one (based on how the
+configuration file was parsed).
+
+<sect2>Security Implications
+
+<P>The DefaultRoot directive is implemented using the chroot(2) system
+call.  This moves the "/" (or root) directory to a specified point
+within the file system and jails the user into this sub-tree.  However
+this is not the holy grail of security, a chroot jail can be broken,
+it is not a trivial matter but it's nowhere near impossible.
+DefaultRoot should be used as part of a general system of security not
+the only security measure.
+
+<P>A more detailed <url
+url="http://www.bpfh.net/simes/computing/chroot-break.html"
+name="discussion"> on this subject and on the breaking of chroot jails
+has been written by Simon Burr
+
+<sect2>Non-root server issues
+
+<P>The chroot() system call will not work under a non-root ftp server
+process, the call requires root privaliges.  Without them it simply
+doesn't work, there doesn't appear to be any checking in the code of
+the uid/gid before calling chroot so using DefaultRoot in such a setup 
+will cause the server to fail.
+
+<sect2>Symlinks
+
+<P>Symlinks will not work from within a chrooted area.  The reason
+	    should be clear from a casual inspection of the nature of
+	    the chroot command.  It is not possible to have a symbolic
+	    link to a directory which can't be reached beacuse it's
+	    outside of the current chroot.  Work arounds to allow
+	    access to other parts of the file system include exporting
+	    the part of the filesystem to be accessed from inside the
+	    chroot and mounting via NFS, using hard file links or (on
+	    Solaris) using lofs to mount the directory via the loopback.
+
+<tscreen>
+<verb>
+mount -Flofs /home/data1 /ftp/data1
+mount -Flofs /home/data2 /ftp/data2
+</verb>
+</tscreen>
+
+<sect1>How do I create individual anonymous FTP sites for my users?
+
+<P>There are two methods of accomplishing this (possibly more).
+First, you can create a directory structure inside your anonymous FTP
+root directory, creating a single directory for each user and setting
+ownership/permissions as appropriate. Then, either create a symlink
+from each user's home directory into the FTP site, or instruct your
+users on how to access their directory.
+
+<P>The alternate method (and more versatile) of accomplishing per-user
+anonymous FTP is to use AnonymousGroup in combination with the
+DefaultRoot directory. You'll probably want to do this inside a
+&lt;VirtualHost&gt;, otherwise none of your users will be able to access
+your system without being stuck inside their per-user FTP site.
+Additionally, you'll want to use a deferred &lt;Directory&gt; block to
+carefully limit outside access to each user's site.
+
+<enum>
+<item>Create a new unix group on your system named `anonftp'. Please
+each user who will have per-user anonymous FTP in this group.
+
+<item>Create an `anon-ftp' and `anon-ftp/incoming' directory in each
+user's home directory.
+
+<item>Modify your /etc/proftpd.conf file to look something like this
+(you'll probably want to customize this to your needs):
+</enum>
+
+<tscreen><code>
+ &lt;VirtualHost my.per-user.virtual.host.address&gt;
+ 
+ # the next line limits all logins to this virtual host, so that only
+ anonftp users can connect
+ 
+ &lt;Limit LOGIN&gt;
+ DenyGroup !anonftp
+ &lt;/Limit&gt;
+ 
+ # limit access to each user's anon-ftp directory, we want read-only
+ except on incoming
+ 
+ &lt;Directory ~/anon-ftp&gt;
+ 
+ &lt;Limit WRITE&gt;
+ DenyAll
+ &lt;/Limit&gt;
+ 
+ &lt;/Directory&gt;
+ 
+ # permit stor access to each user's anon-ftp/incoming directory,
+ but deny everything else
+ 
+ &lt;Directory ~/anon-ftp/incoming&gt;
+ 
+ &lt;Limit STOR&gt;
+ AllowAll
+ &lt;/Limit&gt;
+ &lt;Limit READ WRITE&gt;
+ DenyAll
+ &lt;/Limit&gt;
+ 
+ &lt;/Directory&gt;
+ 
+ # provide a default root for all logins to this virtual host.
+ DefaultRoot ~/anon-ftp
+ # Finally, force all logins to be anonymous for the anonftp group
+ AnonymousGroup anonftp
+ 
+ &lt;/VirtualHost&gt;
+</code></tscreen>
+
+
+<sect1>I want to support normal login and Anonymous under a particular 
+user
+
+<P>You can use the AuthAliasOnly directive to control how and
+where real usernames get authenticated (as opposed to aliased names,
+via the UserAlias directive). Note that it is still impossible to
+have two identical aliased names login to different anonymous sites;
+for that you would need &lt;VirtualHost&gt;.
+
+<P>Example:
+
+<tscreen><code>
+...
+&lt;Anonymous ~jrluser&gt;
+
+ User jrluser
+ Group jrluser
+ UserAlias ftp jrluser
+ UserAlias anonymous jrluser
+ AuthAliasOnly on
+ ...
+ 
+&lt;/Anonymous&gt;
+</code></tscreen>
+
+<P>Here, the &lt;Anonymous&gt; configuration for ~jrluser is set to allow
+alias authentication only. Thus, if a client attempts to authenticate
+as 'jrluser', the anonymous config will be ignored and the client will
+be authenticated as if they were a normal user (typically resulting in
+`jrluser' logging in normally). However, if the client uses the
+aliased username `ftp' or `anonymous', the anonymous block is applied.
+
+<sect1>Why doesn't Anonymous ftp work (550 login incorrect)?
+<P>
+Things to check
+Check the following first:
+
+<enum>
+<item>Make sure the user/group you specified inside the &lt;Anonymous&gt;
+block actually exists. This must be a real user and group, as it is
+used to control whom the daemon runs as and authenticates as.
+
+<item>If RequireValidShell is not specifically turned off, make sure
+that your "ftp user" (as specified by the User directive inside an
+&lt;Anonymous&gt; block), has a valid shell listed in /etc/shells. If you do
+not wish to give the user a valid shell, you can always use
+"RequireValidShell off" to disable this check.
+
+<item>If UseFtpUsers is not specifically turned off, make sure that
+your "ftp user" is not listed in /etc/ftpusers.
+
+</enum>
+
+<P>If all else fails, you should check your syslog. When authentication
+fails for any reason, ProFTPD uses the syslog mechanism to log the
+reason for failure; using the AUTH (or AUTHPRIV) facility. If you need
+further assistance, you can send email, including related syslog
+entries and your configuration file, to the ProFTPD mailing list
+mentioned elsewhere in this FAQ.
+
+<sect1>Bandwidth control
+
+<P>The Bandwidth directive has been removed as of 1.2.0pre8, this
+directive acted on a per-virtual basis.  It was generally held that it
+worked on the principle that a single connection to a given virtual
+could take the full bandwidth limit until other connections were made.
+However, the server uses either separate server (inetd) or forked
+(standalone) model there is no way for the various processes to
+communicate, therefore is no way they could share the bandwidth
+allocation.
+
+<P>The replacement actually does the same but does it in a more
+rigorous manner and more precisely.  The directives RateReadBPS,
+RateReadFreeBytes, RateReadHardBPS work by limiting on a
+per-connection basis.
+
+<tscreen><verb>
+Bandwidth                       81920
+
+is replaced with something like
+
+RateReadBPS                     81920
+RateReadFreeBytes               5120
+RateReadHardBPS                 on
+</verb></tscreen>
+
+<P>To achieve a total limit on a per virtual basis a mix of
+RateReadBPS and MaxClients is needed.  ie RateReadBPS x MaxClients =
+Total Bandwidth allocation.  There is no way (at the moment) to
+specify that virtual server xyz has a maximum total bandwidth of
+200K/s that it can use between all connections.
+
+<P>Per-virtual, per-user and global limits are currently in the "to be
+coded" pile and are being penciled in for the 1.3.x development
+series.  There is some work in providing for a shared communication
+system between servers before this can happen.
+
+<sect2>Rate controls aren't working
+
+<P>
+In pre9 and earlier Rate* does not work if sendfile is enabled,
+	    recompile with --without-sendfile and all should be as
+	    expected.
+
+<sect1>CHMOD isn't working
+
+<P>As of rc1 the AllowChmod command was added to allow control over
+who is allowed to use the CHMOD command.  The default value for this
+directive is off.
+
+
+<!-- SECTION BREAK -->
+
+<sect>Security
+<P>
+
+<sect1>General
+
+<P>Recently (between versions 1.2.0pre3 - 1.2.0pre7) there have been
+a number of buffer overflow type security problems with ProFTPD, with
+the coming release of pre7 these should be under control.  Though no
+absolute statement can be given on the security of the software (this
+is true for every piece of software out there).  A significant amount
+of effort has been put into removing the more 'dangerous' system calls
+which are prone to overflow attacks.
+
+<!--
+<P>There is a known security problem with ALL unix FTP daemons, which
+requires the daemon to retain root privileges even after a client has
+fully authenticated. In ProFTPD versions 1.0.x, a decision was made to
+ignore RFC959's port 20 requirements in the interests of security.
+
+<P>Unfortunately, over time, it became obvious that this was a bad idea.
+Until the RFC is "fixed", this problem will continue to plague unix
+FTP servers.
+
+<P>In ProFTPD versions 1.1.x and higher, the "standard" route was
+taken, retaining root at all times, allowing the daemon to bind to
+port 20 and be completely RFC959 compliant.  The security issue
+remains, however the code is carefully structured to handle this in as
+secure a fashion as possible.
+
+<P>
+You have two options for working around this problem:
+<enum>
+<item>Upgrade to ProFTPD 1.1.x or higher
+<item>Have your FTP clients use passive mode. Passive mode data
+connections originate from the client, and thus do not experience this
+"port 20" problem.
+</enum>
+-->
+
+<sect2>What about using Stackguard?
+<P>Stackguard is a gcc variant which can protect programs from
+stack-smashing attacks, programs compiled using Stackguard dies without
+executing the stack code.  While this approach is a good first line of
+defense against future problems it's not a complete cure-all.  Some of the
+buffer overflows were found on static variables, which are not protected
+by stack protection mechanisms. 
+
+<!-- Need link to stackguard -->
+
+<sect1>Surely running ProFTPD as non-root will help?
+
+<P>Running ProFTPD as a non-root user gives only a marginal security
+improvement on the normal case and adds some functional problems.
+Such as not being able to bind to ports 20 or 21, unless it's spawned
+from inetd.
+
+<P>ProFTPD takes a middle road in terms of security.  It only uses
+root privileges where required and drops to the UID defined in the
+config file at all other times.  Times when root is required include,
+binding to ports < 1024, setting resource limits, reading
+configuration information and some network code.
+
+<P>For Linux 2.2.x kernel systems there is the POSIX style
+mod_linuxprivs module which allows very fine grain control over
+privileges.  This is highly recommended for security-conscious admins.
+
+<sect1>How can I control what commands the server accepts?
+
+<P>Use a sane Allow/DenyFilter, these directives use regular
+expressions to control all text sent over the control socket.  (If
+anyone has some good examples please let me know.)
+
+<!-- <P>[NB: need examples here] -->
+
+<sect1>How can I prevent the server version from being displayed
+<P>Setting SeverIdent to "off" should turn off the information about
+what type of server is running.  To have maximum effect this directive 
+should either be in the Global context or included in every virtual
+host block and the default block.
+
+<tscreen><code>
+ServerIdent  On "Linux.co.uk server"
+
+ServerIdent  Off
+</code></tscreen>
+
+<sect1>I want to show a message prior to login
+<P>Use the DisplayConnect directive to specify a file containing a
+message to be displayed prior to login.
+
+<tscreen><code>
+DisplayConnect /ftp/ftp.virtualhost/login.msg
+</code></tscreen>
+
+<sect1>I want to display a message after login
+
+<P>Use the DisplayLogin directive, this sends a specified ASCII file to the
+connected user.
+
+<tscreen><code>
+DisplayLogin       /etc/proftp.msg
+</code></tscreen>
+
+<sect1>Can I have a custom welcome response?
+
+<P>Use the AccessGrantMsg directive, this sends a simple single line
+message back to the user after a successful authentication.  Magic
+cookies appear to be honoured in this directive.
+
+<tscreen><code>
+AccessGrantMsg "Guest access granted for %u."
+</code></tscreen>
+
+<P>Note, this directive has an overriding default and needs to be
+specified in both VirtualHost and Anonymous blocks.
+
+<sect1>External Programs
+
+<P>ProFTPD has been designed to run as a secure ftp server, this means 
+that it tries to keep as much as possible under it's control.  An
+external program is a security risk in itself because it's behaviour
+is not controllable from within the ftpd code.
+
+<sect>User Authentication
+
+<P>
+
+<sect1>Why is PAM the default authentication system?
+
+<P>Security, pure and simple.  PAM is the most secure (or securable)
+of the available authentication systems.  Many of the issues and
+configuration hints for PAM are contained in README.PAM which is
+bundled with the server source and in the various packaged builds.  To 
+use /etc/passwd manual compilation will be required with the configure 
+script being run with the --without-pam flag.  Unless the PAM
+subsystem is properly configured authentication will fail.
+
+<sect1>Authentication methods supported
+<P>
+
+<itemize>
+<item>PAM
+<item>Standard /etc/passwd lookups
+<item>NIS
+<item>Shadow passwords
+<item>Indvidual passwd/group files for each virtual
+<item>SQL databases
+</itemize>
+
+<P>If these don't fit in with your system then writing a custom module
+or using such as the 'ld.so.preload' approach to intercept
+getpwbynam() system calls works happily with ProFTPD.
+
+
+<sect1>Problems with non-PAM authentication
+
+<P>Generally these problems will be cured by either disabling PAM
+completely or by ensuring that these directives are set
+
+<tscreen>
+<code>
+PersistentPasswd   off
+AuthPAMAuthoritative off
+</code>
+</tscreen>
+
+<sect1>AuthPAMAuthorative is an unknown directive!
+
+<P>Check the spelling it should be AuthPAMAuthoritative not
+AuthPAMAuthorative or any other variation.
+
+<sect1>Configuring PAM
+
+<P>There is a README.Pam in the top directory of the ProFTPD install
+directory :
+
+<sect2>Redhat Linux
+<P>
+<tscreen><code>
+#%PAM-1.0
+auth       required     /lib/security/pam_listfile.so item=user
+sense=deny file=/etc/ftpusers onerr=succeed
+auth       required     /lib/security/pam_pwdb.so shadow nullok
+account    required     /lib/security/pam_pwdb.so
+session    required     /lib/security/pam_pwdb.so
+</code></tscreen>
+
+<sect2>SuSE Linux 
+<P>SuSE appears to uses pam_unix rather than pam_pwdb which is the
+Redhat approach.  All references to pam_pwdb should be replaced with
+"pam_unix" on SuSE systems.
+
+<P>The following fragment is reported to work fine on SuSE 6.2
+
+<tscreen><code>
+/etc/pam.d/ftpd
+#%PAM-1.0
+
+# Uncomment this to achieve what used to be ftpd -A.
+# auth       required     /lib/security/pam_listfile.so item=user sense=allow file=/etc/ftpchroot onerr=fail
+
+auth     required       /lib/security/pam_listfile.so item=user
+sense=deny file=/etc/ftpusers onerr=succeed
+auth     sufficient     /lib/security/pam_ftp.so
+auth     required       /lib/security/pam_unix.so
+auth     required       /lib/security/pam_shells.so
+account  required       /lib/security/pam_unix.so
+password required       /lib/security/pam_unix.so
+session  required       /lib/security/pam_unix.so
+</code></tscreen>
+
+<sect2>FreeBSD
+
+<P>FreeBSD does not support PAM session directives. If you remove the
+following line from the FreeBSD section of README.PAM, PAM should work
+properly under recent versions of FreeBSD.
+
+<tscreen><code>
+ ftp session required    pam_unix.so         try_first_pass
+</code></tscreen>
+
+<sect1>pam_sm_open_session errors
+<P>ProFTPD requires PAM version 0.59 or better.  pam_sm_open_session
+is not part of previous versions.
+
+<sect1>Normal users can't login, only anon.
+
+<P>Check that the /etc/pam.d/ftp file exists on the system and is
+configured as detailed in README.PAM
+
+<sect1>AuthPAMAuthoritative
+
+<P>Currently AuthPAMAuthoritative defaults on "ON" resulting in login
+failures if PAM cannot authenticate the user.  This breaks the
+AuthUserFile directive as it never gets a chance to authenticate the
+user unless the AuthPAMAuthoritative directive is set to "OFF"
+
+<P>The reasoning behind the current default is to ensure that the
+system is secure by default requiring that the admin explicitly and
+knowingly has to disable it.  There are discussions underway which
+may result in the directive flipping to a default of "Off" if
+AuthUserFile is specified.
+
+<P><bf>Note:</bf> as of the current CVS and the forthcoming pre9
+release the default has changed to "Off"
+
+<sect1>LDAP
+<P>
+mod_ldap is currently stable; there were a couple bugs that were
+squashed after release 1.0 of the module.  it is still udner
+development , check the <url
+url="http://horde.net/~jwm/software/proftpd-ldap/" name="website"> for
+more information.  There is an example config fragment on the author's
+site which gives a reasonable idea on how to use this module.
+
+<sect1>Encrypted passwords
+
+<P>There are patches which are being merged in at the moment to provide
+SHA encryption.  The plan is to have the server get all user information
+except passwords via an anonymous bind.  The server will then reconnect
+as a user is logging in and attempt to get the password via an encrypted
+connection.  This should be in the next major release (2.5)
+
+<sect1>SecureID
+<P>No support yet
+
+<sect1>One time passwords
+
+<P>This is possible using either PAM or the Opie modules.  The module
+passes back a challenge which the user puts into a key generator along
+with their 'pass phrase' and it gives them back 5 words which get sent
+as the password.  As long as you do it correctly it will never repeat.
+
+<P>It requires <url url="http://inner.net/opie/" name="opie"> to be installed on the server.
+There are key gen clients for win95/98, *nix, mac.
+
+<P>ftp://ftp.urbanrage.com/pub/c/mod_opie.c
+
+<sect1>RADIUS
+<P>
+Radius support isn't built into ProFTPD, though there's nothing
+stopping someone writing a module and submitting it for inclusion in
+the code tree.  Possibly the easist way to implement Radius is by
+using the modules available for PAM and using the inbuilt PAM support.
+
+<sect1>Anonymous password checking
+
+<P>Is it possible to check an offered email address in an anonymous
+login before allowing access.  Simple answer, not a hope in hell,
+anonymous access is pretty much designed to be freely open without
+checks and restrictions other than those placed on upload/download
+from the site.  The best that can be hoped for is decent logging and
+tracking of accesses, and the requesting IP.
+
+<!-- Submitted text for sql -->
+
+<sect1>Configuring for SQL authentication
+
+<P>
+<itemize>
+<item>Install MySQL 
+<item>Run 'configure' with these flags:
+--with-modules=mod_sqlpw:mod_mysql
+<itemize>
+<item>configure --with-modules=mod_sqlpw:mod_mysql
+</itemize>
+<item>Edit Make.rules
+<item>Compile with: make
+<item>Then install per the Proftpd instructions: make install
+<item>Edit the proftpd configuration file/usr/local/etc/proftpd.conf 
+<item>Set up your system so libmysqlclient.so can be found 
+</itemize>
+
+<sect2>Edit Make.rules
+
+<P>
+<itemize>
+<item>Add the location of the MySQL include files to the CPPFLAGS in Make.rules: 
+<itemize>
+<item>CPPFLAGS=$(DEFAULT_PATHS) $(PLATFORM) -I.. -I$(top_srcdir)/include -I/usr/local/mysql/include/mysql
+</itemize>
+<item>Add the location of the MySQL client library to the LDFLAGS in Make.rules: 
+<itemize>
+<item>LDFLAGS=-L/home/builds/proftpd-1.2.0pre10/lib -L/usr/local/mysql/lib/mysql 
+</itemize>
+<item>Add the MySQL client library to the LIBS variable so that it will be  required at link time.
+<itemize>
+<item>LIBS=-lsupp -ldl -lcrypt&nbsp; -lm -lmysqlclient&nbsp; -lpam
+</itemize>
+</itemize>
+
+<sect2>Edit the proftpd.conf file
+
+<P>Make sure to add these lines and change where appropriate (example: the password)
+
+<tscreen>
+<code>
+--[ proftpd.conf ]--
+# auth using mysql host login pass db
+MySQLInfo localhost hamster ***** proftpd
+SQLUserTable ftp
+SQLUsernameField username
+SQLUidField uid
+SQLGidField gid
+SQLPasswordField password
+SQLHomedirField homedir
+SQLLoginCountField count
+SQLAuthoritative on
+SQLPlaintextPasswords on
+--[ proftpd.conf ]--
+</code>
+</tscreen>
+
+<sect2>Set up your system so libmysqlclient.so can be found
+
+<P>
+<itemize>
+<item>First decide how to do it:
+<item>On Linux: make it system wide by editing /etc/ld.so.conf
+Modify the LD_LIBRARY_PATH for root, or in a shell wrapper script to proftpd.
+Note: if you have Linux and are not installing more than one version of MySQL use the edit ld.so.conf solution.
+
+Linux: Editing /etc/ld.so.conf, as root:
+Add the same path you added to LDFLAGS at the bottom of the file /usr/local/mysql/lib/mysql
+Run the ldconfig program. Note: there will be no visible sign that this has worked, it just will...
+Modify the LD_LIBRARY_PATH
+Add these lines to either root's .profile (or .bashrc) or to a shell script that is wrappering proftpd
+</itemize>
+
+<P>
+<tscreen>
+<code>
+if [ -z "$LD_LIBRARY_PATH" ] ; then<br>
+export LD_LIBRARY_PATH="/usr/local/mysql/lib/mysql"
+else
+export LD_LIBRARY_PATH="/usr/local/mysql/lib/mysql:$LD_LIBRARY_PATH"
+</code>
+</tscreen>
+
+<P>Detailing how to use MySQL is outside the scope of this document,
+so here's some links.</P>
+
+<P>
+<itemize>
+<item><url url="http://www.devshed.com/Server_Side/MySQL/Administration/" name="Administration">
+<item><url url="http://www.devshed.com/Server_Side/MySQL/Intro/" name="Intro">
+</itemize></P>
+
+<sect3>Quick rundown of what's needed to make a database 
+<P>
+<itemize>
+	<item>Create a user for proftpd to
+	access the database as 
+	<item>Create permissions for this user 
+	<item>Create new database (mine is
+	called proftpd) 
+	<item>Reload as required to make this
+	live 
+	<item>Create a table within proftpd (mine is ftp) 
+</itemize>
+
+<sect3>Creating a user
+
+<P>
+<itemize>
+<item>Connect to the MySQL access DB: mysql mysql
+<item>Use Insert to the user you want proftpd to use to access the DB
+<item>insert into user values ('%', 'hamster', password('mypasswd'),'Y','N','Y','N','N','N','N','N','N','N' ,'N','N','N','N');
+</itemize>
+
+<P>The above insert will work for MySQL v3.23.x, if you are using an
+older MySQL remove the last 4 'N'.  Your User access table in MySQL
+v3.23.x should look like:
+
+<tscreen>
+<code>
++------+-----------+------------------+-------------+-------------+-------------+-------------+-------------+-----------+-------------+---------------+--------------+-----------+------------+-----------------+------------+------------+
+| Host | User      | Password         | Select_priv | Insert_priv | Update_priv | Delete_priv | Create_priv | Drop_priv | Reload_priv | Shutdown_priv | Process_priv | File_priv | Grant_priv | References_priv | Index_priv | Alter_priv |
++------+-----------+------------------+-------------+-------------+-------------+-------------+-------------+-----------+-------------+---------------+--------------+-----------+------------+-----------------+------------+------------+
+| %    | hamster   | 0d26d1e75ffa7efb | Y           | N           | Y           | N           | N           | N         | N           | N             | N            | N         | N          | N               | N          | N          |
++------+-----------+------------------+-------------+-------------+-------------+-------------+-------------+-----------+-------------+---------------+--------------+-----------+------------+-----------------+------------+------------+
+</code>
+</tscreen>
+
+<sect3>Creating the DB
+
+<P>
+<itemize>
+<item>Use the mysqladmin command to create the database:
+<item>mysqladmin create proftpd
+</itemize>
+
+<sect3>Reloading and refreshing the MySQL daemon
+
+<P>
+<itemize>
+<item>Use the mysqladmin command to refresh and reload its DB pointers and configurations
+<item>mysqlamdin refresh
+<item>mysqlamdin reload
+</itemize>
+
+<sect3>Creating the Table
+
+<P>
+<itemize>
+<item>Copy the following SQL create statement to a file and run it.
+<item>mysql < table_create_file
+</itemize>
+
+<tscreen>
+<code>
+#mysqldump proftpd ftp
+# MySQL dump 8.2
+#
+# Host: localhost Database: proftpd
+#--------------------------------------------------------
+# Server version 3.23.13a-alpha-log
+
+#
+# Table structure for table 'ftp'
+#
+
+CREATE TABLE ftp (
+ username varchar(60) binary,
+ uid int(11),
+ gid int(11),
+ password varchar(30),
+ homedir varchar(250),
+ count int(11)
+);
+</code>
+</tscreen>
+
+<P>You may want to refresh and reload MySQL again, how to is listed
+above.  What you should end up with is something that looks like this:
+
+<tscreen>
+<code>Database changed
+mysql&gt; show tables;
++-------------------+
+| Tables in proftpd |
++-------------------+
+| ftp |
++-------------------+
+1 row in set (0.02 sec)
+
+mysql&gt; show columns from ftp ;
++----------+--------------------+------+-----+---------+-------+---------------+
+| Field    | Type               | Null | Key | Default | Extra | Privileges    |
++----------+--------------------+------+-----+---------+-------+---------------+
+| username | varchar(60) binary | YES  |     | NULL    |       | select,update |
+| uid      | int(11)            | YES  |     | NULL    |       | select,update |
+| gid      | int(11)            | YES  |     | NULL    |       | select,update |
+| password | varchar(30)        | YES  |     | NULL    |       | select,update |
+| homedir  | varchar(250)       | YES  |     | NULL    |       | select,update |
+| count    | int(11)            | YES  |     | NULL    |       | select,update |
++----------+--------------------+------+-----+---------+-------+---------------+
+6 rows in set (0.00 sec)
+</code>
+</tscreen>
+
+<P>Note: in MySQL v3.23.x and above you will see a Privileges column,
+if you are running an older version, you will not see that.
+
+<sect2>Database Permissions
+<P>
+At the very least the user/host the profptd daemon uses to connect to
+the SQL server should have SELECT permission.  If the "count" field is 
+being used to track a users usage then UPDATE is also required.  The
+lack of these permissions may cause the server to fail.
+
+<sect2>Gotcha's
+<P>
+
+<descrip>
+<tag>421 Service not availible</tag>
+<P>Make sure that the home directory of the user concerned actually
+exists and has the right ownerships/permissions</P>
+
+<tag>Can't connect to the database</tag>
+
+<itemize>
+<item>Is it running?
+<item>Is it listening?
+<item>Does the user proftpd is using have the right permissions?
+</itemize>
+
+</descrip>
+
+</P>
+
+
+
+
+<sect>Hamster droppings
+<P>
+
+<sect1>Why...
+<P>This chapter is not meant to be meaningful, it's where I cut
+and paster ideas, comments, code fragments before I work them into the 
+main part of the document.
+
+
+<sect1>Odds and ends
+<P>Why can't I delete a directory with dele ?
+<P>Port bouncing, ftp bouncing, priv ports
+<P>hiding directories
+<P>hiding files
+<P>authentication methods
+
+<P>user defined permissions in &lt;LIMIT&gt; do not override system level
+permissions.
+
+<P>From: Arthur Stark astark5@tdmonline.com
+Speaking of the FAQ, I have a cron job mirror the proftpdfaq's to my
+server (mainly cause I use it so much) =-) available at
+http://www.tdmonline.com/proftpdfaq/proftpdfaq.html , Thanks Mark for
+the great job in maintaining that sucker!
+
+<P>0.0.0.0 is INADDR_ANY, which means to bind to any interface.  The 'address
+in use' probably means something already has that *port* 21; probably
+inetd.  Check /etc/inetd.conf.
+
+<P>analysing log files.
+
+a release of mod_quota is available.  It (thanks to Bruneton Beranger)
+fixes the bug of the quota becoming inaccurate if you rename a file to
+an existing one.
+currently it's available from ftp://ftp.urbanrage.com/pub/c/
+Eric
+  eric@urbanrage.com
+
+<P>authuserfile: needs a complete password file, not a cutdown.
+
+
+<sect>FAQ Notes
+
+<sect1>History
+
+<P>The original text for this document was based on the configuration
+FAQ on www.proftpd.org.  It was taken over in Sept 1999 when the
+maintainer of the software changed.
+
+<P>The faq is usually maintained on a P100 or paper somewhere on the
+London Underground while I'm travelling home from work.  The most
+recent version can always be obtained from <url
+url="http://hamster.wibble.org/proftpd/faq.html"
+name="hamster.wibble.org">.  It is available as a series of linked
+html files, a single flat html file, the original sgml source, ASCII
+text and a tarball containing all the formats.  The tarball should be
+available shortly from ftp.linux.co.uk
+
+<sect1>Copyrights and Trademarks
+
+<P>(c) 1999-2000 Mark Lowes
+
+<P>This document may be reproduced in whole or in part, without fee,
+subject to the following restrictions:
+   
+<itemize>
+
+<item>The copyright notice above and this permission notice must be
+preserved complete on all complete or partial copies
+
+<item>Any translation or derived work must be approved by the author in
+writing before distribution.
+
+<item>If you distribute this work in part, instructions for obtaining
+the complete version of this manual must be included, and a means
+for obtaining a complete version provided.
+
+<item>Small portions may be reproduced as illustrations for reviews or
+quotes in other works without this permission notice if proper
+citation is given.
+
+</itemize>   
+
+<P>Exceptions to these rules may be granted for academic purposes:
+Write to the author and ask. These restrictions are here to protect us
+as authors, not to restrict you as learners and educators. 
+
+<sect1>Acknowledgements and Thanks
+
+<P>Thanks to the developers, anyone who's posted useful information to 
+the mailing lists and those who've mailed me direct.
+
+<P>This document couldn't have been maintained without the Sgml Tools
+package and the document layout defined by the Linux HOWTO
+maintainers. 
+
+<P>Some specific mentions, in no particular order, and I've missed
+anyone please drop me a line.
+
+<itemize>
+<item>Updates to the SQL section, Michael Grabenstein &lt;mgrabens@popd.isinet.com&gt;
+</itemize>
+
+<sect1>Todo
+<P>
+
+<itemize>
+<item>Get a clear idea of how to split this up
+<item>More examples
+<item>Clear the mailing list backlog and add information from there
+<item>sleep, relax and generally have a good time.
+</itemize>
+   
+</article>
+
