@@ -359,7 +359,7 @@ databases using the mod_sql module as supplied in the main
 distribution.
 
 <sect1>SSH
-<P>There is a mini-HOWTO at http://www.castaglia.org/proftpd/doc/
+<P>There is a mini-HOWTO at http://www.castaglia.org/proftpd/
 detailing how to tunnel ftp connections over ssh.
 
 <sect1>sendfile()
