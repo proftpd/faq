@@ -1026,8 +1026,11 @@ for "warez"):</para>
   User username
   Group usergroup
   UserAlias ftp username
-  AuthAliasOnly on
   RequireValidShell off
+
+  &lt;Limit WRITE&gt;
+    DenyAll
+  &lt;/Limit&gt;
 
   &lt;Directory pub/incoming/&gt;
      &lt;Limit STOR CWD&gt;
