@@ -885,12 +885,20 @@ hostname in the VirtualHost block.  Normally caused by a problem
 with the DNS resolution of the host, check the resolv.conf file
 and that your chosen nameservers are functional.
 
-<sect1>451 [filename]: append/restart not permitted, try again
+<sect1>451 append/restart not permitted, try again
 
 <P>AllowStoreRestart is disabled by default because it will allow any
 writable file to be corrupted by a malicious user.  It is recommended
 that this option is only used with authenticated users and then only
 in certain directories.
+
+<sect1>The time being displayed is wrong
+
+<P>The default behaviour for ProFTPD is to display all times relative
+to GMT.  To use local time set "TimesGMT off" in the server section of
+the config.  There is a known issue with Redhat 7, with regard to time
+handling.
+http://www.redhat.com/support/errata/rh7-errata-bugfixes.html
 
 <!-- -------------------- -->
 <!-- Configuration Issues -->
@@ -1812,7 +1820,7 @@ v3.23.x should look like:
 <P>
 <itemize>
 <item>Copy the following SQL create statement to a file and run it.
-<item>mysql < table_create_file
+<item>mysql proftpddb < table_create_file
 </itemize>
 
 <tscreen>

@@ -3,9 +3,9 @@
 # Proftpd
 #
 export LINUXDOCLIB=`pwd`
-export BASE="$HOME/Repository/"
-export ROOT="$BASE/hamster.wibble.org/proftpd/"
-export FTP="$BASE/ftp.linux.co.uk/proftpd/"
+export BASE="$HOME/Proftpd/"
+export ROOT="$BASE/www.pdd/"
+export FTP="$BASE/ftp.pdd/proftpd/"
 export FAQ="proftpdfaq"
 ##
 ##
@@ -30,10 +30,11 @@ cp -r $ROOT/faq/ $FTP/
 #
 # All built
 #
-for i in *html
-do
-	./fix_faq.pl ${i}
-done
+# Copy to www.proftpd.net
+#for i in *html
+#do
+#	./fix_faq.pl ${i}
+#done
 #
 # End...
 #
