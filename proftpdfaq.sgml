@@ -5,7 +5,7 @@
 
 <TITLE>Professional FTP Daemon FAQ
 <author>Mark Lowes <tt/&lt;hamster@vom.tm&gt;/
-<date>v0.6.5, 07 Jan 2001
+<date>v0.6.7, 13 Jan 2001
 
 <abstract>$Id$
 This document sets out many of the FAQs related to the installation,
@@ -78,8 +78,8 @@ FAQ, other documentation resources and information on the project.
 The documentation is being brought back into shape at the moment, the
 configuration on the website is now approaching where it should be but
 more work is required and is ongoing.  There is also a mirror at
-http://proftpd.vom.tm/ and the documentation will also become
-availible on http://pdd.sourceforge.net/ soon.
+http://proftpd.vom.tm/ and the documentation is also availible on
+http://pdd.sourceforge.net/
 
 <sect2>Helping with documentation
 
@@ -138,22 +138,22 @@ Maintained by: vko@linja.net<newline>
 Location: France<newline>
 
 <P>
-<URL url="ftp://ftp.wipol.uni-bonn.de/pub/mirror/ftp.proftpd.net/" name="ftp://ftp.wipol.uni-bonn.de/pub/mirror/ftp.proftpd.net/"><newline>
-Location: Germany (Bonn)<newline>
-Maintained by: Noel Koethe<newline>
-
-<P>
 <URL url="ftp://de.samba.org/pub/mirror/ftp.proftpd.net/" name="ftp://de.samba.org/pub/mirror/ftp.proftpd.net/"><newline>
 Location: Germany (Bonn)<newline>
 Maintained by: Noel Koethe<newline>
 
 <P>
-<URL url="ftp://ftp-stud.fht-esslingen.de/pub/Mirrors/ftp.proftpd.net/" name="ftp://ftp-stud.fht-esslingen.de/pub/Mirrors/ftp.proftpd.net/"><newline>
+<URL url="ftp://ftp.wipol.uni-bonn.de/pub/mirror/ftp.proftpd.net/" name="ftp://ftp.wipol.uni-bonn.de/pub/mirror/ftp.proftpd.net/"><newline>
+Location: Germany (Bonn)<newline>
+Maintained by: Noel Koethe<newline>
+
+<P>
+<URL url="http://ftp-stud.fht-esslingen.de/pub/Mirrors/ftp.proftpd.net/ " name="http://ftp-stud.fht-esslingen.de/pub/Mirrors/ftp.proftpd.net/ "><newline>
 Location: Germany (Esslingen)<newline>
 Maintained by: Adrian Reber<newline>
 
 <P>
-<URL url="http://ftp-stud.fht-esslingen.de/pub/Mirrors/ftp.proftpd.net/ " name="http://ftp-stud.fht-esslingen.de/pub/Mirrors/ftp.proftpd.net/ "><newline>
+<URL url="ftp://ftp-stud.fht-esslingen.de/pub/Mirrors/ftp.proftpd.net/" name="ftp://ftp-stud.fht-esslingen.de/pub/Mirrors/ftp.proftpd.net/"><newline>
 Location: Germany (Esslingen)<newline>
 Maintained by: Adrian Reber<newline>
 
@@ -192,7 +192,7 @@ Location: Lithuania (Ziezmariai)<newline>
 Maintained by: Simas Mockevicius<newline>
 
 <P>
-<URL url="ftp.nl.uu.net:/pub/unix/ftp/proftpd" name="ftp.nl.uu.net:/pub/unix/ftp/proftpd"><newline>
+<URL url="ftp://ftp.nl.uu.net:/pub/unix/ftp/proftpd/" name="ftp://ftp.nl.uu.net:/pub/unix/ftp/proftpd/"><newline>
 Location: Netherlands (Amsterdam)<newline>
 
 <P>
@@ -204,6 +204,11 @@ Maintained by: Dag Stenstad<newline>
 <URL url="ftp://ftp.task.gda.pl/pub/proftpd/" name="ftp://ftp.task.gda.pl/pub/proftpd/"><newline>
 Location: Poland<newline>
 Maintained by: Robert Milkowski<newline>
+
+<P>
+<URL url="ftp://ftp.hjc.edu.sg/proftpd/" name="ftp://ftp.hjc.edu.sg/proftpd/"><newline>
+Location: Singapore<newline>
+Maintained by: Chen Shiyuan<newline>
 
 <P>
 <URL url="ftp://ftp.solnet.ch/pub/proftpd" name="ftp://ftp.solnet.ch/pub/proftpd"><newline>
@@ -238,7 +243,10 @@ Location: USA (Los Angeles, CA)<newline>
 Location: USA (Milwaukee, WI)<newline>
 Maintained by: Steve Kaczkowski<newline>
 
-
+<P>
+<URL url="ftp://www.linuxceptional.com/proftpd/" name="ftp://www.linuxceptional.com/proftpd/"><newline>
+Location: USA<newline>
+Maintained by: Phil Barnett<newline>
 
 <sect2>CVS
 
@@ -506,6 +514,9 @@ particularly with the directives and features which require accurate
 determination of filesize.  Such as the Rate* functions and
 downloading large files, the best advice at the moment appears to be
 to disable sendfile by default ( --disable-sendfile ).
+
+<P>Sendfile() also appears to be the source of a number of file corruption problems.
+
 
 <!--
 <sect1>Regular expressions
@@ -911,6 +922,10 @@ http://www.redhat.com/support/errata/rh7-errata-bugfixes.html
 Additionally check the size of your /etc/passwd (or shadow) file, if
 it is large then the only solution may be to move to another
 authentication scheme.
+
+<sect1>Corrupted files
+<P>There appear to be some problems with both the use of sendfile()
+in ProFTPD and with the implementation within certain operating systems.
 
 <!-- -------------------- -->
 <!-- Configuration Issues -->
@@ -1922,6 +1937,11 @@ exists and has the right ownerships/permissions</P>
 
 </P>
 
+<sect1>Can I run the whole process in a chroot()?
+
+<P>No, not at the moment, ProFTPD was not designed to run chrooted and
+needs access to various system files through out it's normal running
+lifetime.  (/etc/passwd for example).
 
 
 
@@ -1977,15 +1997,14 @@ maintainer of the software changed.
 <P>The faq is usually maintained on a P100 or paper somewhere on the
 London Underground while I'm travelling home from work.  The most
 recent version can always be obtained from <url
-url="http://hamster.wibble.org/proftpd/faq.html"
-name="hamster.wibble.org">.  It is available as a series of linked
-html files, a single flat html file, the original sgml source, ASCII
-text and a tarball containing all the formats.  The tarball should be
-available shortly from ftp.linux.co.uk
+url="http://pdd.sourceforge.net/" name="Sourceforge">.  It is
+available as a series of linked html files, a single flat html file,
+the original sgml source, ASCII text and a tarball containing all the
+formats.
 
 <sect1>Copyrights and Trademarks
 
-<P>(c) 1999-2000 Mark Lowes
+<P>(c) 1999-2001 Mark Lowes
 
 <P>This document may be reproduced in whole or in part, without fee,
 subject to the following restrictions:
