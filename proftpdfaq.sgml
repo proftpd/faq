@@ -5,7 +5,7 @@
 
 <TITLE>Professional FTP Daemon FAQ
 <author>Mark Lowes <tt/&lt;hamster@vom.tm&gt;/
-<date>v0.8.0, 17 Mar 2001
+<date>v0.8.1, 21 April 2001
 
 <abstract>$Id$
 This document sets out many of the FAQs related to the installation,
@@ -32,6 +32,7 @@ to be much like Apache in concept taking many of the ideas
 <p>
 <itemize>
 <item>Stable:   1.2.1
+<item>Release Candidate: 1.2.2rc2
 <item>Unstable: None
 </itemize>
 
@@ -86,7 +87,7 @@ http://pdd.sourceforge.net/
 
 <sect2>Helping with documentation
 
-<P>Writing documentation is a little time consuming and requires some
+<P>Writing documentation is time consuming and requires some
 work but it's not actually difficult.  Get the source code from CVS,
 run "ShowUndocumented" in the doc directory.  This will list what
 needs work.  Grep through the code in the looking for something like
@@ -108,7 +109,7 @@ Then copy the format in Configuration.html and add the new documentation.
 cvs diff -uw Configuration.html > Configuration.html.patch
 </verb></tscreen>
 
-<P>and send it to hamster@vom.tm and the devel list.
+<P>and submit it via the bug reporting system.
 
 <sect1>Bug reporting?  
 
@@ -1327,6 +1328,18 @@ directive is off.
 can be uploaded.  The best solution to this problem at the moment is
 to use whatever disk quota tools are available within your OS.
 
+<sect1>Can I disable Anonymous logins?
+
+<P>Yes, just remove all the &lt;Anonymous&gt; sections from your
+configuration file and reload the daemon.
+
+<sect1>Limiting the connections per loginID
+
+<P>This is not possible at this time, the directive appeared in the
+docs for a short period but the code was never added.  The closest
+possible at the moment is to limit the number of connections from a
+given host.
+
 <!-- SECTION BREAK -->
 
 <sect>Security
@@ -1334,16 +1347,13 @@ to use whatever disk quota tools are available within your OS.
 
 <sect1>General
 
-<P>Between versions 1.2.0pre3 - 1.2.0pre7 there were a number of buffer
-overflow type security problems with ProFTPD, with the coming release
-of pre7 these should be under control.  Though no absolute statement
-can be given on the security of the software (this is true for every
-piece of software out there).  A significant amount of effort has been
-put into removing the more 'dangerous' system calls which are prone to
-overflow attacks.
+<P>As with all software there have been a number of security issues
+during the life of the project.  The most recent information can
+always be found on http://www.proftpd.org/security.html
 
-<P>Versions 1.2.0 should be considered to be production code and few if
-any new features will be added to this code branch to maintain stability.
+<P>Versions 1.2.0 and above should be considered to be production code
+and few if any new features will be added to this code branch to
+maintain stability.
 
 <sect2>What about using Stackguard?
 <P>Stackguard is a gcc variant which can protect programs from
