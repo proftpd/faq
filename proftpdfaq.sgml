@@ -506,12 +506,12 @@ determination of filesize.  Such as the Rate* functions and
 downloading large files, the best advice at the moment appears to be
 to disable sendfile by default ( --disable-sendfile ).
 
+<!--
 <sect1>Regular expressions
 
 <P>ProFTPD uses POSIX-style regexps.
 
-<!-- need more on regexps -->
-
+-->
 <sect1>IPv6
 <P>There is currently no support for IPv6, this may be included in the 
 1.3.* development tree.
@@ -531,11 +531,11 @@ cleanly with this program (http://flashfxp.skuz.net/).
 <P>To support FXP when connecting as a user place "AllowForeignAddress 
 on" in the Global or VirtualHost context.
 
-<P>To support FXP when connecting as anon "AllowForeignAddress on" must be placed
-in the Anonymous context.
+<P>To support FXP when connecting as anon "AllowForeignAddress on"
+must be placed in the Anonymous context.
 
-<P>The config will happily support "AllowForeignAddress on" in multiple places
-within the config.
+<P>The config will happily support "AllowForeignAddress on" in
+multiple places within the config.
 
 <!-- NEW SECTION -->
 
@@ -607,6 +607,14 @@ configuration file and add or edit the ServerType directive to read:
 <tscreen><verb>
 ServerType standalone
 </verb></tscreen>
+
+<sect1>"Fatal: unable to determine IP address of 'hostname'"
+
+<P>The hosting machine has a poorly configured hostname setup to the
+point where the resolver library cannot determine the IP from the
+name.  Solutions include, fixing the DNS for the domain, fixing the
+hostname, fixing the /etc/hosts file.  Which one works for you will
+largely depend on your OS and exactly what is wrong.
 
 <sect1>I'm having problems with FTP clients behind firewalls
 
