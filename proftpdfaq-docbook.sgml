@@ -208,12 +208,12 @@ compressed tarball or rpm (there is also a Debian package available in the main 
 		<para>There is a complete and maintained list of ftp mirror sites available
 from <ulink url="http://www.proftpd.org/download.html">http://www.proftpd.org/download.html</ulink></para>
 	      	  <bridgehead renderas=sect2>CVS</bridgehead>
-		<para> cvs -d :pserver:anonymous@proftpd.org:/var/proftpd login
-(password is proftpd)</para>
+		<para> cvs -d :pserver:anonymous@cvs.proftp.sourceforge.net:/cvsroot/proftp
+login (Hit Enter when prompted for a password.)</para>
 	      <para>Then do:</para>
-	      <para>cvs -d :pserver:anonymous@proftpd.org:/var/proftpd checkout proftpd-1.2</para>
+	      <para>cvs -d :pserver:anonymous@cvs.proftp.sourceforge.net:/cvsroot/proftp -z3 co proftpd</para>
 	      <para>To obtain the latest/greatest updates, just hop into the
-proftpd-1.2 directory and do: cvs update</para>
+proftpd directory and do: cvs update</para>
               <para>A couple of sites generate downloadable tarballs of the latest CVS
 code to make obtaining the test code easier.</para>
 	  </blockquote>

@@ -129,15 +129,16 @@ from http://www.proftpd.org/download.html
 <sect2>CVS
 
 <P>CVS:
-cvs -d :pserver:anonymous@proftpd.org:/var/proftpd login
-(password is proftpd)
+cvs -d :pserver:anonymous@cvs.proftp.sourceforge.net:/cvsroot/proftp login
+(Hit Enter when prompted for a password.)
 
 Then do:
 
-cvs -d :pserver:anonymous@proftpd.org:/var/proftpd checkout proftpd-1.2
+cvs -d :pserver:anonymous@cvs.proftp.sourceforge.net:/cvsroot/proftp -z3
+co proftpd
 
 <P>To obtain the latest/greatest updates, just hop into the
-proftpd-1.2 directory and do: cvs update
+proftpd directory and do: cvs update
 
 <P>A couple of sites generate downloadable tarballs of the latest CVS
 code to make obtaining the test code easier.
