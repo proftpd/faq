@@ -1682,7 +1682,7 @@ release the default has changed to "Off"
 mod_ldap is currently stable; there were a couple bugs that were
 squashed after release 1.0 of the module.  it is still udner
 development , check the <url
-url="http://horde.net/~jwm/software/proftpd-ldap/" name="website"> for
+url="http://horde.net/~jwm/software/mod_ldap/" name="website"> for
 more information.  There is an example config fragment on the author"s
 site which gives a reasonable idea on how to use this module.
 
