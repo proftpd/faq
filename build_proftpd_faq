@@ -1,11 +1,12 @@
 #!/bin/bash
 #
 # Proftpd
+# I'm now symlinking the docbook source to faq.sgml
 #
 export BASE="$HOME/Proftpd/"
 export ROOT="$BASE/www.pdd/"
 export FTP="$BASE/ftp.pdd/proftpd/"
-export FAQ="proftpdfaq-docbook"
+export FAQ="faq"
 export SGMLSRC="$BASE/FAQ/$FAQ.sgml"
 ##
 ## Test to see if we can find a stylesheet using a
@@ -43,12 +44,6 @@ cd linked
 jade -t sgml -d $DSL ${SGMLSRC}
 cd ..
 
-# Build the text file
-#echo -n "text "
-#sgml2txt ${FAQ}.sgml > /dev/null 
-
-exit
-
 # PDF file
 echo -n "pdf "
 htmldoc --webpage -f ${FAQ}.pdf ${FAQ}_full.html
@@ -56,32 +51,11 @@ htmldoc --webpage -f ${FAQ}.pdf ${FAQ}_full.html
 # Postscript
 echo -n "ps "
 htmldoc --webpage -f ${FAQ}.ps ${FAQ}_full.html
-#
 
-#rm -f *tgz
-#echo -n "tgz "
-#tar -czvf ${FAQ}.tgz *png *pdf *ps
-#echo "done"
-#cp ${FAQ}.tgz ${FAQ}* *png *pdf *ps $ROOT/faq/
-##
-#cp -r $ROOT/faq/ $FTP/
-#
-#
-##
-## www.proftpd.org
-##
+## Install
+cd $BASE/FAQ/html
 mkdir -p $BASE/www.proftpd.org/docs/faq
-cp -v ${FAQ}* *htm $BASE/www.proftpd.org/docs/faq
-#
-# All built
-#
-# Copy to www.proftpd.net
-#echo "Updating www.proftpd.net "
-#for i in *html
-#do
-#	./fix_faq.pl ${i}
-#done
-#echo "done"
+rsync -av . $BASE/www.proftpd.org/docs/faq
 #
 # End...
 #
