@@ -2191,15 +2191,14 @@ tracking of accesses, and the requesting IP.</para>
 	  <para>History</para>
 	</question>
 	<answer>
-	  <para>The original text for this document was based on the configuration
-FAQ on www.proftpd.org.  It was taken over in Sept 1999 when the
-maintainer of the software changed.</para>
-	  <para>The faq is usually maintained on a P100 or paper somewhere on the
-London Underground while I'm travelling home from work.  The most
-recent version can always be obtained from <ulink url="http://pdd.sourceforge.net/">http://pdd.sourceforge.net/</ulink>.  It is
-available as a series of linked html files, a single flat html file,
-the original sgml source, ASCII text and a tarball containing all the
-formats.</para>
+	
+          <para>The original text for this document was based on the
+          configuration FAQ on www.proftpd.org.  It was taken over in
+          Sept 1999 when the maintainer of the software changed.</para>
+          
+	  <para>The faq is maintained by a group of people (usually
+	  lurking on irc or on proftpd-docs) using CVS and Docbook.</para>
+	  
 	</answer>
       </qandaentry>
       <qandaentry>
@@ -2221,27 +2220,6 @@ anyone please drop me a line.</para>
 and generally stuffing patches in my direction.
 	    <member>TJ Saunders, for the HOWTOs and other docs.
 	  </simplelist>
-	</answer>
-      </qandaentry>
-      <qandaentry>
-	<question>
-	  <para>Todo</para>
-	</question>
-	<answer>
-	  <orderedlist>
-	    <listitem>
-	      <para>Get a clear idea of how to split this up</para>
-	    </listitem>
-	    <listitem>
-	      <para>More examples</para>
-	    </listitem>
-	    <listitem>
-	      <para>Clear the mailing list backlog and add information from there</para>
-	    </listitem>
-	    <listitem>
-	      <para>sleep, relax and generally have a good time.</para>
-	    </listitem>
-	  </orderedlist>
 	</answer>
       </qandaentry>
     </qandaset>
