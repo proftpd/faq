@@ -1,0 +1,17 @@
+README
+------
+
+Changelog
+	Record of major changes to these files
+
+proftpdfaq-docbook.sgml
+	FAQ in docbook sgml format, this is the primary source file
+
+proftpdfaq-linuxdoc.sgml
+	FAQ in linuxdoc sgml format, this is a legacy document and
+	only kept for historic interest.
+
+build_proftpd_faq 
+	docbook build script.
+
+

@@ -1,5 +1,9 @@
 ChangeLog
 
+1.0.1 18/Oct/2002
+	Added TJ's patch for the requirevalidshell FAQ
+	Added README for this module
+
 0.5.2 (18/Jan/2000)
 	Added pre10 
 	chroot()/login bug in pre9 information
