@@ -67,10 +67,12 @@ as authors, not to restrict you as learners and educators. </para>
 	    <para>What is ProFTPD?</para>	      
 	  </question>
 	  <answer>
-	    <para>ProFTPD is a ftp server primarily written for the various unix
-variants though it will now compile under win32.  It has been designed
-to be much like Apache in concept taking many of the ideas
-(configuration format, modular design, etc) from it.</para>
+	    <para>ProFTPD is a ftp server primarily written for the
+	    various unix variants however it will compile under Cygwin
+	    giving some support on Windows platforms.  It has been
+	    designed to be much like Apache in concept taking many
+	    of the ideas (configuration format, modular design, etc)
+	    from it.</para>
 	  </answer>
 	</qandaentry>
 
@@ -145,7 +147,14 @@ to be much like Apache in concept taking many of the ideas
 	      <para>Website & documentation</para>
             </question>
 	    <answer>
-	      <para><ulink url="http://www.proftpd.org">http://www.proftpd.org</ulink> is now online and contains copies of this FAQ, other documentation resources and information on the project.  The documentation is being brought back into shape at the moment, the configuration on the website is now approaching where it should be but more work is required and is ongoing.  There are a number of geographic mirror sites, see <ulink url="http://www.proftpd.org">http://www.proftpd.org</ulink> for details or try www.&lt;isocode&gt;.proftpd.org (ie www.uk.proftpd.org).</para>
+	      <para><ulink
+	      url="http://www.proftpd.org/">http://www.proftpd.org/</ulink>
+	      is the primary source for all information about the
+	      project including documentation and security alerts.
+	      There are a number of geographic mirror sites,
+	      see the mirror pages on www.proftpd.org for more
+	      details or try www.&lt;isocode&gt;.proftpd.org (ie
+	      www.uk.proftpd.org).</para>
 	  <blockquote>
 	    <bridgehead renderas=sect2>Helping with documentation</bridgehead>
 	      <para>Writing documentation is time consuming and requires
@@ -349,6 +358,9 @@ platforms (and versions).</para>
 	      <listitem>
 		<para>DEC OFS/1</para>
 	      </listitem>
+	      <listitem>
+		<para>Cygwin</para>
+	      </listitem>
 	    </itemizedlist>
 	  </answer>
 	</qandaentry>
@@ -357,13 +369,13 @@ platforms (and versions).</para>
 	    <para>Why not libc5 on Linux?</para>
 	  </question>
 	  <answer>
-	    <para>There are several known problems with libc5-based systems,
-including improperly implemented library routines (vsprintf and
-vsnprintf are examples).  There are known problems with the resolver
-library.  For these reasons and others lib5 is not being supported at
-all, the latest versions of the major distributions (inc Debian,
-Redhat and Suse) are all glibc.
-</para>
+	    <para>There are several known problems with libc5-based
+	    systems, including improperly implemented library routines
+	    (vsprintf and vsnprintf are examples).  There are known
+	    problems with the resolver library.  For these reasons
+	    and others lib5 is not being supported at all, the latest
+	    versions of the major distributions (inc Debian, Redhat and
+	    Suse) are all glibc.  </para>
 	  </answer>
 	</qandaentry>
 	<qandaentry>
@@ -381,6 +393,8 @@ not guaranteed to even compile let alone work.  Access to CVS is given
 to allow important security patches out into the wild and to allow
 users and interested users to test out the latest changes on real
 systems. </para>
+            <para>Nightly tarballs of the current CVS are available on
+            ftp.proftpd.org, these are built at approx 1am UK time.</para>
 	  <blockquote>
 	    <bridgehead renderas=sect2>Recommended ~/.cvsrc settings</bridgehead>
 	    <programlisting>
@@ -447,6 +461,7 @@ make install
             </programlisting>
 	  </answer>
 	</qandaentry>
+<!--
 	<qandaentry>
 	  <question>
 	    <para>Plans for next version (1.3.x)</para>
@@ -477,13 +492,13 @@ scheme as the linux kernel developers.  The targets/goals are:</para>
 	    <para>2.0.x will be the production release of the 1.3.x development set.</para>
 	  </answer>
 	</qandaentry>
+-->
 	<qandaentry>
 	  <question>
-	    <para>NT Support</para>
+	    <para>Microsoft platform support</para>
 	  </question>
 	  <answer>
-	    <para>If/when a port is undertaken for NT, it will only be after a near
-complete rethinking of ProFTPD.  This is planned for 2.0 and onwards.</para>
+	    <para>There are no current plans for a direct port to any MS platform.</para>
 	  </answer>
 	</qandaentry>
 	<qandaentry>
@@ -491,12 +506,13 @@ complete rethinking of ProFTPD.  This is planned for 2.0 and onwards.</para>
 	    <para>New features/modules</para>
 	  </question>
 	  <answer>
-	    <para>While anything new is welcomed it's probably better to at least
-float the idea first on the devel mailing list to ensure that someone
-else isn't already hacking on it.  Also when submitting the patch or
-module for inclusion into the ProFTPD source full documentation is
-needed.</para>
+	    <para>While anything new is welcomed it's probably better
+	    to at least float the idea first on the devel mailing list
+	    to ensure that someone else isn't already hacking on it.
+	    Also when submitting the patch or module for inclusion into
+	    the ProFTPD source full documentation is needed.</para>
 
+<!--
 	  <blockquote>
 	    <bridgehead renderas=sect2>Suggestions made for future development</bridgehead>
 	    <itemizedlist>
@@ -505,6 +521,7 @@ needed.</para>
 	      </listitem>
 	    </itemizedlist>
 	  </blockquote>
+-->
 	  </answer>
 	</qandaentry>
       </qandaset>
