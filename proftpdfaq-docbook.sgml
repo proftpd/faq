@@ -11,7 +11,7 @@
           <address><email>&lt;hamster@vom.org.uk&gt;</email></address>
 	</affiliation>
     </author>
-    <date>v1.0.0, 21 April 2002</date>
+    <date>v1.0.1, 19 October 2002</date>
     <copyright>
       <year>1999-2002</year>
       <holder>Mark Lowes</holder>
@@ -695,6 +695,20 @@ configured to run as.</para>
 inetd is still configured for port 21.  Comment out the line starting
 "ftp" in /etc/inetd.conf and restart (killall -HUP inetd or something
 similar should do the trick) and try again.  </para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>"(Login failed): Invalid shell"</para>
+	  </question>
+	  <answer>
+	    <para>The user attempting to login has been given a shell that is
+not listed in the system's /etc/shells file.  By default, proftpd will require
+that users logging in have valid shells.  Use the RequireValidShell directive
+to turn off this requirement:</para>
+	    <programlisting>
+RequireValidShell off
+	    </programlisting>
 	  </answer>
 	</qandaentry>
 	<qandaentry>
