@@ -5,7 +5,7 @@
 
 <TITLE>Professional FTP Daemon FAQ
 <author>Mark Lowes <tt/&lt;hamster@vom.tm&gt;/
-<date>v0.7.0, 06 Feb 2001
+<date>v0.8.0, 17 Mar 2001
 
 <abstract>$Id$
 This document sets out many of the FAQs related to the installation,
@@ -31,8 +31,8 @@ to be much like Apache in concept taking many of the ideas
 <sect1>What is the current version?
 <p>
 <itemize>
-<item>Stable:   None
-<item>Unstable: 1.2.0rc3
+<item>Stable:   1.2.1
+<item>Unstable: None
 </itemize>
 
 <sect1>Who codes/maintains it
@@ -76,7 +76,7 @@ the core distribution and more are likely to follow.
 
 <sect1>Website & documentation
 
-<P>http://www.proftpd.net/ is now online and contains copies of this
+<P>http://www.proftpd.org/ is now online and contains copies of this
 FAQ, other documentation resources and information on the project.
 The documentation is being brought back into shape at the moment, the
 configuration on the website is now approaching where it should be but
@@ -123,11 +123,16 @@ security@proftpd.org before releasing the information into the public
 domain.  It would be appreciated if you give the core team a few days
 to put together a patch and/or new release to address the issue.
 
+<P>Please adhere to the proceedures and timescales given in the RF
+Policy document http://www.wiretrip.net/rfp/policy.html, this will give
+the core development team a chance to get a fix or workaround in place
+before the problem becomes fully public domain.
+
 <sect1>Downloading
 
 <P>There are two main methods of getting the software.  Downloading a
 compressed tarball or rpm (there is also a Debian package available in
-the main distribution) from proftpd.net or from a mirror site,
+the main distribution) from proftpd.org or from a mirror site,
 alternatively if you wish to run the latest bleeding edge code then
 collecting from the cvs server is the best method.
 
@@ -158,35 +163,35 @@ There are three lists for ProFTPD
 
 <sect2>Announce
 <P>
-proftpd-announce@proftpd.net
+proftpd-announce@proftpd.org
 
 <P>This is a very low traffic list where only ProFTPD announcements/changes
 will be announced.
 
-<P>Subscribe by sending a message to proftpd-announce-request@proftpd.net with
+<P>Subscribe by sending a message to proftpd-announce-request@proftpd.org with
 "subscribe" in the subject.
 
 <sect2>Users
 <P>
-proftpd@proftpd.net
+proftpd@proftpd.org
 
 <P>This is intended to the the user support channel for the software,
 in most likelihood this is going to be a high traffic list and
 slightly chatty.  Please read the FAQ, the documentation and the list
 archives before posting a question.
 
-<P>Subscribe by sending a message to proftpd-request@proftpd.net with
+<P>Subscribe by sending a message to proftpd-request@proftpd.org with
 "subscribe" in the subject.
 
 <sect2>Development
 <P>
-proftpd-devel@proftpd.net
+proftpd-devel@proftpd.org
 
 <P>This list is intended for discussion of development-related issues
 of ProFTPD, and feature design.  It is NOT intended to be a 'user
 help' group.
 
-<P>Subscribe by sending a message to proftpd-devel-request@proftpd.net
+<P>Subscribe by sending a message to proftpd-devel-request@proftpd.org
 with 'subscribe' in the subject.
 
 <sect2>Archives
@@ -211,7 +216,7 @@ There have been reports of ProFTPD compiling on all the following
 platforms (and versions).
 
 <itemize>
-<item>Linux 2.0.x &amp; 2.2.x (glibc 2.x only)
+<item>Linux 2.0.x &amp; 2.2.x (glibc 2.x only) &amp; 2.4.x
 <item>BSDI 3.1 & 4.0
 <item>IRIX 6.2, 6.3, 6.4, 6.5
 <item>Solaris 2.5.1, 2.6 & 2.7
@@ -321,15 +326,7 @@ scheme as the linux kernel developers.  The targets/goals are:
 <item>Creating a web and GUI configuration interface to ProFTPD.
 </itemize>
 
-<P>1.4.x will be the production release of the 1.3.x development set.
-
-<sect1>Longer term development
-
-<P>For 1.9.x/2.0.x there are plans to completely recode some core
-sections of the software and creating an abstract layer to build the
-2.x version on.  The abstract layer will handle all filesystem and
-OS-specific stuff.  This layer will then have backends onto the major
-environments (ie Unix and NT)
+<P>2.0.x will be the production release of the 1.3.x development set.
 
 <sect1>NT Support
 
@@ -466,13 +463,14 @@ without giving enough information for intelligent debugging.
 <item>Tried the server in debug mode
 <item>Read the FAQ?
 <item>Checked the mailing list archive?
+<item>Are you running the latest version?
 </itemize>
 
 <P>When posting try giving enough information, this might include but
 not be limited to.
 
 <itemize>
-<item>OS and server version (proftpd -v)
+<item>OS and server version (proftpd -vv)
 <item>List of included modules (proftpd -l)
 <item>Appropriate log extracts
 <item>Output fom debug mode
@@ -1336,13 +1334,16 @@ to use whatever disk quota tools are available within your OS.
 
 <sect1>General
 
-<P>Recently (between versions 1.2.0pre3 - 1.2.0pre7) there have been
-a number of buffer overflow type security problems with ProFTPD, with
-the coming release of pre7 these should be under control.  Though no
-absolute statement can be given on the security of the software (this
-is true for every piece of software out there).  A significant amount
-of effort has been put into removing the more 'dangerous' system calls
-which are prone to overflow attacks.
+<P>Between versions 1.2.0pre3 - 1.2.0pre7 there were a number of buffer
+overflow type security problems with ProFTPD, with the coming release
+of pre7 these should be under control.  Though no absolute statement
+can be given on the security of the software (this is true for every
+piece of software out there).  A significant amount of effort has been
+put into removing the more 'dangerous' system calls which are prone to
+overflow attacks.
+
+<P>Versions 1.2.0 should be considered to be production code and few if
+any new features will be added to this code branch to maintain stability.
 
 <sect2>What about using Stackguard?
 <P>Stackguard is a gcc variant which can protect programs from
@@ -1430,7 +1431,7 @@ is not controllable from within the ftpd code.
 
 <sect>User Authentication
 
-<P>
+<P>This section is being re-written due to major structural changes to the SQL module prior to 1.2.0
 
 <sect1>Why is PAM the default authentication system?
 
@@ -1603,6 +1604,7 @@ tracking of accesses, and the requesting IP.
 
 <sect1>Configuring for SQL authentication
 
+<!--
 <P>
 <itemize>
 <item>Install MySQL 
@@ -1844,7 +1846,7 @@ exists and has the right ownerships/permissions</P>
 <P>No, not at the moment, ProFTPD was not designed to run chrooted and
 needs access to various system files through out it's normal running
 lifetime.  (/etc/passwd for example).
-
+-->
 
 
 <sect>Hamster droppings
