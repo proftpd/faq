@@ -843,17 +843,6 @@ process.</para>
 	</qandaentry>
       <qandaentry>
 	<question>
-	  <para>503 No PORT command issued</para>
-	</question>
-	<answer>
-	  <para>A bug was introduced in 1.2.0rc2 which prevented the PORT command
-working properly and therefore breaking the data socket under certain
-conditions.  The bug was documented as bug 240 and has been fixed in
-CVS.  A rc3 release is due before the end of Jan 2001.</para>
-	</answer>
-      </qandaentry>
-      <qandaentry>
-	<question>
 	  <para>Fatal: unable to determine IP address of</para>
 	</question>
 	<answer>
