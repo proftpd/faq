@@ -802,10 +802,10 @@ in certain directories.
 
 <sect1>501 REST not compatible with server configuration
 
-<P>As mentioned in the description of the HiddenStor configuration directive,
+<P>As mentioned in the description of the HiddenStores configuration directive,
 use of that directive is incompatible with the FTP command REST.  Either
 disable use of REST with the AllowRetrieveRestart and AllowStoreRestart
-directives, or do not use HiddenStor.
+directives, or do not use HiddenStores.
 
 <sect1>The time being displayed is wrong
 
@@ -1425,9 +1425,9 @@ given host.
    need to be allowed is that a restarted/resumed upload is a form of
    overwriting the file.
  
-<p>Also note that using HiddenStor and AllowStoreRestart is incompatible,
+<p>Also note that using HiddenStores and AllowStoreRestart is incompatible,
    as mentioned in the documentation for the AllowStoreRestart
-   and HiddenStor directives.
+   and HiddenStores directives.
  
 <sect1>When should the Bind directive be used?
  

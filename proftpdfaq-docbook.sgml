@@ -1106,10 +1106,10 @@ in certain directories.</para>
 	  <para>501 REST not compatible with server configuration</para>
 	</question>
 	<answer>
-	  <para>As mentioned in the description of the HiddenStor configuration directive,
+	  <para>As mentioned in the description of the HiddenStores configuration directive,
 use of that directive is incompatible with the FTP command REST.  Either
 disable use of REST with the AllowRetrieveRestart and AllowStoreRestart
-directives, or do not use HiddenStor.</para>
+directives, or do not use HiddenStores.</para>
 	</answer>
       </qandaentry>
       <qandaentry>
@@ -1780,9 +1780,9 @@ mentioned elsewhere in this FAQ.</para>
    AllowOverwrite and AllowStoreRestart directives.  The reason that both
    need to be allowed is that a restarted/resumed upload is a form of
    overwriting the file.</para>
-	  <para>Also note that using HiddenStor and AllowStoreRestart is incompatible,
+	  <para>Also note that using HiddenStores and AllowStoreRestart is incompatible,
    as mentioned in the documentation for the AllowStoreRestart
-   and HiddenStor directives.</para>
+   and HiddenStores directives.</para>
 
 	</answer>
       </qandaentry>
