@@ -11,12 +11,12 @@
           <address><email>hamster@vom.org.uk</email></address>
 	</affiliation>
     </author>
-    <date>30 October 2002</date>
+    <date>27 Feb 2004</date>
     <copyright>
-      <year>1999-2003</year>
+      <year>1999-2004</year>
       <holder>Mark Lowes</holder>
     </copyright>
-    <releaseinfo>v1.0.3 (CVS $Id$)</releaseinfo>    
+    <releaseinfo>v1.1.0 (CVS $Id$)</releaseinfo>    
     <legalnotice>
       <title>Copyrights and Trademarks</title>
       <para>This document may be reproduced in whole or in part, without fee,
@@ -67,78 +67,11 @@ as authors, not to restrict you as learners and educators. </para>
 	    <para>What is ProFTPD?</para>	      
 	  </question>
 	  <answer>
-	    <para>ProFTPD is a ftp server primarily written for the
-	    various unix variants however it will compile under Cygwin
-	    giving some support on Windows platforms.  It has been
-	    designed to be much like Apache in concept taking many
-	    of the ideas (configuration format, modular design, etc)
-	    from it.</para>
+	    <para>ProFTPD is a ftp server written for use on Unix and
+Unix-a-like operating systems, there is no support for native use
+under Microsoft Windows.</para>
 	  </answer>
 	</qandaentry>
-
-	<qandaentry>
-	  <question>
-	    <para>What is the current version?</para>
-	  </question>
-	  <answer>
-             <simplelist>
-                <member>Stable:   1.2.9</member>
-             </simplelist>
-             <simplelist>
-                <member>Release Candidate: -none-</member>
-             </simplelist>
-	  </answer>
-	</qandaentry>
-	
-        <qandaentry>
-	    <question>
-	      <para>Version numbering scheme</para>
-	    </question>
-	    <answer>
-	      <para>At the moment there is a little irrationality in the numbering scheme however it can be summarised as follows</para>
-	  <blockquote>
-	      <variablelist>
-		<varlistentry>
-		  <term>1.0.x</term>
-		  <listitem>
-		    <para>This is the previous stable version.</para>
-		  </listitem>
-		</varlistentry>
-		<varlistentry>
-		  <term>1.1.x</term>
-		  <listitem>
-		    <para>Development code</para>
-		  </listitem>
-		</varlistentry>
-		<varlistentry>
-		  <term>1.2.0rcx</term>
-		  <listitem>
-		    <para>Release candidate code, these releases are
-		    pretty much bug free and are testing releases prior
-		    to the final stable code.</para>
-		  </listitem>
-		</varlistentry>
-		<varlistentry>
-		  <term>1.2.x</term>
-		  <listitem>
-		    <para>This will be the stable cycle with the final .x
-		    being the incremental patches to fix bugs discovered
-		    after the release version is issued.</para>
-		  </listitem>
-		</varlistentry>
-		<varlistentry>
-		  <term>1.3.x</term>
-		  <listitem>
-		    <para>1.3.x is the planned development tree, work
-		    on this has been pushed back while more active
-		    development of 1.2.x is undertaken.
-		    </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	  </blockquote>
-	    </answer>
-	  </qandaentry>
 
 	  <qandaentry>
 	    <question>
@@ -153,31 +86,6 @@ as authors, not to restrict you as learners and educators. </para>
 	      see the mirror pages on www.proftpd.org for more
 	      details or try www.&lt;isocode&gt;.proftpd.org (ie
 	      www.uk.proftpd.org).</para>
-	  <blockquote>
-	    <bridgehead renderas=sect2>Helping with documentation</bridgehead>
-	      <para>Writing documentation is time consuming and requires
-	      some work but it's not actually difficult.  Look through the
-	      directive list shipped with the source and package builds
-	      of ProFTPD and see what needs work.  Check the source code
-	      to ensure that the context is correct by grepping through
-	      the source code looking for something like</para>
-	      
-	      <programlisting>
-CHECK_CONF(cmd,CONF_ROOT|CONF_VIRTUAL|CONF_ANON|CONF_GLOBAL)
-              </programlisting>
-	      <para>to figure out where the directive is valid
-	      (server config, &lt;VirtualHost&gt;, &lt;Anonymous&gt;,
-	      &lt;Global&gt; for the above example).  Once you think you
-	      understand what it does, test, play, break (if possible).
-	      </para>
-
-	      <para>
-	      Then either submit a plain text update via the bug reporting
-	      system or a patch against the docbook/sgml source (available
-	      from CVS on sourceforge (Project: pdd)
-	      </para>
-
-	  </blockquote>
 	    </answer>
 	  </qandaentry>
 
@@ -326,54 +234,9 @@ Copyright is held by Public Flood Software.</para>
 	    <para>What platforms will it compile on?</para>
 	  </question>
 	  <answer>
-	    <para>There have been reports of ProFTPD compiling on all the following
-platforms (and versions).</para>
-	    <itemizedlist>
-	      <listitem>
-		<para>Linux 2.0.x &amp; 2.2.x (glibc 2.x only) &amp; 2.4.x</para>
-	      </listitem>
-	      <listitem>
-		<para>BSDI 3.1 & 4.0</para>
-	      </listitem>
-	      <listitem>
-		<para>IRIX 6.2, 6.3, 6.4, 6.5</para>
-	      </listitem>
-	      <listitem>
-		<para>Solaris 2.5.1, 2.6, 2.7, 8 (Sparc)</para>
-	      </listitem>
-	      <listitem>
-		<para>AIX 3.2 & 4.2</para>
-	      </listitem>
-	      <listitem>
-		<para>OpenBSD 2.2/2.3</para>
-	      </listitem>
-	      <listitem>
-		<para>FreeBSD 2.2.7</para>
-	      </listitem>
-	      <listitem>
-		<para>Digital UNIX 4.0A</para>
-	      </listitem>
-	      <listitem>
-		<para>DEC OFS/1</para>
-	      </listitem>
-	      <listitem>
-		<para>Cygwin</para>
-	      </listitem>
-	    </itemizedlist>
-	  </answer>
-	</qandaentry>
-	<qandaentry>
-	  <question>
-	    <para>Why not libc5 on Linux?</para>
-	  </question>
-	  <answer>
-	    <para>There are several known problems with libc5-based
-	    systems, including improperly implemented library routines
-	    (vsprintf and vsnprintf are examples).  There are known
-	    problems with the resolver library.  For these reasons
-	    and others lib5 is not being supported at all, the latest
-	    versions of the major distributions (inc Debian, Redhat and
-	    Suse) are all glibc.  </para>
+	    <para>ProFTPD has been reported as compiling and running
+on Linux, all BSD variants, Solaris and a number of other similar
+operating systems.</para>
 	  </answer>
 	</qandaentry>
 	<qandaentry>
@@ -459,46 +322,6 @@ make install
             </programlisting>
 	  </answer>
 	</qandaentry>
-<!--
-	<qandaentry>
-	  <question>
-	    <para>Plans for next version (1.3.x)</para>
-	  </question>
-	  <answer>
-	    <para>The new development series will be 1.3.x, using the same number
-scheme as the linux kernel developers.  The targets/goals are:</para>
-	    <itemizedlist>
-	      <listitem>
-		<para>refining/redefining the module API to make it more extensible and useful.</para>
-	      </listitem>
-	      <listitem>
-		<para>dynamic modules</para>
-	      </listitem>
-	      <listitem>
-		<para>security APIs and implementations</para>
-	      </listitem>
-	      <listitem>
-		<para>mod_ls rewrite</para>
-	      </listitem>
-	      <listitem>
-		<para>Implementing some security-related RFCs</para>
-	      </listitem>
-	      <listitem>
-		<para>Creating a web and GUI configuration interface to ProFTPD</para>
-	      </listitem>
-	    </itemizedlist>
-	    <para>2.0.x will be the production release of the 1.3.x development set.</para>
-	  </answer>
-	</qandaentry>
--->
-	<qandaentry>
-	  <question>
-	    <para>Microsoft platform support</para>
-	  </question>
-	  <answer>
-	    <para>There are no current plans for a direct port to any MS platform.</para>
-	  </answer>
-	</qandaentry>
 	<qandaentry>
 	  <question>
 	    <para>New features/modules</para>
@@ -510,16 +333,6 @@ scheme as the linux kernel developers.  The targets/goals are:</para>
 	    Also when submitting the patch or module for inclusion into
 	    the ProFTPD source full documentation is needed.</para>
 
-<!--
-	  <blockquote>
-	    <bridgehead renderas=sect2>Suggestions made for future development</bridgehead>
-	    <itemizedlist>
-	      <listitem>
-		<para>GUI based configuration tool</para>
-	      </listitem>
-	    </itemizedlist>
-	  </blockquote>
--->
 	  </answer>
 	</qandaentry>
       </qandaset>
@@ -1011,45 +824,6 @@ level.</para>
 	</qandaentry>
 	<qandaentry>
 	  <question>
-	    <para>Error 421</para>
-	  </question>
-	  <answer>
-	    <para>This appears to be a general catch all error code meaning "something
-nasty has gone wrong".</para>
-	    <itemizedlist>
-	      <listitem>
-		<para>Connection has timed out</para>
-	      </listitem>
-	      <listitem>
-		<para>The DefaultRoot specified doesn't exist</para>
-	      </listitem>
-	      <listitem>
-		<para>The parent server has been killed</para>
-	      </listitem>
-	      <listitem>
-		<para>Check /etc/services</para>
-	      </listitem>
-	      <listitem>
-		<para>Wrong permissions on the DefaultRoot</para>
-	      </listitem>
-	    </itemizedlist>
-	    <para>You get the idea...</para>
-	  </answer>
-	</qandaentry>
-	<qandaentry>
-	  <question>
-	    <para>proftpd doesn't show in the processlist</para>
-	  </question>
-	  <answer>
-	    <para>Two possible reasons, first that it's simply not running, try
-proftpd -n -d2 to run in debug mode and see what happens.  The other
-is that it's running from inetd and there are no active sessions at
-the moment.
-</para>
-	  </answer>
-	</qandaentry>
-	<qandaentry>
-	  <question>
 	    <para>How do I restart/reload the server?</para>
 	  </question>
 	  <answer>
@@ -1127,17 +901,6 @@ handling.
       </qandaentry>
       <qandaentry>
 	<question>
-	  <para>Authentication is taking too long</para>
-	</question>
-	<answer>
-	  <para>Make sure that ReverseDNS is disabled, turn off ident lookups.
-Additionally check the size of your /etc/passwd (or shadow) file, if
-it is large then the only solution may be to move to another
-authentication scheme.</para>
-	</answer>
-      </qandaentry>
-      <qandaentry>
-	<question>
 	  <para>Corrupted files</para>
         </question>
 	<answer>
@@ -1201,30 +964,6 @@ proftpd.conf to a group which does exist.</para>
    If this is the cause of your error message, any solution will most
    likely involve reducing the number of groups your users are members of,
    or tuning the NGROUPS_MAX value, if your operating system allows it.</para>
-	</answer>
-      </qandaentry>
-      <qandaentry>
-	<question>
-	  <para>Why do I see error messages like these when I logout?</para>
-	</question>
-	<answer><para>
-	  <programlisting>
-            PAM(exit): Permission denied
-            open_module: stat(/usr/lib/security/pam_unix.so.1) failed: No such file or directory
-            load_modules: can not open module /usr/lib/security/pam_unix.so.1
-            PAM(exit): Dlopen failure.
-          </programlisting></para>
-	  <para>These messages appear when the DefaultRoot configuration directive is
-   in effect.  This directive causes a user to be confined using the
-   chroot(2) system call.  This call, however, affects other system
-   utilities, such as PAM.  In this case, PAM's configuration is causing
-   the PAM library to attempt to open PAM modules using a path that is
-   no longer valid, thus the errors.  This happens on logout because the
-   chroot has already happened by that point; on login, the PAM modules
-   are successfully found and loaded before the chroot, so no errors.
-   These are merely cosmetic reporting errors, and do not really affect
-   the functionality or security of the server.
-</para>
 	</answer>
       </qandaentry>
     </qandaset>
@@ -1786,21 +1525,6 @@ mentioned elsewhere in this FAQ.</para>
 
 	</answer>
       </qandaentry>
-      <qandaentry>
-	<question>
-	  <para>When should the Bind directive be used?</para>
-	</question>
-	<answer>
-	  <para>The Bind directive is used to specify additional interfaces (addresses)
-   for a given server; it is *not* used to configure the main interface
-   for the server.  For &lt;VirtualHost&gt; servers, this is not a problem, as
-   the main interface for the server is set in the &lt;VirtualHost&gt; line.</para>
-	  <para>For the main "default" server, however, the controlling of the main
-   interface is more problematic.  There is currently a bug report
-   opened for this issue:</para>
-	  <para><ulink url="http://bugs.proftpd.org/show_bug.cgi?id=1253">http://bugs.proftpd.org/show_bug.cgi?id=1253</ulink></para>
-	</answer>
-      </qandaentry>
     </qandaset>
   </chapter>
 
@@ -2108,15 +1832,6 @@ properly under recent versions of FreeBSD.</para>
       </qandaentry>
       <qandaentry>
 	<question>
-	  <para>pam_sm_open_session errors</para>
-	</question>
-	<answer>
-	  <para>ProFTPD requires PAM version 0.59 or better.  pam_sm_open_session
-is not part of previous versions.</para>
-	</answer>
-      </qandaentry>
-      <qandaentry>
-	<question>
 	  <para>Normal users can't login, only anon.</para>
 	</question>
 	<answer>
@@ -2148,31 +1863,7 @@ release the default has changed to "Off"</para>
 	  <para>LDAP</para>
 	</question>
 	<answer>
-	  <para>mod_ldap is currently stable; there were a couple bugs that were
-squashed after release 1.0 of the module.  it is still udner
-development , check the <ulink url="http://horde.net/~jwm/software/mod_ldap/">http://horde.net/~jwm/software/mod_ldap/</ulink> for
-more information.  There is an example config fragment on the author's
-site which gives a reasonable idea on how to use this module.</para>
-	</answer>
-      </qandaentry>
-      <qandaentry>
-	<question>
-	  <para>Encrypted passwords</para>
-	</question>
-	<answer>
-	  <para>There are patches which are being merged in at the moment to provide
-SHA encryption.  The plan is to have the server get all user information
-except passwords via an anonymous bind.  The server will then reconnect
-as a user is logging in and attempt to get the password via an encrypted
-connection.  This should be in the next major release (2.5)</para>
-	</answer>
-      </qandaentry>
-      <qandaentry>
-	<question>
-	  <para>SecureID</para>
-	</question>
-	<answer>
-	  <para>No support yet</para>
+	  <para>mod_ldap is part of the core distribution.</para>
 	</answer>
       </qandaentry>
       <qandaentry>
@@ -2225,48 +1916,6 @@ tracking of accesses, and the requesting IP.</para>
    fail.  The use of PAM can be configured using the AuthPAM configuration
    directive; the "authoritativeness" of any PAM checks is controlled via
    the AuthPAMAuthoritative configuration directive.</para>
-	</answer>
-      </qandaentry>
-    </qandaset>
-  </chapter>
-
-  <chapter><?dbhtml filename="faq-ch-notes.html">
-    <title>FAQ Notes</title>
-    <qandaset defaultlabel="number">
-      <qandaentry>
-	<question>
-	  <para>History</para>
-	</question>
-	<answer>
-	
-          <para>The original text for this document was based on the
-          configuration FAQ on www.proftpd.org.  It was taken over in
-          Sept 1999 when the maintainer of the software changed.</para>
-          
-	  <para>The faq is maintained by a group of people (usually
-	  lurking on irc or on proftpd-docs) using CVS and Docbook.</para>
-	  
-	</answer>
-      </qandaentry>
-      <qandaentry>
-	<question>
-	  <para>Acknowledgements and Thanks</para>
-	</question>
-	<answer>
-	  <para>Thanks to the developers, anyone who's posted useful information to 
-the mailing lists and those who've mailed me direct.</para>
-	  <para>This document couldn't have been maintained without the Sgml Tools
-package and the document layout defined by the Linux HOWTO
-maintainers. </para>
-	  <para>Some specific mentions, in no particular order, and I've missed
-anyone please drop me a line.</para>
-	  <simplelist>
-	    <member>Updates to the SQL section, Michael Grabenstein
-&lt;mgrabens@popd.isinet.com&gt;</member>
-	    <member>Matt Mozur, who's been cleaning up some of my mess
-and generally stuffing patches in my direction.</member>
-	    <member>TJ Saunders, for the HOWTOs and other docs.</member>
-	  </simplelist>
 	</answer>
       </qandaentry>
     </qandaset>
