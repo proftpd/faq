@@ -1,0 +1,2281 @@
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V4.1//EN" [
+]>
+<book>
+<?dbhtml filename="faq.html">
+  <bookinfo>
+    <title>Professional FTP Daemon FAQ</title>
+    <author>
+        <firstname>Mark</firstname>
+        <surname>Lowes</surname>
+	<affiliation>
+          <address><email>&lt;hamster@vom.org.uk&gt;</email></address>
+	</affiliation>
+    </author>
+    <date>v1.0.0, 21 April 2002</date>
+    <copyright>
+      <year>1999-2002</year>
+      <holder>Mark Lowes</holder>
+    </copyright>
+    <releaseinfo>$Id$</releaseinfo>    
+    <legalnotice>
+      <title>Copyrights and Trademarks</title>
+      <para>This document may be reproduced in whole or in part, without fee,
+subject to the following restrictions:</para>
+      <orderedlist spacing="compact">
+	<listitem>
+	  <para>The copyright notice above and this permission notice must be
+preserved complete on all complete or partial copies</para>
+	</listitem>
+	<listitem>
+	  <para>Any translation or derived work must be approved by the author in
+writing before distribution.</para>
+	</listitem>
+	<listitem>
+	  <para>If you distribute this work in part, instructions for obtaining
+the complete version of this manual must be included, and a means
+for obtaining a complete version provided.</para>
+	</listitem>
+	<listitem>
+	  <para>Small portions may be reproduced as illustrations for reviews or
+quotes in other works without this permission notice if proper
+citation is given.</para>
+	</listitem>
+      </orderedlist>
+      <para>Exceptions to these rules may be granted for academic purposes:
+Write to the author and ask. These restrictions are here to protect us
+as authors, not to restrict you as learners and educators. </para>
+    </legalnotice>
+
+  </bookinfo>
+
+  <toc>
+  </toc>
+  <preface><?dbhtml filename="faq-preface.html">
+    <title>Preface</title>
+    <abstract>
+      <para>This document sets out many of the FAQs related to the installation,
+        functioning and configuration of ProFTPD.  It also provides some guidance
+        on policy and security issues.</para>
+    </abstract>
+  </preface>
+
+  <chapter><?dbhtml filename="faq-ch1.html">
+    <title>Introduction to ProFTPD</title>
+    <qandaset defaultlabel='number'>
+        <qandaentry>
+	  <question>
+	    <para>What is ProFTPD?</para>	      
+	  </question>
+	  <answer>
+	    <para>ProFTPD is a ftp server primarily written for the various unix
+variants though it will now compile under win32.  It has been designed
+to be much like Apache in concept taking many of the ideas
+(configuration format, modular design, etc) from it.</para>
+	  </answer>
+	</qandaentry>
+
+	<qandaentry>
+	  <question>
+	    <para>What is the current version?</para>
+	  </question>
+	  <answer>
+	    <itemizedlist spacing="compact">
+              <listitem>
+		<para>Stable:   1.2.4</para>
+              </listitem>
+	      <listitem>
+		<para>Release Candidate: 1.2.5rc1</para>
+              </listitem>
+              <listitem>
+		<para>Unstable: 1.3.x</para>
+              </listitem>
+	    </itemizedlist>
+	  </answer>
+	</qandaentry>
+	
+        <qandaentry>
+	    <question>
+	      <para>Version numbering scheme</para>
+	    </question>
+	    <answer>
+	      <para>At the moment there is a little irrationality in the numbering scheme however it can be summarised as follows</para>
+	  <blockquote>
+	      <variablelist>
+		<varlistentry>
+		  <term>1.0.x</term>
+		  <listitem>
+		    <para>This is the previous stable version.</para>
+		  </listitem>
+		</varlistentry>
+		<varlistentry>
+		  <term>1.1.x</term>
+		  <listitem>
+		    <para>Development code</para>
+		  </listitem>
+		</varlistentry>
+		<varlistentry>
+		  <term>1.2.0prex</term>
+		  <listitem>
+		    <para>Pre-release testing versions, development code.</para>
+		  </listitem>
+		</varlistentry>
+		<varlistentry>
+		  <term>1.2.0rcx</term>
+		  <listitem>
+		    <para>Release candidate code, these releases are pretty much bug free and are testing releases prior to the final stable code.</para>
+		  </listitem>
+		</varlistentry>
+		<varlistentry>
+		  <term>1.2.x</term>
+		  <listitem>
+		    <para>This will be the stable cycle with the final .x being the incremental patches to fix bugs discovered after the release version is issued.</para>
+		  </listitem>
+		</varlistentry>
+		<varlistentry>
+		  <term>1.3.x</term>
+		  <listitem>
+		    <para>1.3.x is in development, nightly tarballs from the CVS tree are
+available from <ulink url="ftp.proftpd.org">ftp.proftpd.org</ulink> and it's mirror sites.</para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	  </blockquote>
+	    </answer>
+	  </qandaentry>
+
+	  <qandaentry>
+	    <question>
+	      <para>Website & documentation</para>
+            </question>
+	    <answer>
+	      <para><ulink url="http://www.proftpd.org">http://www.proftpd.org</ulink> is now online and contains copies of this FAQ, other documentation resources and information on the project.  The documentation is being brought back into shape at the moment, the configuration on the website is now approaching where it should be but more work is required and is ongoing.  There are a number of geographic mirror sites, see <ulink url="http://www.proftpd.org">http://www.proftpd.org</ulink> for details or try www.&lt;isocode&gt;.proftpd.org (ie www.uk.proftpd.org).</para>
+	  <blockquote>
+	    <bridgehead renderas=sect2>Helping with documentation</bridgehead>
+	      <para>Writing documentation is time consuming and requires some
+work but it's not actually difficult.  Get the source code from CVS,
+run "ShowUndocumented" in the doc directory.  This will list what
+needs work.  Grep through the code in the looking for something like</para>
+	      
+	      <programlisting>
+CHECK_CONF(cmd,CONF_ROOT|CONF_VIRTUAL|CONF_ANON|CONF_GLOBAL)
+              </programlisting>
+	      <para>to figure out where the directive is valid (server config,
+&lt;VirtualHost&gt;, &lt;Anonymous&gt;, &lt;Global&gt; for the above example).  Once you
+think you understand what it does, test, play, break (if possible).
+Then copy the format in Configuration.html and add the new documentation.</para>
+	      <para>Once the documentation is complete run</para>
+	      <programlisting>
+cvs diff -uw Configuration.html > Configuration.html.patch
+              </programlisting>
+	      <para>and submit it via the bug reporting system.</para>
+	  </blockquote>
+	    </answer>
+	  </qandaentry>
+
+	  <qandaentry>
+	    <question>
+	      <para>Bug reporting</para>
+	    </question>
+	    <answer>
+	  <para>Bug reports should be made via <ulink url="http://bugs.proftpd.org/">http://bugs.proftpd.org/</ulink> which uses the bugzilla tracking system.  Patches should be mailed to the ProFTPD-Devel mailing list or MacGyver directly.
+</para>
+	    </answer>
+	  </qandaentry>
+
+	  <qandaentry>
+	    <question>
+	      <para>I've found a security hole</para>
+	    </question>
+	    <answer>
+	      <para>Please report all security problems with the code to
+<email>security@proftpd.org</email> before releasing the information into the public
+domain.  It would be appreciated if you give the core team a few days
+to put together a patch and/or new release to address the issue.</para>
+	      <para>Please adhere to the proceedures and timescales given in the RF
+Policy document <ulink url="http://www.wiretrip.net/rfp/policy.html">http://www.wiretrip.net/rfp/policy.html</ulink>, this will give the core development team a chance to get a fix or workaround in place before the problem becomes fully public domain.</para>
+	    </answer>
+	  </qandaentry>
+
+	  <qandaentry>
+	    <question>
+	      <para>Downloading</para>
+	    </question>
+	    <answer>
+	      <para>There are two main methods of getting the software.  Downloading a
+compressed tarball or rpm (there is also a Debian package available in the main distribution) from proftpd.org or from a mirror site, alternatively if you wish to run the latest bleeding edge code then collecting from the cvs server is the best method.</para>
+	  <blockquote>
+	  <bridgehead renderas=sect2>Mirror sites</bridgehead>
+		<para>There is a complete and maintained list of ftp mirror sites available
+from <ulink url="http://www.proftpd.org/download.html">http://www.proftpd.org/download.html</ulink></para>
+	      	  <bridgehead renderas=sect2>CVS</bridgehead>
+		<para> cvs -d :pserver:anonymous@proftpd.org:/var/proftpd login
+(password is proftpd)</para>
+	      <para>Then do:</para>
+	      <para>cvs -d :pserver:anonymous@proftpd.org:/var/proftpd checkout proftpd-1.2</para>
+	      <para>To obtain the latest/greatest updates, just hop into the
+proftpd-1.2 directory and do: cvs update</para>
+              <para>A couple of sites generate downloadable tarballs of the latest CVS
+code to make obtaining the test code easier.</para>
+	  </blockquote>
+	    </answer>
+	  </qandaentry>
+
+	  <qandaentry>
+	    <question>
+	      <para>Mailing lists</para>
+	    </question>
+	    <answer>
+	      <para>There are a number of mailing lists for ProFTPD</para>
+	  <blockquote>	      
+	    <bridgehead renderas=sect2>Announce</bridgehead>
+              <para>proftpd-announce@proftpd.org</para>
+	      <para>This is a very low traffic list where only ProFTPD announcements/changes
+will be announced.  Subscribe by sending a message to <email>proftpd-announce-request@proftpd.org</email> with
+"subscribe" in the subject.</para>
+	      <para>Web interface: 
+                <ulink url="https://lists.sourceforge.net/lists/listinfo/proftp-announce">
+                  https://lists.sourceforge.net/lists/listinfo/proftp-announce
+                </ulink>
+              </para>
+
+	    <bridgehead renderas=sect2>Users</bridgehead>
+	      <para>proftp-user@proftpd.org</para>
+	      <para>This is intended to the the user support channel for the software,
+in most likelihood this is going to be a high traffic list and
+slightly chatty.  Please read the FAQ, the documentation and the list
+archives before posting a question.</para>
+	      <para>Subscribe by sending a message to <email>proftpd-user-request@proftpd.org</email> with
+"subscribe" in the subject.</para>
+	      <para>Web interface: <ulink url="https://lists.sourceforge.net/lists/listinfo/proftp-user">https://lists.sourceforge.net/lists/listinfo/proftp-user</ulink></para>
+
+	    <bridgehead renderas=sect2>Development</bridgehead>
+	      <para>proftpd-devel@proftpd.org</para>
+	      <para>This list is intended for discussion of development-related issues
+of ProFTPD, and feature design.  It is NOT intended to be a "user
+help" group.</para>
+	      <para>Subscribe by sending a message to <email>proftpd-devel-request@proftpd.org</email>
+with "subscribe" in the subject.</para>
+	      <para>Web interface: 
+                <ulink url="https://lists.sourceforge.net/lists/listinfo/proftp-devel">
+                  https://lists.sourceforge.net/lists/listinfo/proftp-devel
+                </ulink>
+              </para>
+
+	    <bridgehead renderas=sect2>Archives</bridgehead>
+	      <para>The mailing list archives can be found at:</para>
+
+              <itemizedlist>
+	      <listitem>
+		<para><ulink url="http://www.proftpd.org/proftpd-announce-archive/">
+                  http://www.proftpd.org/proftpd-announce-archive/</ulink></para>
+	      </listitem>
+		<listitem>
+		<para><ulink url="http://www.proftpd.org/proftpd-l-archive/">
+                  http://www.proftpd.org/proftpd-l-archive/</ulink></para>
+		</listitem>
+	      <listitem>
+		<para><ulink url="http://www.proftpd.org/proftpd-devel-archive/">
+                  http://www.proftpd.org/proftpd-devel-archive/</ulink></para>
+	      </listitem>
+	      </itemizedlist>
+ 
+              
+
+	    <bridgehead renderas=sect2>Unsubscribing</bridgehead>
+		<para>Before posting to any of the lists or mailing the list admins
+please try and remove yourself first.  Either by emailing
+&lt;listname&gt;-request@lists.sourceforge.net with the subject "unsubscribe" or
+visiting the web interface and unsubscribing from there.</para>
+	      <para>I've (lost / never had) a password to the interface.  Easy,
+enter the address you are subscribed to the list as into the form and
+hit the "email me my password" button.</para>
+	  </blockquote>
+	    </answer>
+	  </qandaentry>
+
+	  <qandaentry>
+	    <question>
+	      <para>Copyright Issues</para>
+	    </question>
+	    <answer>
+	      <para>The software is currently distributed under the GNU General Public License
+(version 2 or later) as published by the Free Software Foundation.
+Copyright is held by Public Flood Software.</para>
+	    </answer>
+	  </qandaentry>
+	</qandaset>
+  </chapter>
+
+  <chapter><?dbhtml filename="faq-ch2.html">
+    <title>Compilation and installing</title>
+    <qandaset defaultlabel="number">
+	<qandaentry>
+	  <question>
+	    <para>What platforms will it compile on?</para>
+	  </question>
+	  <answer>
+	    <para>There have been reports of ProFTPD compiling on all the following
+platforms (and versions).</para>
+	    <itemizedlist>
+	      <listitem>
+		<para>Linux 2.0.x &amp; 2.2.x (glibc 2.x only) &amp; 2.4.x</para>
+	      </listitem>
+	      <listitem>
+		<para>BSDI 3.1 & 4.0</para>
+	      </listitem>
+	      <listitem>
+		<para>IRIX 6.2, 6.3, 6.4, 6.5</para>
+	      </listitem>
+	      <listitem>
+		<para>Solaris 2.5.1, 2.6, 2.7, 8 (Sparc)</para>
+	      </listitem>
+	      <listitem>
+		<para>AIX 3.2 & 4.2</para>
+	      </listitem>
+	      <listitem>
+		<para>OpenBSD 2.2/2.3</para>
+	      </listitem>
+	      <listitem>
+		<para>FreeBSD 2.2.7</para>
+	      </listitem>
+	      <listitem>
+		<para>Digital UNIX 4.0A</para>
+	      </listitem>
+	      <listitem>
+		<para>DEC OFS/1</para>
+	      </listitem>
+	    </itemizedlist>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>Why not libc5 on Linux?</para>
+	  </question>
+	  <answer>
+	    <para>There are several known problems with libc5-based systems,
+including improperly implemented library routines (vsprintf and
+vsnprintf are examples).  There are known problems with the resolver
+library.  For these reasons and others lib5 is not being supported at
+all, the latest versions of the major distributions (inc Debian,
+Redhat and Suse) are all glibc.
+</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>CVS</para>
+	  </question>
+	  <answer>
+	    <para>CVS (Concurrent Versions System), is a version control system which
+allows multiple developers (scattered across the same room or across
+the world) to maintain a single codebase and keep a record of all
+changes to the work.</para>
+	    <para>The CVS repository for ProFTPD is available for non-developers in
+read-only mode, however this code is right on the bleeding edge and is 
+not guaranteed to even compile let alone work.  Access to CVS is given 
+to allow important security patches out into the wild and to allow
+users and interested users to test out the latest changes on real
+systems. </para>
+	  <blockquote>
+	    <bridgehead renderas=sect2>Recommended ~/.cvsrc settings</bridgehead>
+	    <programlisting>
+cvs -z 3
+update -Pd
+diff -u
+            </programlisting>
+	    
+	    <bridgehead renderas=sect2>Where can I get information on cvs?</bridgehead>
+	    <para>CVS is produced by Cyclic Software (http://www.cyclic.com/) and
+details on CVS can be found on their website.  The CVS documentation
+is clear, detailed and above all heavy when printed.  I'd recommend
+reading it if you're planning on using CVS a lot.</para>
+	  </blockquote>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>How do I get debug output</para>
+	  </question>
+	  <answer>
+	    <para>The easiest way is to fire up proftpd manually from the command
+line with the debug level cranked up.</para>
+	    <programlisting>
+/usr/local/sbin/proftpd -d9 -n
+            </programlisting>
+	    <para>This will result in maximal debug output direct to the
+console. Warning, this can get messy on a busy server, for testing I
+would suggest copying the config and altering the port the server
+binds to and then testing.</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>Patches</para>
+	  </question>
+	  <answer>
+	    <para>Any patches should be submitted in Universal format, this makes
+integrating them into the main cvs source a lot easier.  When
+generating a diff against the current cvs source use "cvs diff -uw" to
+generate the patch.</para>
+	    <programlisting>
+cvs diff -u filename > filename.patch
+
+  or
+
+cvs diff -u > bigger.patch
+            </programlisting>
+	    <para>Patches that add configuration directives without proper
+documentation.  Will be rejected.  New features without documentation
+are less than useless to the community at large.</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>Using non-default modules</para>
+	  </question>
+	  <answer>
+	    <para>Simply configure ProFTPD with </para>
+	    <programlisting>
+./configure --with-modules=mod_module1:mod_module2:mod_module3
+make
+make install
+            </programlisting>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>Plans for next version (1.3.x)</para>
+	  </question>
+	  <answer>
+	    <para>The new development series will be 1.3.x, using the same number
+scheme as the linux kernel developers.  The targets/goals are:</para>
+	    <itemizedlist>
+	      <listitem>
+		<para>refining/redefining the module API to make it more extensible and useful.</para>
+	      </listitem>
+	      <listitem>
+		<para>dynamic modules</para>
+	      </listitem>
+	      <listitem>
+		<para>security APIs and implementations</para>
+	      </listitem>
+	      <listitem>
+		<para>mod_ls rewrite</para>
+	      </listitem>
+	      <listitem>
+		<para>Implementing some security-related RFCs</para>
+	      </listitem>
+	      <listitem>
+		<para>Creating a web and GUI configuration interface to ProFTPD</para>
+	      </listitem>
+	    </itemizedlist>
+	    <para>2.0.x will be the production release of the 1.3.x development set.</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>NT Support</para>
+	  </question>
+	  <answer>
+	    <para>If/when a port is undertaken for NT, it will only be after a near
+complete rethinking of ProFTPD.  This is planned for 2.0 and onwards.</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>New features/modules</para>
+	  </question>
+	  <answer>
+	    <para>While anything new is welcomed it's probably better to at least
+float the idea first on the devel mailing list to ensure that someone
+else isn't already hacking on it.  Also when submitting the patch or
+module for inclusion into the ProFTPD source full documentation is
+needed.</para>
+
+	  <blockquote>
+	    <bridgehead renderas=sect2>Suggestions made for future development</bridgehead>
+	    <itemizedlist>
+	      <listitem>
+		<para>GUI based configuration tool</para>
+	      </listitem>
+	    </itemizedlist>
+	  </blockquote>
+	  </answer>
+	</qandaentry>
+      </qandaset>
+  </chapter>
+
+  <chapter><?dbhtml filename="faq-ch3.html">
+    <title>Compatibility and Integration</title>
+    <qandaset defaultlabel="number">
+	<qandaentry>
+	  <question>
+	    <para>SQL</para>
+	  </question>
+	  <answer>
+	    <para>ProFTPD has support for authentication and logging via SQL
+databases using the mod_sql module as supplied in the main
+distribution.</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>SSH</para>
+	  </question>
+	  <answer>
+	    <para>There is a mini-HOWTO at <ulink url="http://www.castaglia.org/proftpd/doc/">http://www.castaglia.org/proftpd/doc/</ulink> detailing how to tunnel ftp connections over ssh.</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>sendfile()</para>
+	  </question>
+	  <answer>
+	    <para>sendfile() is a system call which streamlines the copying of data
+between the disk and the tcp socket.  The call copied from the page
+cache directly rather than requiring a kernel -> user space -> kernel
+space copy for every read() and write() call.  Generally the
+advantages are only felt on heavily loaded servers.  The call is
+supported in ProFTPD for Linux and FreeBSD.</para>
+	  <blockquote>
+	    <bridgehead renderas=sect2>Linux 2.0.x</bridgehead>
+	    <para>sendfile is not supported under 2.0.x, this is not an issue when
+compiling for 2.0.x on a 2.0.x system. However when compiling on a
+2.2.x system for use on 2.0.x use the --disable-sendfile flag.</para>
+
+	    <bridgehead renderas=sect2>Runtime detection of sendfile()</bridgehead>
+	    <para>Johnie Ingram (aka netgod)'s:
+<ulink url="http://www.proftpd.org/proftpd-devel-archive/99-10/msg00073.html">http://www.proftpd.org/proftpd-devel-archive/99-10/msg00073.html</ulink></para>
+	    <para>John Pierce &lt;hawkfan@pyrotechnics.com&gt;
+<ulink url="http://www.proftpd.org/proftpd-devel-archive/99-10/msg00112.html">http://www.proftpd.org/proftpd-devel-archive/99-10/msg00112.html</ulink></para>
+
+	    <bridgehead renderas=sect2>Problems with sendfile</bridgehead>
+	    <para>There appear to be a number of problems with sendfile()
+particularly with the directives and features which require accurate
+determination of filesize.  Such as the Rate* functions and
+downloading large files, the best advice at the moment appears to be
+to disable sendfile by default ( --disable-sendfile ).</para>
+	    <para>Sendfile() also appears to be the source of a number of file corruption problems.</para>
+	  </blockquote>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>IPv6</para>
+	  </question>
+	  <answer>
+	    <para>There is currently no official support for IPv6 within the 1.2.x
+code tree, however there is an <ulink url="http://www.t17.ds.pwr.wroc.pl/~misiek/ipv6/">http://www.t17.ds.pwr.wroc.pl/~misiek/ipv6/</ulink> and more comprehensive support will probably be developed
+during the 1.3.x development cycle.</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>Filename case sensitivity</para>
+	  </question>
+	  <answer>
+	    <para>ProFTPD is utterly dependant on the underlying OS to handle
+filename case sensitivity.  If the underlying OS is case sensitive
+then ProFTPD will be, there are currently no plans for a module to
+handle this.
+</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>FXP</para>
+	  </question>
+	  <answer>
+	    <para>FXP is capable of bouncing data between websites.  There have been
+a number of reports of problems in configuring ProFTPD to function
+cleanly with this program (http://flashfxp.skuz.net/).
+</para>
+	    <para>To support FXP when connecting as a user place "AllowForeignAddress 
+on" in the Global or VirtualHost context.</para>
+	    <para>To support FXP when connecting as anon "AllowForeignAddress on"
+must be placed in the Anonymous context.</para>
+	    <para>The config will happily support "AllowForeignAddress on" in
+multiple places within the config.</para>
+	  </answer>
+	</qandaentry>
+      </qandaset>
+  </chapter>
+
+  <chapter><?dbhtml filename="faq-ch4.html">
+    <title>Common Running problems</title>
+    <qandaset defaultlabel="number">
+	<qandaentry>
+	  <question>
+	    <para>ProFTPD doesn't seem to work.</para>
+	  </question>
+	  <answer>
+	    <para>Starting ProFTPD in standalone mode it doesn't show in "ps" It
+could be many things, possibly something like not running ProFTPD as
+root (it needs to be run as root initially, but will switch to a
+non-privileged user). Regardless, ProFTPD logs all errors via the
+standard syslog mechanism. You need to check your system logs in order
+to determine what the problem is.</para>
+	  <blockquote>
+	    <bridgehead renderas=sect2>It doesn't work!</bridgehead>
+	    <para>There are many times when there's a completely random problem which
+appears to be insoluble.  The best place to ask for help is definately
+the mailing list (proftpd-l) but it's not productive to ask for help
+without giving enough information for intelligent debugging.</para>
+	    <para>Have you?</para>
+	    <itemizedlist>
+	      <listitem>
+		<para>Checked your logs</para>
+	      </listitem>
+	      <listitem>
+		<para>Tried the server in debug mode</para>
+	      </listitem>
+	      <listitem>
+		<para>Read the FAQ?</para>
+	      </listitem>
+	      <listitem>
+		<para>Checked the mailing list archive?</para>
+	      </listitem>
+	      <listitem>
+		<para>Are you running the latest version?</para>
+	      </listitem>
+	    </itemizedlist>
+	  </blockquote>
+	  </answer>
+	  <answer>
+	    <para>When posting try giving enough information, this might include but
+not be limited to.</para>
+	    <itemizedlist>
+	      <listitem>
+		<para>OS and server version (proftpd -vv)</para>
+	      </listitem>
+	      <listitem>
+		<para>List of included modules (proftpd -l)</para>
+	      </listitem>
+	      <listitem>
+		<para>Appropriate log extracts</para>
+	      </listitem>
+	      <listitem>
+		<para>Output fom debug mode</para>
+	      </listitem>
+	      <listitem>
+		<para>Configration fragment</para>
+	      </listitem>
+	    </itemizedlist>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>"inet_create_connection() failed: Operation not permitted".</para>
+	  </question>
+	  <answer>
+	    <para>You aren't starting ProFTPD as root, or you have inetd configured
+to run ProFTPD as a user other than root. The ProFTPD daemon must be
+started as root in order to bind to tcp ports lower than 1024, or to
+open your shadow password file when authenticating users. The daemon
+switches uid/gids to the user and group specified by the User/Group
+directives during normal operation, so a "ps" will show it running as
+the user you specified.</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>Unable to bind to port/Address already in use</para>
+	  </question>
+	  <answer>
+	    <para>0.0.0.0 is INADDR_ANY, which means to bind to any interface.  The
+"address in use" will normally mean that something has already bound
+to that address.</para>
+	    <para>Under linux it is possible to run:</para>
+	    <programlisting>
+fuser -n tcp 21
+            </programlisting>
+            <para>to get the PID of the process currently bound to port ProFTPD is
+configured to run as.</para>
+            <para>The most common cause is that ProFTPD is configured standalone and
+inetd is still configured for port 21.  Comment out the line starting
+"ftp" in /etc/inetd.conf and restart (killall -HUP inetd or something
+similar should do the trick) and try again.  </para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>"Fatal: Socket operation on non-socket"</para>
+	  </question>
+	  <answer>
+	    <para>You have ProFTPD configured to run in inetd mode rather than
+standalone. In this mode, ProFTPD expects that it will be run from the
+inetd super-server, which implies that stdin/stdout will be sockets
+instead of terminals. As a result, socket operations will fail and the
+above error will be printed. If you wish to run ProFTPD from the
+shell, in standalone mode, you'll need to modify your proftpd.conf
+configuration file and add or edit the ServerType directive to read:</para>
+	    <programlisting>
+ServerType standalone
+            </programlisting>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>"Fatal: unable to determine IP address of "hostname:</para>
+	  </question>
+	  <answer>
+	    <para>The hosting machine has a poorly configured hostname setup to the
+point where the resolver library cannot determine the IP from the
+name.  Solutions include, fixing the DNS for the domain, fixing the
+hostname, fixing the /etc/hosts file.  Which one works for you will
+largely depend on your OS and exactly what is wrong.</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>I'm having problems with FTP clients behind firewalls</para>
+	  </question>
+	  <answer>
+	    <para>The FTP Specification defines that two sockets should be used for
+all communications.  The first runs over port 21 and is the control
+channel over which all commands and response codes are sent.  Whenever 
+data is required to be transfered, for example for a file download, a
+directory listing etc etc.  A second channel is created on demand,
+this socket can take one of two forms.</para>
+	  <blockquote>
+	    <bridgehead renderas=sect2>non-Passive</bridgehead>
+	    <para>The server end of the data socket uses port 20.  This is nice and
+easy to work into a firewall configuration.</para>
+	    <bridgehead renderas=sect2>Passive</bridgehead>
+	    <para>The port at either end is dynamically allocated.  This is virtually 
+impossible to cater for in a firewall configuration given that the
+port mapping will be different for every data connection.
+</para>
+	    <para>The solution is to force the users to configure their clients to
+use the non-passive mode (ie port 20)</para>
+	  </blockquote>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>Can I run more that one VirtualHost on a single IP?</para>
+	  </question>
+	  <answer>
+	    <para>No, or at least not in the HTTP/1.1 manner of virtual hosting.
+This is an inbuilt limitation of the current FTP RFC., unlike the
+HTTP/1.1 spec there is no mechanism comparable to the "Host:
+foo.bar.com" HTTP header for specifying which host the connection is
+for.  Therefore the only method for determining which VirtualHost the
+connection is destined for is by the destination IP.</para>
+	    <para>The one exception to this is if you host multiple servers on the same
+IP but using different ports, however this requires that the connecting
+client uses a non-standard port and therefore is probably not a good
+solution for mass hosting.</para>
+	  <blockquote>
+	   <bridgehead renderas=sect2>Is there anything in the pipeline to fix this?</bridgehead>
+	      <para>There is a draft standard <ulink url="http://search.ietf.org/internet-drafts/draft-ietf-ftpext-mlst-12.txt">http://search.ietf.org/internet-drafts/draft-ietf-ftpext-mlst-12.txt</ulink> with the IETF which extends and improves on the FTP specification including support for a HOST command.  However given that the IP crunch is coming from websites and not virtual ftp servers this is unlikely to be pushed through any time soon.</para>
+	  </blockquote>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>How do I run ProFTPD from inetd?</para>
+	  </question>
+	  <answer>
+	    <para>Find the line in /etc/inetd.conf that looks something like this:</para>
+	    <blockquote>
+	      <para>ftp stream tcp nowait root in.ftpd in.ftpd</para>
+	    </blockquote>
+	    <para>Replace it with:</para>
+	    <blockquote>
+	      <para>ftp stream tcp nowait root in.proftpd in.proftpd</para>
+	    </blockquote>
+	    <para>Then, find your inetd process in the process listing and send it
+the SIGHUP signal so that it will rehash and reconfigure itself.  You
+may also need to add in.ProFTPD to hosts.allow on your system.</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>Can I use tcp-wrappers with ProFTPD?</para>
+	  </question>
+	  <answer>
+	    <para>Yup. Although ProFTPD has built-in IP access control (see the Deny
+and Allow directives), many admins choose to consolidate IP access
+control in one place via in.tcpd. Just configure ProFTPD to run from
+inetd as any other tcp-wrapper wrapped daemon and add the
+appropriate lines to hosts.allow/deny files.</para>
+	    <para>If running ProFTPD in standalone mode, mod_wrap can be used to direct the
+server to use the normal hosts.allow/deny files.</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>Can I run an FTP server on a non-standard port?</para>
+	  </question>
+	  <answer>
+	    <para>Yes. Use a &lt;VirtualHost&gt; block with your machine's FQDN
+(Fully Qualified Domain Name) or IP address, and a Port directive
+inside the &lt;VirtualHost&gt; block. For example, if your host is
+named "myhost.mydomain.com" and you want to run an additional FTP
+server on port 2001, you would:
+</para>
+	    <programlisting>
+...
+&lt;VirtualHost myhost.mydomain.com&gt;
+Port 2001
+...
+&lt;/VirtualHost&gt;
+            </programlisting>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question
+	    <para>Can control upload/download ratios?</para>
+	  </question>
+	  <answer>
+	    <para>Yes the mod_ratio module provides for doing just this.</para>
+	    <para>The ratio directives take four numbers: file ratio, initial file
+credit, byte ratio, and initial byte credit.  Setting either ratio
+to 0 disables that check.</para>
+	    <para>The directives are HostRatio (matches FQDN, wildcards allowed),
+AnonRatio (matches password entered at login), UserRatio (accepts "*"
+for "any user"), and GroupRatio. 
+</para>
+              <programlisting>
+Ratios on                                    # enable module
+UserRatio ftp 0 0 0 0
+HostRatio master.debian.org 0 0 0 0          # leech access (default)
+GroupRatio proftpd 100 10 5 100000           # 100:1 files, 10 file cred 5:1 bytes, 100k byte cred
+AnonRatio billg@microsoft.com 1 0 1 0        # 1:1 ratio, no credits
+UserRatio * 5 5 5 50000                      # special default case
+              </programlisting>
+            <para>This example is for someone who (1) has downloaded 1 file of 82k,
+(2) has uploaded nothing, (3) has a ratio of 5:1 files and 5:1
+bytes, (4) has 4 files and 17k credit remaining, and (5) is now
+changing directory to /art/nudes/young/carla.  The initial credit,
+not shown, was 5 files and 100k (UserRatio * 5 5 5 100000).
+</para>
+	    <para>Version 2.0 and above of this module integrate with mod_sql.</para>
+	  <blockquote>
+	    <bridgehead renderas=sect2>Limitations of mod_ratio</bridgehead>
+	    <para>It appears that the ratio limits in mod_ratio are only maintained
+on a per session basis and there is no ongoing tracking of usage.
+</para>
+	  </blockquote>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>Slow logins</para>
+	  </question>
+	  <answer>
+	    <para>This is probably caused by a firewall or DNS timeout.  By default
+ProFTPD will try to do both DNS and ident lookups against the incoming 
+connection.  If these are blocked or excessively delayed a slower than 
+normal login will result.  To turn off DNS and ident use:</para>
+	    <programlisting>
+UseReverseDNS off
+IdentLookups                    off
+            </programlisting>
+	    <para>IdentLookups and tcpwrappers
+***</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>Lots of "FTP session closed" messages</para>
+	  </question>
+	  <answer>
+	    <programlisting>
+Oct  7 12:30:48 salvage2 proftpd[8874]: FTP session closed.
+Oct  7 12:30:48 salvage2 proftpd[8874]: FTP session closed.
+Oct  7 12:30:48 salvage2 proftpd[8874]: FTP session closed.
+Oct  7 12:30:48 salvage2 proftpd[8874]: FTP session closed.
+            </programlisting>
+	    <para>The above log extract is likely to be caused by a local monitoring
+system or a particularly aggressive DoS attack.  Most service
+monitoring systems try opening the ftp port on the target server to
+detect whether it is active and running.  Most of the time these tests 
+are followed by an immediate "QUIT" or disconnection.</para>
+	    <para>TCPdump/TCPshow on the server in question should show which machine
+on your network is is generating these connections.
+</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>How do I see who is connected?</para>
+	  </question>
+	  <answer>
+	    <para>The ftpwho command lists the state of each ftp connection to the
+server and what it's current activity is.  However this does not
+detail the connection information on a virtual by virtual basis.</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>Can I force ProFTPD to listen on only one IP?</para>
+	  </question>
+	  <answer>
+	    <para>Sort, of it's not quite as clean as the socket binding under Apache 
+but the principle works something like this.</para>
+	  <blockquote>
+	    <bridgehead renderas=sect2>Standalone mode</bridgehead>
+	    <para>To listen on the primary IP of a host use the SocketBindTight directive</para>
+	    <para>To listen on a interfaces which are not the primary host interface use the SocketBindTight directive, place your server configuration in a &lt;VirtualHost ftp.mydomain.com&gt; block and use "Port 0" for the main host configuration and and "Port 21" inside the VirtualHost block.</para>
+	    <bridgehead renderas=sect2>inetd</bridgehead>
+	    <para>There are two approaches possible, the first is to use the patch
+from Daniel Roesen &lt;droesen@entire-systems.com&gt; (check
+the mailing list archives).</para>
+	    <para>The second method is to run ProFTPD from xinetd
+(http://synack.net/xinetd/), a more advanced replacement of inetd. An
+entry for this in xinetd.conf would be something like this:</para>
+	    <programlisting>
+service ftp
+{
+        disable = no
+        flags			= REUSE
+        socket_type             = stream
+        wait                    = no
+        user                    = root
+        server                  = /usr/sbin/proftpd
+        log_on_success          += DURATION USERID
+        log_on_failure          += USERID
+        nice                    = 10
+	#bind			= [IP to bind to]
+}
+            </programlisting>
+	  </blockquote>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>"FTP server shut down ... please try again later."</para>
+	  </question>
+	  <answer>
+	    <para>Check for /etc/shutmsg and delete it.</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>How do I shutdown the server without killing proftpd?</para>
+	  </question>
+	  <answer>
+	    <para>ftpshut, allows the server to disallow connections with a message
+without actually taking down the service.  The shutdown can be
+scheduled for a point in the future or right now, existing connections
+can be allowed to finish, or be terminated now.  Re-enabling is done
+by removing the /etc/shutmsg file.
+</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>Is is possible to shutdown a single VirtualHost?
+</para>
+	  </question>
+	  <answer>
+	    <para>No, the shutmsg file works at a daemon level not at a virtual host
+level.</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>Error 421</para>
+	  </question>
+	  <answer>
+	    <para>This appears to be a general catch all error code meaning "something
+nasty has gone wrong".</para>
+	    <itemizedlist>
+	      <listitem>
+		<para>Connection has timed out</para>
+	      </listitem>
+	      <listitem>
+		<para>The DefaultRoot specified doesn't exist</para>
+	      </listitem>
+	      <listitem>
+		<para>The parent server has been killed</para>
+	      </listitem>
+	      <listitem>
+		<para>Check /etc/services</para>
+	      </listitem>
+	      <listitem>
+		<para>Wrong permissions on the DefaultRoot</para>
+	      </listitem>
+	    </itemizedlist>
+	    <para>You get the idea...</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>proftpd doesn't show in the processlist</para>
+	  </question>
+	  <answer>
+	    <para>Two possible reasons, first that it's simply not running, try
+proftpd -n -d2 to run in debug mode and see what happens.  The other
+is that it's running from inetd and there are no active sessions at
+the moment.
+</para>
+	  </answer>
+	</qandaentry>
+	<qandaentry>
+	  <question>
+	    <para>How do I restart/reload the server?</para>
+	  </question>
+	  <answer>
+	    <para>This depends on the mode you're running the server in.
+</para>
+	  <blockquote>
+	    <bridgehead renderas=sect2>inetd</bridgehead>
+	    <para>Unless you're making a configuration change to inetd itself nothing 
+needs doing.  The server reloads the configuration everytime a new
+connection is made.</para>
+	    <bridgehead renderas=sect2>Standalone</bridgehead>
+	      <para>Either stop and start the server completely (a little aggressive
+for most admins tastes) or send a SIGHUP to the master daemon
+process.</para>
+	  </blockquote>
+	  </answer>
+	</qandaentry>
+      <qandaentry>
+	<question>
+	  <para>503 No PORT command issued</para>
+	</question>
+	<answer>
+	  <para>A bug was introduced in 1.2.0rc2 which prevented the PORT command
+working properly and therefore breaking the data socket under certain
+conditions.  The bug was documented as bug 240 and has been fixed in
+CVS.  A rc3 release is due before the end of Jan 2001.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Fatal: unable to determine IP address of</para>
+	</question>
+	<answer>
+	  <para>Proftpd was unable to work out what IP is associated with the
+hostname in the VirtualHost block.  Normally caused by a problem
+with the DNS resolution of the host, check the resolv.conf file
+and that your chosen nameservers are functional.
+</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>451 append/restart not permitted, try again</para>
+	</question>
+	<answer>
+	  <para>AllowStoreRestart is disabled by default because it will allow any
+writable file to be corrupted by a malicious user.  It is recommended
+that this option is only used with authenticated users and then only
+in certain directories.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>501 REST not compatible with server configuration</para>
+	</question>
+	<answer>
+	  <para>As mentioned in the description of the HiddenStor configuration directive,
+use of that directive is incompatible with the FTP command REST.  Either
+disable use of REST with the AllowRetrieveRestart and AllowStoreRestart
+directives, or do not use HiddenStor.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>The time being displayed is wrong
+</para>
+	</question>
+	<answer>
+	  <para>The default behaviour for ProFTPD is to display all times relative
+to GMT.  To use local time set "TimesGMT off" in the server section of
+the config.  There is a known issue with Redhat 7, with regard to time
+handling.
+<ulink url="http://www.redhat.com/support/rh7-errata-bugfixes.html">http://www.redhat.com/support/errata/rh7-errata-bugfixes.html</ulink></para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Authentication is taking too long</para>
+	</question>
+	<answer>
+	  <para>Make sure that ReverseDNS is disabled, turn off ident lookups.
+Additionally check the size of your /etc/passwd (or shadow) file, if
+it is large then the only solution may be to move to another
+authentication scheme.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Corrupted files</para>
+        </question>
+	<answer>
+	  <para>There appear to be some problems with both the use of sendfile()
+in ProFTPD and with the implementation within certain operating systems.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Can I upgrade ProFTPD without terminating the current sessions?</para>
+	</question>
+	<answer>
+	  <para>Short answer, no.  Longer answer is no, but you can minimise the
+effects.  The cleanest approach on servers which have significant
+amounts of traffic appears to be to use ftpshut to block new
+connections and terminate existing ones after a pre-determined time
+period and then to upgrade and restart.  This approach limits the
+number of downloads which are terminated part way through.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>No such group "nogroup"</para>
+	</question>
+	<answer>
+	  <para>The default ProFTPD configuration file uses the user "nouser" and
+the group "nogroup", some systems / distributions do not have the
+group "nogroup" defined.  The solution is to either add the group
+"nogroup" to /etc/groups or to change the "nogroup" entry in the
+proftpd.conf to a group which does exist.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Why do I see "unable to set groups: Invalid argument"? </para>
+	</question>
+	<answer>
+	  <para>The setting of the group privileges for a process uses the setgroups(2)
+   system call.  This call will fail with the above error message for
+   one of two reasons: there is a negative GID value for one of the
+   groups, or the maximum number of groups for a single user has been
+   exceeded.</para>
+	  <para>Ideally, all IDs, both UID and GID, will be positive.  Unfortunately,
+   it is common on many systems to use -1 or -2, especially for such
+   users as 'nobody', or group 'nogroup'.  Use of these values uses C's
+   treatment of data types to make the actual numeric value very high;
+   some functions, like setgroups(), do not like this, though.  In
+   general, always use positive ID numbers.</para>
+	  <para>The other limitation is the number of supplemental groups for a user
+   (eg non-primary groups, the ones configured in /etc/group).  The
+   maximum number of supplemental groups to which a user may belong
+   is defined by the operating system constant NGROUPS_MAX.  On
+   some operating systems, such as Solaris, this limitation may be
+   tunable.</para>
+	  <para>Some other applications may not encounter this error if they use the
+   initgroups(3) function, which reads the /etc/group file for a user's
+   supplemental group memberships, and sets those groups.  This function,
+   however, silently ignores any supplemental groups for user greater than
+   NGROUPS_MAX, unlike setgroups(2), which complains.</para>
+          <para>
+   If this is the cause of your error message, any solution will most
+   likely involve reducing the number of groups your users are members of,
+   or tuning the NGROUPS_MAX value, if your operating system allows it.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Why do I see error messages like these when I logout?</para>
+	</question>
+	<answer><para>
+	  <programlisting>
+            PAM(exit): Permission denied
+            open_module: stat(/usr/lib/security/pam_unix.so.1) failed: No such file or directory
+            load_modules: can not open module /usr/lib/security/pam_unix.so.1
+            PAM(exit): Dlopen failure.
+          </programlisting></para>
+	  <para>These messages appear when the DefaultRoot configuration directive is
+   in effect.  This directive causes a user to be confined using the
+   chroot(2) system call.  This call, however, affects other system
+   utilities, such as PAM.  In this case, PAM's configuration is causing
+   the PAM library to attempt to open PAM modules using a path that is
+   no longer valid, thus the errors.  This happens on logout because the
+   chroot has already happened by that point; on login, the PAM modules
+   are successfully found and loaded before the chroot, so no errors.
+   These are merely cosmetic reporting errors, and do not really affect
+   the functionality or security of the server.
+</para>
+	</answer>
+      </qandaentry>
+    </qandaset>
+  </chapter>
+
+  <chapter><?dbhtml filename="faq-ch5.html">
+    <title>Configuration problems</title>
+    <qandaset defaultlabel="number">
+      <para>Problems encountered in trying to make the server behave 
+exactly as required after compilation and installation are 
+complete and the server is running.
+</para>
+      <qandaentry>
+	<question>
+	  <para>How do I add another anonymous login or guest account?</para>
+	</question>
+	<answer>
+	  <para>You should look in the sample-configurations/ directory from
+your distribution tarball. Basically, you'll need to create another
+user on your system for the guest/anonymous ftp login. For security
+reasons, it's very important that you make sure the user account
+either has a password or has an "unmatchable" password. The root
+directory of the guest/anonymous account doesn't have to be the user's
+directory, but it makes sense to do so. After you have created the
+account, put something like the following in your /etc/proftpd.conf
+file (assuming the new user/group name is private/private):</para>
+	  <programlisting>
+&lt;Anonymous ~private&gt;
+AnonRequirePassword off
+User private
+Group private
+RequireValidShell off
+&lt;Directory *&gt;
+&lt;Limit WRITE&gt;
+DenyAll
+&lt;/Limit&gt;
+&lt;/Directory&gt;
+&lt;/Anonymous&gt;
+          </programlisting>
+	  <para>This will allow ftp clients to login to your site with the username
+"private" and their e-mail address as a password. You can change the
+AnonRequirePassword directive to "on" if you want clients to be
+forced to transmit the correct password for the "private" account.
+This sample configuration allows clients to change into, list and read
+all directories, but denies write access of any kind.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>How do I ftp as root?</para>
+	</question>
+	<answer>
+	  <para>First off this is a <emphasis>bad</emphasis> idea ftping as root is insecure,
+there are better more secure ways of shifting files as root.</para>
+	  <para>To enable root ftp ensure that the directive "RootLogin on" is
+included in your configuration.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>How do I provide a secure upload facility?</para>
+	</question>
+	<answer>
+	  <para>The following snippet from a sample configuration file
+illustrates how to protect an "upload" directory in such a fashion
+(which is a very good idea if you don't want people using your site
+for "warez"):</para>
+	  <programlisting>
+&lt;Anonymous /home/ftp&gt;
+  # All files uploaded are set to username.usergroup ownership
+  User username
+  Group usergroup
+  UserAlias ftp username
+  AuthAliasOnly on
+  RequireValidShell off
+
+  &lt;Directory pub/incoming/&gt;
+     &lt;Limit STOR CWD&gt;
+        AllowAll
+     &lt;/Limit&gt;
+     &lt;Limit READ RMD DELE MKD&gt;
+        DenyAll
+     &lt;/Limit&gt;
+  &lt;/Directory&gt;
+&lt;/Anonymous&gt;
+          </programlisting>
+	  <para>This denies all write operations to the anonymous root directory
+and sub-directories, except "incoming/" where the permissions are
+reversed and the client can store but not read. If you used &lt;Limit
+WRITE&gt; instead of &lt;Limit STOR&gt; on &lt;Directory incoming&gt;,
+ftp clients would be allowed to perform all write operations to the
+sub-dir, including deleting, renaming and creating directories.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>How can I stop my users from using their space as a warez repository</para>
+	</question>
+	<answer>
+	  <para>The above fragment will control anonymous users however if a local
+user with a full account with up and download capability is abusing
+their space then the technical measures which can be taken are
+limited.  Applying a sane system quota is a good start, using the
+mod_quota and mod_ratio modules may control the rates of
+upload/download making it less useful as a warez repository.  In the
+end it comes down to system monitoring and good site AUP's and
+enforcement.
+</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Can I rotate files out of an upload directory after upload?</para>
+	</question>
+	<answer>
+	  <para>Yes.  You'll need to write a script which either checks the
+contents of the directory regularly and moves once it's detected no
+size change in a file for xyz seconds.  Or a script which monitors an
+upload log.  There is no automatic method for doing this.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>How can I hide a directory from anonymous clients.</para>
+	</question>
+	<answer>
+	  <para>Use the HideUser or HideGroup directive in combination with the
+proper user/group ownership on the directive. For example, if you
+have the follow directory in your anonymous ftp directory tree:</para>
+	  <programlisting>
+drwxrwxr-x 3 ftp staff 6144 Apr 21 16:40 private
+          </programlisting>
+	  <para>You can use a directive such as "HideGroup staff" to hide the private
+directory from a directory listing. For example:</para>
+	  <programlisting>
+&lt;Anonymous ~ftp&gt;
+...
+&lt;Directory Private&gt;
+HideGroup staff
+&lt;/Directory&gt;
+...
+&lt;/Anonymous&gt;
+          </programlisting>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>File/Directory hiding isn't working for me!</para>
+	</question>
+	<answer>
+	  <para>You need to make sure that the group you are hiding isn't the
+anonymous ftp user's primary group, or HideGroup won't apply.
+</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>I want to prevent users from accessing a hidden directory</para>
+	</question>
+	<answer>
+	  <para>You can either change the permissions on the directory to prevent
+the anonymous FTP user from accessing it, or if you want to make it
+appear completely invisible (as though there is no such directory),
+use the IgnoreHidden directive inside a &lt;Limit&gt; block for one or
+more commands that you want to completely ignore the hidden directory
+entries (ignore = act as if the directory entry does not exist).</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>How do I setup a virtual FTP server?</para>
+	</question>
+	<answer>
+	  <para>You'll need to configure your host to be able to handle multiple IP
+addresses. This is often called "aliasing", and can generally be
+configured through an IP alias or dummy interface. You need to read
+your operating system documentation to figure out how to do this. Once
+your have the host configured to accept the additional IP address that
+you wish to offer a virtual FTP server on, use the &lt;VirtualHost&gt;
+configuration directive to create the virtual server:</para>
+	  <programlisting>
+&lt;VirtualHost 10.0.0.1&gt;
+ServerName "My virtual FTP server"
+&lt;/VirtualHost&gt;
+          </programlisting>
+	  <para>You can add additional directive blocks into the &lt;VirtualHost&gt; block
+in order to create anonymous/guest logins and the like which are only
+available on the virtual host.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>I only want to allow anonymous access to a virtual server.</para>
+	</question>
+	<answer>
+	  <para>Use a &lt;Limit LOGIN&gt; block to deny access at the top-level of
+the virtual host, then use &lt;Limit LOGIN&gt; again in your
+&lt;Anonymous&gt; block to allow access to the anonymous login. This
+permits logins to a virtual anonymous server, but denies to everything
+else. Example:</para>
+	  <programlisting>
+&lt;VirtualHost 10.0.0.1&gt;
+ServerName "My virtual FTP server"
+&lt;Limit LOGIN&gt;
+DenyAll
+&lt;/Limit&gt;
+&lt;Anonymous /usr/local/private&gt;
+User private
+Group private
+&lt;Limit LOGIN&gt;
+AllowAll
+&lt;/Limit&gt;
+...
+&lt;/Anonymous&gt;
+&lt;/VirtualHost&gt;
+          </programlisting>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>How does &lt;Limit LOGIN&gt; work, and where should I use it?</para>
+	</question>
+	<answer>
+          <para>The &lt;LOGIN&gt; directive is used to control connection or login
+access to a particular context (the directive block which contains
+it). When a client initially connects to ProFTPD, the daemon searches
+the configuration tree for &lt;Limit LOGIN&gt; directives, and
+attached parameters (such as Allow, Deny, etc). If it determines that
+there is no possible way for the client to ever be allowed to login,
+such as a "Deny from" matching the client's source address, without an
+overriding "Allow from" at a lower level, the client is disconnected
+without being offered the opportunity to transmit a user and password.</para>
+
+          <para>However, if it is possible for the client to be allowed a login,
+ProFTPD continues as per normal, allowing the client to login only if
+the proper &lt;Limit LOGIN&gt; applies. Normally, &lt;Limit&gt; directive blocks
+are allowed in the server config, &lt;VirtualHost&gt;, &lt;Anonymous&gt;
+and &lt;Directory&gt; contexts. However, &lt;Limit LOGIN&gt; should not be
+used in a &lt;Directory&gt; context, as clients do not connect/login to a
+directory (and thus it is meaningless).</para>
+
+          <para>By way of example, the following configuration snippet illustrates a
+&lt;Limit LOGIN&gt; deny which will cause any incoming connections from the
+10.1.1.x subnet to be immediately disconnected, without a welcome
+message:</para>
+	  <programlisting>
+...
+&lt;Limit LOGIN&gt;
+Order deny,allow
+Deny from 10.1.1.
+Allow from all
+&lt;/Limit&gt;
+...
+          </programlisting>
+	  <para>Next, an example of a configuration using &lt;Limit LOGIN&gt; that will not
+immediately disconnect an incoming client, but will return "Login
+invalid" for all login attempts except anonymous.</para>
+	  <programlisting>
+...
+&lt;Limit LOGIN&gt;
+DenyAll
+&lt;/Limit&gt;
+&lt;Anonymous ~ftp&gt;
+...
+&lt;Limit LOGIN&gt;
+AllowAll
+&lt;/Limit&gt;
+...
+          </programlisting>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>How can I limit users to a particular directory tree?</para>
+	</question>
+	<answer>
+	  <para>For general open access you can use an &lt;Anonymous&gt; directive context block,
+possibly in combination with a UserPassword/AnonRequirePassword directive. </para>
+	  <para>However if you wish to jail an entire group (or groups) of users,
+you can use the DefaultRoot directive.  DefaultRoot lets you specify a
+root jailed directory (or "~" for the user's home directory), and an
+optional group-expression argument which can be used to control which
+groups of users the jail will be applied to. For example:</para>
+	  <programlisting>
+...
+&lt;VirtualHost myhost.mynet.foo&gt;
+DefaultRoot ~
+...
+&lt;/VirtualHost&gt;
+          </programlisting>
+	  <para>This creates a configuration where all users who log into
+myhost.mynet.foo are jailed into their home directories (cannot chdir
+into a higher level directory). Alternatively, you could:</para>
+	  <programlisting>
+...
+&lt;VirtualHost myhost.mynet.foo&gt;
+DefaultRoot /u2/public users,!staff
+...
+&lt;/VirtualHost&gt;
+          </programlisting>
+	  <para>In this example, all users who are members of group "users", but
+not members of group "staff" are jailed into /u2/public. If a user
+does not meet the group-expression requirements, they login as per
+normal (not jailed, default directory is their home).  You can use
+multiple DefaultRoot directives to create multiple jails inside the
+same directive context. If two DefaultRoot directives apply to the
+same user, ProFTPD arbitrarily chooses one (based on how the
+configuration file was parsed).</para>
+	  <blockquote>
+	  <bridgehead renderas=sect2>Security Implications</bridgehead>
+	  <para>The DefaultRoot directive is implemented using the chroot(2) system
+call.  This moves the "/" (or root) directory to a specified point
+within the file system and jails the user into this sub-tree.  However
+this is not the holy grail of security, a chroot jail can be broken,
+it is not a trivial matter but it's nowhere near impossible.
+DefaultRoot should be used as part of a general system of security not
+the only security measure.</para>
+	  <para>A more detailed <ulink url="http://www.bpfh.net/simes/computing/chroot-break.html">http://www.bpfh.net/simes/computing/chroot-break.html</ulink> on this subject and on the breaking of chroot jails has been written by Simon Burr</para>
+	  <bridgehead renderas=sect2>Non-root server issues</bridgehead>
+	  <para>The chroot() system call will not work under a non-root ftp server
+process, the call requires root privaliges.  Without them it simply
+doesn't work, there doesn't appear to be any checking in the code of
+the uid/gid before calling chroot so using DefaultRoot in such a setup 
+will cause the server to fail.</para>
+	  <bridgehead renderas=sect2>Symlinks</bridgehead>
+	  <para>Symlinks will not work from within a chrooted area.  The reason
+	    should be clear from a casual inspection of the nature of
+	    the chroot command.  It is not possible to have a symbolic
+	    link to a directory which can"t be reached beacuse it's
+	    outside of the current chroot.  Work arounds to allow
+	    access to other parts of the file system include exporting
+	    the part of the filesystem to be accessed from inside the
+	    chroot and mounting via NFS, using hard file links or (on
+	    Solaris) using lofs to mount the directory via the loopback.
+          </para>
+	  <programlisting>
+mount -Flofs /home/data1 /ftp/data1
+mount -Flofs /home/data2 /ftp/data2
+          </programlisting>
+	  <para>As of the 2.4.x Linux kernel tree it is possible to mount filesystems
+multiple times and to mount subdirectories of filesystems elsewhere on
+the filesystem.
+</para>
+	  </blockquote>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>How do I create individual anonymous FTP sites for my users?</para>
+	</question>
+	<answer>
+	  <para>There are two methods of accomplishing this (possibly more).
+First, you can create a directory structure inside your anonymous FTP
+root directory, creating a single directory for each user and setting
+ownership/permissions as appropriate. Then, either create a symlink
+from each user's home directory into the FTP site, or instruct your
+users on how to access their directory.</para>
+	  <para>The alternate method (and more versatile) of accomplishing per-user
+anonymous FTP is to use AnonymousGroup in combination with the
+DefaultRoot directory. You'll probably want to do this inside a
+&lt;VirtualHost&gt;, otherwise none of your users will be able to access
+your system without being stuck inside their per-user FTP site.
+Additionally, you'll want to use a deferred &lt;Directory&gt; block to
+carefully limit outside access to each user's site.</para>
+	  <orderedlist>
+	    <listitem>
+	      <para>Create a new unix group on your system named `anonftp". Please
+each user who will have per-user anonymous FTP in this group.</para>
+            </listitem>
+	    <listitem>
+	      <para>Create an `anon-ftp" and `anon-ftp/incoming" directory in each
+user's home directory.</para>
+	    </listitem>
+	    <listitem>
+	      <para>Modify your /etc/proftpd.conf file to look something like this
+(you'll probably want to customize this to your needs):</para>
+	      <programlisting>
+ &lt;VirtualHost my.per-user.virtual.host.address&gt;
+ 
+ # the next line limits all logins to this virtual host, so that only
+ anonftp users can connect
+ 
+ &lt;Limit LOGIN&gt;
+ DenyGroup !anonftp
+ &lt;/Limit&gt;
+ 
+ # limit access to each user's anon-ftp directory, we want read-only
+ except on incoming
+ 
+ &lt;Directory ~/anon-ftp&gt;
+ 
+ &lt;Limit WRITE&gt;
+ DenyAll
+ &lt;/Limit&gt;
+ 
+ &lt;/Directory&gt;
+ 
+ # permit stor access to each user's anon-ftp/incoming directory,
+ but deny everything else
+ 
+ &lt;Directory ~/anon-ftp/incoming&gt;
+ 
+ &lt;Limit STOR&gt;
+ AllowAll
+ &lt;/Limit&gt;
+ &lt;Limit READ WRITE&gt;
+ DenyAll
+ &lt;/Limit&gt;
+ 
+ &lt;/Directory&gt;
+ 
+ # provide a default root for all logins to this virtual host.
+ DefaultRoot ~/anon-ftp
+ # Finally, force all logins to be anonymous for the anonftp group
+ AnonymousGroup anonftp
+ 
+ &lt;/VirtualHost&gt;
+              </programlisting>
+	    </listitem>
+	  </orderedlist>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question
+	  <para>I want to support normal login and Anonymous under a particular 
+user</para>
+	</question>
+	<answer>
+	  <para>You can use the AuthAliasOnly directive to control how and
+where real usernames get authenticated (as opposed to aliased names,
+via the UserAlias directive). Note that it is still impossible to
+have two identical aliased names login to different anonymous sites;
+for that you would need &lt;VirtualHost&gt;.
+</para>
+	  <para>Example:</para>
+	  <programlisting>
+...
+&lt;Anonymous ~jrluser&gt;
+
+ User jrluser
+ Group jrluser
+ UserAlias ftp jrluser
+ UserAlias anonymous jrluser
+ AuthAliasOnly on
+ ...
+ 
+&lt;/Anonymous&gt;
+          </programlisting>
+	  <para>Here, the &lt;Anonymous&gt; configuration for ~jrluser is set to allow
+alias authentication only. Thus, if a client attempts to authenticate
+as "jrluser", the anonymous config will be ignored and the client will
+be authenticated as if they were a normal user (typically resulting in
+`jrluser" logging in normally). However, if the client uses the
+aliased username `ftp" or `anonymous", the anonymous block is applied.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Why doesn't Anonymous ftp work (550 login incorrect)?</para>
+	</question>
+	<answer>
+	  <para>Things to check</para>
+	  <itemizedlist>
+	    <title>Check the following first:</title>
+	      <listitem>
+		<para>Make sure the user/group you specified inside the &lt;Anonymous&gt;
+block actually exists. This must be a real user and group, as it is
+used to control whom the daemon runs as and authenticates as.</para>
+	      </listitem>
+	    <listitem>
+	      <para>If RequireValidShell is not specifically turned off, make sure
+that your "ftp user" (as specified by the User directive inside an
+&lt;Anonymous&gt; block), has a valid shell listed in /etc/shells. If you do
+not wish to give the user a valid shell, you can always use
+"RequireValidShell off" to disable this check.</para>
+	    </listitem>
+	    <listitem>
+	      <para>If UseFtpUsers is not specifically turned off, make sure that
+your "ftp user" is not listed in /etc/ftpusers.</para>
+	    </listitem>
+	  </itemizedlist>
+	  <para>If all else fails, you should check your syslog. When authentication
+fails for any reason, ProFTPD uses the syslog mechanism to log the
+reason for failure; using the AUTH (or AUTHPRIV) facility. If you need
+further assistance, you can send email, including related syslog
+entries and your configuration file, to the ProFTPD mailing list
+mentioned elsewhere in this FAQ.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Bandwidth control</para>
+	</question>
+	<answer>
+	  <para>The Bandwidth directive has been removed as of 1.2.0pre8, this
+directive acted on a per-virtual basis.  It was generally held that it
+worked on the principle that a single connection to a given virtual
+could take the full bandwidth limit until other connections were made.
+However, the server uses either separate server (inetd) or forked
+(standalone) model there is no way for the various processes to
+communicate, therefore is no way they could share the bandwidth
+allocation.</para>
+	  <para>The replacement actually does the same but does it in a more
+rigorous manner and more precisely.  The directives RateReadBPS,
+RateReadFreeBytes, RateReadHardBPS work by limiting on a
+per-connection basis.</para>
+	  <programlisting>
+Bandwidth                       81920
+
+is replaced with something like
+
+RateReadBPS                     81920
+RateReadFreeBytes               5120
+RateReadHardBPS                 on
+          </programlisting>
+	  <para>To achieve a total limit on a per virtual basis a mix of
+RateReadBPS and MaxClients is needed.  ie RateReadBPS x MaxClients =
+Total Bandwidth allocation.  There is no way (at the moment) to
+specify that virtual server xyz has a maximum total bandwidth of
+200K/s that it can use between all connections.</para>
+	  <para>Per-virtual, per-user and global limits are currently in the "to be
+coded" pile and are being penciled in for the 1.3.x development
+series.  There is some work in providing for a shared communication
+system between servers before this can happen.
+</para>
+	  <blockquote>
+	    <bridgehead renderas=sect3>Rate controls aren't working</bridgehead>
+	  <para>In pre9 and earlier Rate* does not work if sendfile is enabled,
+	    recompile with --without-sendfile and all should be as
+	    expected.
+          </para>
+	  </blockquote>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>CHMOD isn't working</para>
+	</question>
+	<answer>
+	  <para>As of rc1 the AllowChmod command was added to allow control over
+who is allowed to use the CHMOD command.  The default value for this
+directive is off.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>How can I limit the size of uploaded files?</para>
+	</question>
+	<answer>
+	  <para>There is no way within ProFTPD itself to control how large a file
+can be uploaded.  The best solution to this problem at the moment is
+to use whatever disk quota tools are available within your OS.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Can I disable Anonymous logins?</para>
+	</question>
+	<answer>
+	  <para>Yes, just remove all the &lt;Anonymous&gt; sections from your
+configuration file and reload the daemon.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Limiting the connections per loginID</para>
+	</question>
+	<answer>
+	  <para>This is not possible at this time, the directive appeared in the
+docs for a short period but the code was never added.  The closest
+possible at the moment is to limit the number of connections from a
+given host.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>How do I configure proftpd to allow transfer resumption (for
+     downloads and uploads)?</para>
+	</question>
+	<answer>
+	  <para>To allow downloads to be resumed, you need to use the
+   AllowRetrieveRestart configuration directive.</para>
+	  <para>To allow uploads to be resumed, you need to use both the
+   AllowOverwrite and AllowStoreRestart directives.  The reason that both
+   need to be allowed is that a restarted/resumed upload is a form of
+   overwriting the file.</para>
+	  <para>Also note that using HiddenStor and AllowStoreRestart is incompatible,
+   as mentioned in the documentation for the AllowStoreRestart
+   and HiddenStor directives.</para>
+
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>When should the Bind directive be used?</para>
+	</question>
+	<answer>
+	  <para>The Bind directive is used to specify additional interfaces (addresses)
+   for a given server; it is *not* used to configure the main interface
+   for the server.  For &lt;VirtualHost&gt; servers, this is not a problem, as
+   the main interface for the server is set in the &lt;VirtualHost&gt; line.</para>
+	  <para>For the main "default" server, however, the controlling of the main
+   interface is more problematic.  There is currently a bug report
+   opened for this issue:</para>
+	  <para><ulink url="http://bugs.proftpd.org/show_bug.cgi?id=1253">http://bugs.proftpd.org/show_bug.cgi?id=1253</ulink></para>
+	</answer>
+      </qandaentry>
+    </qandaset>
+  </chapter>
+
+  <chapter><?dbhtml filename="faq-ch6.html"> 
+    <title>Security</title>
+    <qandaset defaultlabel="number">
+      <qandaentry>
+	<question>
+	  <para>General</para>
+	</question>
+	<answer>
+	  <para>As with all software there have been a number of security issues
+during the life of the project.  The most recent information can
+always be found on http://www.proftpd.org/security.html</para>
+	  <para>Versions 1.2.0 and above should be considered to be production code
+and few if any new features will be added to this code branch to
+maintain stability.</para>
+	  <blockquote>
+	    <bridgehead renderas=sect2>What about using Stackguard?</bridgehead>
+	    <para>Stackguard (<ulink url="http://immunix.org">http://immunix.org</ulink>) is a gcc variant which can protect programs from stack-smashing attacks, programs compiled using Stackguard dies without executing the stack code.  While this approach is a good first line of defense against future problems it"s not a complete cure-all.  Some of the buffer overflows were found on static variables, which are not protected by stack protection mechanisms. </para>
+	  </blockquote>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Surely running ProFTPD as non-root will help?</para>
+	</question>
+	<answer>
+	  <para>Running ProFTPD as a non-root user gives only a marginal security
+improvement on the normal case and adds some functional problems.
+Such as not being able to bind to ports 20 or 21, unless it's spawned
+from inetd.</para>
+	  <para>ProFTPD takes a middle road in terms of security.  It only uses
+root privileges where required and drops to the UID defined in the
+config file at all other times.  Times when root is required include,
+binding to ports < 1024, setting resource limits, reading
+configuration information and some network code.</para>
+	  <para>For Linux 2.2.x kernel systems there is the POSIX style
+mod_linuxprivs module which allows very fine grain control over
+privileges.  This is highly recommended for security-conscious admins.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>How can I control what commands the server accepts?</para>
+	</question>
+	<answer>
+	  <para>Use a sane Allow/DenyFilter, these directives use regular
+expressions to control all text sent over the control socket.  (If
+anyone has some good examples please let me know.)
+
+<!-- <P>[NB: need examples here] --></para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>How can I prevent the server version from being displayed?</para>
+	</question>
+	<answer>
+	  <para>Setting SeverIdent to "off" should turn off the information about
+what type of server is running.  To have maximum effect this directive 
+should either be in the Global context or included in every virtual
+host block and the default block.</para>
+	  <programlisting>
+ServerIdent  On "Linux.co.uk server"
+
+ServerIdent  Off
+          </programlisting>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>I want to show a message prior to login</para>
+	</question>
+	<answer>
+	  <para>Use the DisplayConnect directive to specify a file containing a
+message to be displayed prior to login.</para>
+	  <programlisting>
+DisplayConnect /ftp/ftp.virtualhost/login.msg
+          </programlisting>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>I want to display a message after login</para>
+	</question>
+	<answer>
+	  <para>Use the DisplayLogin directive, this sends a specified ASCII file to the
+connected user.</para>
+	  <programlisting>
+DisplayLogin       /etc/proftp.msg
+          </programlisting>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Can I have a custom welcome response?</para>
+	</question>
+	<answer>
+	  <para>Use the AccessGrantMsg directive, this sends a simple single line
+message back to the user after a successful authentication.  Magic
+cookies appear to be honoured in this directive.</para>
+	  <programlisting>
+AccessGrantMsg "Guest access granted for %u."
+          </programlisting>
+	  <para>Note, this directive has an overriding default and needs to be
+specified in both VirtualHost and Anonymous blocks.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>External Programs</para>
+	</question>
+	<answer>
+	  <para>ProFTPD has been designed to run as a secure ftp server, this means 
+that it tries to keep as much as possible under it's control.  An
+external program is a security risk in itself because it's behaviour
+is not controllable from within the ftpd code.
+</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Why do I see "No certificates found!"? </para>
+	</question>
+	<answer>
+	  <para>This message is generated by mod_tls, the third-party module that can
+   be used to encrypt both the control and data connections with TLS
+   (Transport Layer Security), the next generation of SSL.  Certificates
+   are used to establish the security context for this secure transport.</para>
+	  <para>Generation of certifications is beyond the scope of this document;
+   however, more information can be found here:</para>
+	  <para>    <ulink url="http://www.linuxdoc.org/HOWTO/SSL-Certificates-HOWTO/">http://www.linuxdoc.org/HOWTO/SSL-Certificates-HOWTO/</ulink></para>
+	</answer>
+      </qandaentry>      
+    </qandaset>
+  </chapter>
+
+  <chapter><?dbhtml filename="faq-ch7.html">
+    <title>User Authentication</title>
+    <qandaset defaultlabel="number">
+      <para>This section is being re-written due to major structural changes to the SQL module prior to 1.2.0</para>
+      <qandaentry>
+	<question>
+	  <para>Why is PAM the default authentication system?</para>
+	</question>
+	<answer>
+	  <para>Security, pure and simple.  PAM is the most secure (or securable)
+of the available authentication systems.  Many of the issues and
+configuration hints for PAM are contained in README.PAM which is
+bundled with the server source and in the various packaged builds.  To 
+use /etc/passwd manual compilation will be required with the configure 
+script being run with the --without-pam flag.  Unless the PAM
+subsystem is properly configured authentication will fail.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Authentication methods supported</para>
+	</question>
+	<answer>
+	  <orderedlist>
+            <listitem>
+	      <para>PAM</para>
+            </listitem>
+            <listitem>
+              <para>Standard /etc/passwd lookups</para>
+            </listitem>
+            <listitem>
+              <para>NIS</para>
+            </listitem>
+            <listitem>
+              <para>Shadow passwords</para>
+            </listitem>
+            <listitem>
+              <para>Indvidual passwd/group files for each virtual</para>
+            </listitem>
+            <listitem>
+              <para>SQL databases</para>
+            </listitem> 
+	  </orderedlist>
+	  <para>If these don't fit in with your system then writing a custom module
+or using such as the "ld.so.preload" approach to intercept
+getpwbynam() system calls works happily with ProFTPD.
+</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Problems with non-PAM authentication</para>
+	</question>
+	<answer>
+	  <para>Generally these problems will be cured by either disabling PAM
+completely or by ensuring that these directives are set</para>
+	  <programlisting>
+PersistentPasswd   off
+AuthPAMAuthoritative off
+          </programlisting>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>AuthPAMAuthorative is an unknown directive!</para>
+	</question>
+	<answer>
+	  <para>Check the spelling it should be AuthPAMAuthoritative not
+AuthPAMAuthorative or any other variation.
+</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Configuring PAM</para>
+	</question>
+	<answer>
+	  <para>There is a README.Pam in the top directory of the ProFTPD install
+directory :</para>
+	  <blockquote>
+	    <bridgehead renderas=sect2>Redhat Linux</bridgehead>
+	  <programlisting>
+#%PAM-1.0
+auth       required     /lib/security/pam_listfile.so item=user
+sense=deny file=/etc/ftpusers onerr=succeed
+auth       required     /lib/security/pam_pwdb.so shadow nullok
+account    required     /lib/security/pam_pwdb.so
+session    required     /lib/security/pam_pwdb.so
+          </programlisting>
+	    <bridgehead renderas=sect2>SuSE Linux</bridgehead>
+	  <para>SuSE appears to uses pam_unix rather than pam_pwdb which is the
+Redhat approach.  All references to pam_pwdb should be replaced with
+"pam_unix" on SuSE systems.</para>
+	  <para>The following fragment is reported to work fine on SuSE 6.2</para>
+	  <programlisting>
+/etc/pam.d/ftpd
+#%PAM-1.0
+
+# Uncomment this to achieve what used to be ftpd -A.
+# auth       required     /lib/security/pam_listfile.so item=user sense=allow file=/etc/ftpchroot onerr=fail
+
+auth     required       /lib/security/pam_listfile.so item=user
+sense=deny file=/etc/ftpusers onerr=succeed
+auth     sufficient     /lib/security/pam_ftp.so
+auth     required       /lib/security/pam_unix.so
+auth     required       /lib/security/pam_shells.so
+account  required       /lib/security/pam_unix.so
+password required       /lib/security/pam_unix.so
+session  required       /lib/security/pam_unix.so
+          </programlisting>
+	    <bridgehead renderas=sect2>FreeBSD</bridgehead>
+	  <para>FreeBSD does not support PAM session directives. If you remove the
+following line from the FreeBSD section of README.PAM, PAM should work
+properly under recent versions of FreeBSD.</para>
+	  <programlisting>
+ ftp session required    pam_unix.so         try_first_pass
+          </programlisting>
+	  </blockquote>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>pam_sm_open_session errors</para>
+	</question>
+	<answer>
+	  <para>ProFTPD requires PAM version 0.59 or better.  pam_sm_open_session
+is not part of previous versions.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Normal users can't login, only anon.</para>
+	</question>
+	<answer>
+	  <para>Check that the /etc/pam.d/ftp file exists on the system and is
+configured as detailed in README.PAM</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>AuthPAMAuthoritative</para>
+	</question>
+	<answer>
+	  <para>Currently AuthPAMAuthoritative defaults on "ON" resulting in login
+failures if PAM cannot authenticate the user.  This breaks the
+AuthUserFile directive as it never gets a chance to authenticate the
+user unless the AuthPAMAuthoritative directive is set to "OFF"
+</para>
+	  <para>The reasoning behind the current default is to ensure that the
+system is secure by default requiring that the admin explicitly and
+knowingly has to disable it.  There are discussions underway which
+may result in the directive flipping to a default of "Off" if
+AuthUserFile is specified.</para>
+	  <para><emphasis>Note:</emphasis> as of the current CVS and the forthcoming pre9
+release the default has changed to "Off"</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>LDAP</para>
+	</question>
+	<answer>
+	  <para>mod_ldap is currently stable; there were a couple bugs that were
+squashed after release 1.0 of the module.  it is still udner
+development , check the <ulink url="http://horde.net/~jwm/software/proftpd-ldap/">http://horde.net/~jwm/software/proftpd-ldap/</ulink> for
+more information.  There is an example config fragment on the author's
+site which gives a reasonable idea on how to use this module.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Encrypted passwords</para>
+	</question>
+	<answer>
+	  <para>There are patches which are being merged in at the moment to provide
+SHA encryption.  The plan is to have the server get all user information
+except passwords via an anonymous bind.  The server will then reconnect
+as a user is logging in and attempt to get the password via an encrypted
+connection.  This should be in the next major release (2.5)</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>SecureID</para>
+	</question>
+	<answer>
+	  <para>No support yet</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>One time passwords</para>
+	</question>
+	<answer>
+	  <para>This is possible using either PAM or the Opie modules.  The module
+passes back a challenge which the user puts into a key generator along
+with their "pass phrase" and it gives them back 5 words which get sent
+as the password.  As long as you do it correctly it will never repeat.
+</para>
+	  <para>It requires <ulink  url="http://inner.net/opie/">http://inner.net/opie/</ulink> to be installed on the server. There are key gen clients for win95/98, *nix, mac.</para>
+
+          <para><ulink url="ftp://ftp.urbanrage.com/pub/c/mod_opie.c">ftp://ftp.urbanrage.com/pub/c/mod_opie.c</ulink></para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>RADIUS</para>
+	</question>
+	<answer>
+	  <para>Radius support isn't built into ProFTPD, though there's nothing
+stopping someone writing a module and submitting it for inclusion in
+the code tree.  Possibly the easist way to implement Radius is by
+using the modules available for PAM and using the inbuilt PAM support.
+</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Anonymous password checking</para>
+	</question>
+	<answer>
+	  <para>Is it possible to check an offered email address in an anonymous
+login before allowing access.  Simple answer, not a hope in hell,
+anonymous access is pretty much designed to be freely open without
+checks and restrictions other than those placed on upload/download
+from the site.  The best that can be hoped for is decent logging and
+tracking of accesses, and the requesting IP.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Why do I see "PAM(name): Authentication failure", but I can login
+     anyway?</para>
+	</question>
+	<answer>
+	  <para>If the operating system supports PAM (Pluggable Authentication Modules)
+   proftpd will perform PAM authentication by default.  However, this
+   authentication is not "authoritative" by default, meaning that
+   a PAM authentication failure will not necessary cause a login to
+   fail.  The use of PAM can be configured using the AuthPAM configuration
+   directive; the "authoritativeness" of any PAM checks is controlled via
+   the AuthPAMAuthoritative configuration directive.</para>
+	</answer>
+      </qandaentry>
+    </qandaset>
+  </chapter>
+
+  <chapter><?dbhtml filename="faq-ch8.html">
+    <title>Hamster droppings</title>
+    <qandaset defaultlabel="number">
+      <para></para>
+      <qandaentry>
+	<question>
+	  <para>Why...</para>
+	</question>
+	<answer>
+	  <para>This chapter is not meant to be meaningful, it's where I cut
+and paster ideas, comments, code fragments before I work them into the 
+main part of the document.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Odds and ends</para>
+	</question>
+	<answer>
+	  <para>Why can't I delete a directory with dele ?</para>
+	  <para>Port bouncing, ftp bouncing, priv ports</para>
+	  <para>hiding directories</para>
+	  <para>hiding files</para>
+	  <para>authentication methods</para>
+	  <para>user defined permissions in &lt;LIMIT&gt; do not override system level
+permissions.</para>
+	  <para>authuserfile: needs a complete password file, not a cutdown.</para>
+	</answer>
+      </qandaentry>
+    </qandaset>
+  </chapter>
+
+  <chapter><?dbhtml filename="faq-ch-notes.html">
+    <title>FAQ Notes</title>
+    <qandaset defaultlabel="number">
+      <qandaentry>
+	<question>
+	  <para>History</para>
+	</question>
+	<answer>
+	  <para>The original text for this document was based on the configuration
+FAQ on www.proftpd.org.  It was taken over in Sept 1999 when the
+maintainer of the software changed.</para>
+	  <para>The faq is usually maintained on a P100 or paper somewhere on the
+London Underground while I'm travelling home from work.  The most
+recent version can always be obtained from <ulink url="http://pdd.sourceforge.net/">http://pdd.sourceforge.net/</ulink>.  It is
+available as a series of linked html files, a single flat html file,
+the original sgml source, ASCII text and a tarball containing all the
+formats.</para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Acknowledgements and Thanks</para>
+	</question>
+	<answer>
+	  <para>Thanks to the developers, anyone who's posted useful information to 
+the mailing lists and those who've mailed me direct.</para>
+	  <para>This document couldn't have been maintained without the Sgml Tools
+package and the document layout defined by the Linux HOWTO
+maintainers. </para>
+	  <para>Some specific mentions, in no particular order, and I've missed
+anyone please drop me a line.</para>
+	  <simplelist>
+	    <member>Updates to the SQL section, Michael Grabenstein
+&lt;mgrabens@popd.isinet.com&gt;</member>
+	    <member>Matt Mozur, who's been cleaning up some of my mess
+and generally stuffing patches in my direction.
+	    <member>TJ Saunders, for the HOWTOs and other docs.
+	  </simplelist>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Todo</para>
+	</question>
+	<answer>
+	  <orderedlist>
+	    <listitem>
+	      <para>Get a clear idea of how to split this up</para>
+	    </listitem>
+	    <listitem>
+	      <para>More examples</para>
+	    </listitem>
+	    <listitem>
+	      <para>Clear the mailing list backlog and add information from there</para>
+	    </listitem>
+	    <listitem>
+	      <para>sleep, relax and generally have a good time.</para>
+	    </listitem>
+	  </orderedlist>
+	</answer>
+      </qandaentry>
+    </qandaset>
+  </chapter>
+</book>

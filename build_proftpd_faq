@@ -2,32 +2,62 @@
 #
 # Proftpd
 #
-export LINUXDOCLIB=`pwd`
 export BASE="$HOME/Proftpd/"
 export ROOT="$BASE/www.pdd/"
 export FTP="$BASE/ftp.pdd/proftpd/"
-export FAQ="proftpdfaq"
+export FAQ="proftpdfaq-docbook"
+export SGMLSRC="$BASE/FAQ/$FAQ.sgml"
+##
+## Test to see if we can find a stylesheet using a
+## provided path
+##
+if [ -f $DSSSL_STYLESHEET_PATH/html/docbook.dsl ]
+then
+  DSL="$DSSSL_STYLESHEET_PATH/html/docbook.dsl"
+else
+  # Fall back to a hardcoded default
+  DSL="/usr/lib/sgml/stylesheet/dsssl/docbook/nwalsh/html/docbook.dsl"
+fi
 ##
 ##
 ##
+mkdir -p $BASE/FAQ/html/
+if [ -d $BASE/FAQ/html/ ]
+then
+	cd $BASE/FAQ/html/
+	rm -rfv *
+else
+	echo "Problem with html output directory"
+	exit
+fi
+
 # Build the single file
 echo -n "Building FAQ: "
 echo -n "single "
-sgml2html -s 0 -I ${FAQ}.sgml > /dev/null 
-mv ${FAQ}.html ${FAQ}-full.html > /dev/null
+jade -t sgml -V nochunks -d $DSL ${SGMLSRC} > ${FAQ}_full.html
+
 # Build the linked file
 echo -n "linked "
-sgml2html -I ${FAQ}.sgml > /dev/null
+mkdir linked
+cd linked
+jade -t sgml -d $DSL ${SGMLSRC}
+cd ..
+
 # Build the text file
-echo -n "text "
-sgml2txt ${FAQ}.sgml > /dev/null 
+#echo -n "text "
+#sgml2txt ${FAQ}.sgml > /dev/null 
+
+exit
+
 # PDF file
 echo -n "pdf "
-htmldoc --webpage -f proftpdfaq.pdf proftpdfaq-full.html
+htmldoc --webpage -f ${FAQ}.pdf ${FAQ}_full.html
+
 # Postscript
 echo -n "ps "
-htmldoc --webpage -f proftpdfaq.ps proftpdfaq-full.html
+htmldoc --webpage -f ${FAQ}.ps ${FAQ}_full.html
 #
+
 #rm -f *tgz
 #echo -n "tgz "
 #tar -czvf ${FAQ}.tgz *png *pdf *ps
@@ -41,7 +71,7 @@ htmldoc --webpage -f proftpdfaq.ps proftpdfaq-full.html
 ## www.proftpd.org
 ##
 mkdir -p $BASE/www.proftpd.org/docs/faq
-cp -v ${FAQ}* *png *pdf *ps $BASE/www.proftpd.org/docs/faq
+cp -v ${FAQ}* *htm $BASE/www.proftpd.org/docs/faq
 #
 # All built
 #
