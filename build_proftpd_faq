@@ -11,19 +11,27 @@ export FAQ="proftpdfaq"
 ##
 ##
 # Build the single file
+echo -n "Building FAQ: "
+echo -n "single "
 sgml2html -s 0 -I ${FAQ}.sgml > /dev/null 
 mv ${FAQ}.html ${FAQ}-full.html > /dev/null
 # Build the linked file
+echo -n "linked "
 sgml2html -I ${FAQ}.sgml > /dev/null
 # Build the text file
+echo -n "text "
 sgml2txt ${FAQ}.sgml > /dev/null 
 # PDF file
+echo -n "pdf "
 htmldoc --webpage -f proftpdfaq.pdf proftpdfaq-full.html
 # Postscript
+echo -n "ps "
 htmldoc --webpage -f proftpdfaq.ps proftpdfaq-full.html
 #
 rm -f *tgz
+echo -n "tgz "
 tar -czvf ${FAQ}.tgz *png *pdf *ps
+echo "done"
 cp ${FAQ}.tgz ${FAQ}* *png *pdf *ps $ROOT/faq/
 #
 cp -r $ROOT/faq/ $FTP/
@@ -31,10 +39,12 @@ cp -r $ROOT/faq/ $FTP/
 # All built
 #
 # Copy to www.proftpd.net
-#for i in *html
-#do
-#	./fix_faq.pl ${i}
-#done
+echo "Updating www.proftpd.net "
+for i in *html
+do
+	./fix_faq.pl ${i}
+done
+echo "done"
 #
 # End...
 #

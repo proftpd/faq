@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 $filename = shift @ARGV;
-$CVSROOT = "/home/mark/Repository/www.proftpd.net/docs/";
+$CVSROOT = "/home/mark/Proftpd/www.proftpd.net/docs/";
 
 if( $filename eq "" )
 {
