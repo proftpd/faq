@@ -256,7 +256,7 @@ systems.
 <verb>
 cvs -z 3
 update -Pd
-diff -uw
+diff -u
 </verb>
 </tscreen>
 
@@ -290,11 +290,11 @@ generating a diff against the current cvs source use "cvs diff -uw" to
 generate the patch.
 
 <tscreen><verb>
-cvs diff -uw filename > filename.patch
+cvs diff -u filename > filename.patch
 
 or
 
-cvs diff -uw > bigger.patch
+cvs diff -u > bigger.patch
 </verb></tscreen>
 
 <P>Patches that add configuration directives without proper
@@ -346,7 +346,6 @@ needed.
 <P>
 <itemize>
 <item>GUI based configuration tool
-<item>CDB based authentication
 </itemize>
 
 <!-- NEW SECTION -->
@@ -577,6 +576,10 @@ control in one place via in.tcpd. Just configure ProFTPD to run from
 inetd as any other tcp-wrapper wrapped daemon and add the
 appropriate lines to hosts.allow/deny files.
 
+<P>
+If running ProFTPD in standalone mode, mod_wrap can be used to direct the
+server to use the normal hosts.allow/deny files.
+
 <sect1>Can I run an FTP server on a non-standard port?
 
 <P>Yes. Use a &lt;VirtualHost&gt; block with your machine"s FQDN
@@ -795,6 +798,13 @@ and that your chosen nameservers are functional.
 writable file to be corrupted by a malicious user.  It is recommended
 that this option is only used with authenticated users and then only
 in certain directories.
+
+<sect1>501 REST not compatible with server configuration
+
+<P>As mentioned in the description of the HiddenStor configuration directive,
+use of that directive is incompatible with the FTP command REST.  Either
+disable use of REST with the AllowRetrieveRestart and AllowStoreRestart
+directives, or do not use HiddenStor.
 
 <sect1>The time being displayed is wrong
 
