@@ -5,7 +5,7 @@
 
 <TITLE>Professional FTP Daemon FAQ
 <author>Mark Lowes <tt/&lt;hamster@vom.tm&gt;/
-<date>v0.6.9, 31 Jan 2001
+<date>v0.7.0, 06 Feb 2001
 
 <abstract>$Id$
 This document sets out many of the FAQs related to the installation,
@@ -32,7 +32,7 @@ to be much like Apache in concept taking many of the ideas
 <p>
 <itemize>
 <item>Stable:   None
-<item>Unstable: 1.2.0rc2
+<item>Unstable: 1.2.0rc3
 </itemize>
 
 <sect1>Who codes/maintains it
@@ -44,6 +44,9 @@ was insufficient to handle this project as well as his other commitments.
 Since then (mid-late 1999) MacGyver has taken over the project and is
 pushing towards cleaning up the outstanding patches and getting 1.2.0
 shipped.  
+
+<P>As of early 2001 Floody is back on the team and we are actively
+pushing for 1.2.0-release, this is expected before the end of March 2001
 
 <P>There are also numerous people involved in developing modules, and
 documentation for the project.  A number of these have been merged into
@@ -109,9 +112,16 @@ cvs diff -uw Configuration.html > Configuration.html.patch
 
 <sect1>Bug reporting?  
 
-<P>Bug reports should be made via http://bugs.proftpd.net/ which uses
+<P>Bug reports should be made via http://bugs.proftpd.org/ which uses
 the bugzilla tracking system.  Patches should be mailed to the
 ProFTPD-Devel mailing list or MacGyver directly.
+
+<sect1>I've found a security hole
+
+<P>Please report all security problems with the code to
+security@proftpd.org before releasing the information into the public
+domain.  It would be appreciated if you give the core team a few days
+to put together a patch and/or new release to address the issue.
 
 <sect1>Downloading
 
@@ -929,6 +939,14 @@ authentication scheme.
 <sect1>Corrupted files
 <P>There appear to be some problems with both the use of sendfile()
 in ProFTPD and with the implementation within certain operating systems.
+
+<sect1>Can I upgrade ProFTPD without terminating the current sessions?
+<P>Short answer, no.  Longer answer is no, but you can minimise the
+effects.  The cleanest approach on servers which have significant
+amounts of traffic appears to be to use ftpshut to block new
+connections and terminate existing ones after a pre-determined time
+period and then to upgrade and restart.  This approach limits the
+number of downloads which are terminated part way through.
 
 <!-- -------------------- -->
 <!-- Configuration Issues -->
