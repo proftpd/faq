@@ -1719,6 +1719,9 @@ tracking of accesses, and the requesting IP.
 <item>Set up your system so libmysqlclient.so can be found 
 </itemize>
 
+<P>Note the ordering of the modules in the configure command is
+significant, incorrect ordering will cause problems.
+
 <sect2>Edit Make.rules
 
 <P>
