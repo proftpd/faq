@@ -8,15 +8,15 @@
         <firstname>Mark</firstname>
         <surname>Lowes</surname>
 	<affiliation>
-          <address><email>&lt;hamster@vom.org.uk&gt;</email></address>
+          <address><email>hamster@vom.org.uk</email></address>
 	</affiliation>
     </author>
-    <date>v1.0.2, 19 October 2002</date>
+    <date>v1.0.3, 19 October 2002</date>
     <copyright>
       <year>1999-2002</year>
       <holder>Mark Lowes</holder>
     </copyright>
-    <releaseinfo>$Id$</releaseinfo>    
+    <releaseinfo>v1.0.2 (CVS $Id$)</releaseinfo>    
     <legalnotice>
       <title>Copyrights and Trademarks</title>
       <para>This document may be reproduced in whole or in part, without fee,
@@ -1721,44 +1721,14 @@ mentioned elsewhere in this FAQ.</para>
 	  <para>Bandwidth control</para>
 	</question>
 	<answer>
-	  <para>The Bandwidth directive has been removed as of 1.2.0pre8, this
-directive acted on a per-virtual basis.  It was generally held that it
-worked on the principle that a single connection to a given virtual
-could take the full bandwidth limit until other connections were made.
-However, the server uses either separate server (inetd) or forked
-(standalone) model there is no way for the various processes to
-communicate, therefore is no way they could share the bandwidth
-allocation.</para>
-	  <para>The replacement actually does the same but does it in a more
-rigorous manner and more precisely.  The directives RateReadBPS,
-RateReadFreeBytes, RateReadHardBPS work by limiting on a
-per-connection basis.</para>
-	  <programlisting>
-Bandwidth                       81920
+	  <para>A new patch providing the TransferRate directive has
+	  been provided and is slated for inclusion in 1.2.8, this
+	  gives per-connection bandwidth limits with Class support.
+	  The limits are more effective against downloads than
+	  uploads.</para>
 
-is replaced with something like
-
-RateReadBPS                     81920
-RateReadFreeBytes               5120
-RateReadHardBPS                 on
-          </programlisting>
-	  <para>To achieve a total limit on a per virtual basis a mix of
-RateReadBPS and MaxClients is needed.  ie RateReadBPS x MaxClients =
-Total Bandwidth allocation.  There is no way (at the moment) to
-specify that virtual server xyz has a maximum total bandwidth of
-200K/s that it can use between all connections.</para>
-	  <para>Per-virtual, per-user and global limits are currently in the "to be
-coded" pile and are being penciled in for the 1.3.x development
-series.  There is some work in providing for a shared communication
-system between servers before this can happen.
-</para>
-	  <blockquote>
-	    <bridgehead renderas=sect3>Rate controls aren't working</bridgehead>
-	  <para>In pre9 and earlier Rate* does not work if sendfile is enabled,
-	    recompile with --without-sendfile and all should be as
-	    expected.
-          </para>
-	  </blockquote>
+          <para>There is no method to control the total bandwidth a
+          single VirtualHost context can use.</para>
 	</answer>
       </qandaentry>
       <qandaentry>
@@ -1766,9 +1736,9 @@ system between servers before this can happen.
 	  <para>CHMOD isn't working</para>
 	</question>
 	<answer>
-	  <para>As of rc1 the AllowChmod command was added to allow control over
-who is allowed to use the CHMOD command.  The default value for this
-directive is off.</para>
+	  <para>AllowChmod is deprecated and has been replaced with
+	  the SITE_CHMOD expansion for controlling this
+	  functionality.</para>
 	</answer>
       </qandaentry>
       <qandaentry>
@@ -1776,9 +1746,10 @@ directive is off.</para>
 	  <para>How can I limit the size of uploaded files?</para>
 	</question>
 	<answer>
-	  <para>There is no way within ProFTPD itself to control how large a file
-can be uploaded.  The best solution to this problem at the moment is
-to use whatever disk quota tools are available within your OS.</para>
+	  <para>As of 1.2.7rc1 there are two new directives
+	  MaxRetrieveFileSize and MaxStoreFileSize to control the
+	  maximum size of files being transfered to or from the
+	  server.</para>
 	</answer>
       </qandaentry>
       <qandaentry>
@@ -1786,8 +1757,8 @@ to use whatever disk quota tools are available within your OS.</para>
 	  <para>Can I disable Anonymous logins?</para>
 	</question>
 	<answer>
-	  <para>Yes, just remove all the &lt;Anonymous&gt; sections from your
-configuration file and reload the daemon.</para>
+	  <para>Yes, just remove all the &lt;Anonymous&gt; sections
+	  from your configuration file and reload the daemon.</para>
 	</answer>
       </qandaentry>
       <qandaentry>
@@ -1795,16 +1766,14 @@ configuration file and reload the daemon.</para>
 	  <para>Limiting the connections per loginID</para>
 	</question>
 	<answer>
-	  <para>This is not possible at this time, the directive appeared in the
-docs for a short period but the code was never added.  The closest
-possible at the moment is to limit the number of connections from a
-given host.</para>
+	  <para>As of 1.2.7rc1 MaxClientsPerUser has been
+	  implemented.</para>
 	</answer>
       </qandaentry>
       <qandaentry>
 	<question>
-	  <para>How do I configure proftpd to allow transfer resumption (for
-     downloads and uploads)?</para>
+	  <para>How do I configure proftpd to allow transfer
+	  resumption (for downloads and uploads)?</para>
 	</question>
 	<answer>
 	  <para>To allow downloads to be resumed, you need to use the
@@ -2228,11 +2197,8 @@ as the password.  As long as you do it correctly it will never repeat.
 	  <para>RADIUS</para>
 	</question>
 	<answer>
-	  <para>Radius support isn't built into ProFTPD, though there's nothing
-stopping someone writing a module and submitting it for inclusion in
-the code tree.  Possibly the easist way to implement Radius is by
-using the modules available for PAM and using the inbuilt PAM support.
-</para>
+	  <para>The new mod_radius module provides RADIUS authentication
+	  and accounting support to ProFTPD.  </para>
 	</answer>
       </qandaentry>
       <qandaentry>
