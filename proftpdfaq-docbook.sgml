@@ -11,9 +11,9 @@
           <address><email>hamster@vom.org.uk</email></address>
 	</affiliation>
     </author>
-    <date>19 October 2002</date>
+    <date>30 October 2002</date>
     <copyright>
-      <year>1999-2002</year>
+      <year>1999-2003</year>
       <holder>Mark Lowes</holder>
     </copyright>
     <releaseinfo>v1.0.3 (CVS $Id$)</releaseinfo>    
@@ -81,14 +81,12 @@ as authors, not to restrict you as learners and educators. </para>
 	    <para>What is the current version?</para>
 	  </question>
 	  <answer>
-	    <itemizedlist spacing="compact">
-              <listitem>
-		<para>Stable:   1.2.6</para>
-              </listitem>
-	      <listitem>
-		<para>Release Candidate: 1.2.7rc1</para>
-              </listitem>
-	    </itemizedlist>
+             <simplelist>
+                <member>Stable:   1.2.9</member>
+             </simplelist>
+             <simplelist>
+                <member>Release Candidate: -none-</member>
+             </simplelist>
 	  </answer>
 	</qandaentry>
 	
