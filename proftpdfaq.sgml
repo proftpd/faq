@@ -5,7 +5,7 @@
 
 <TITLE>Professional FTP Daemon FAQ
 <author>Mark Lowes <tt/&lt;hamster@vom.tm&gt;/
-<date>v0.6.1, 30 Sept 2000
+<date>v0.6.5, 07 Jan 2001
 
 <abstract>$Id$
 This document sets out many of the FAQs related to the installation,
@@ -77,7 +77,9 @@ the core distribution and more are likely to follow.
 FAQ, other documentation resources and information on the project.
 The documentation is being brought back into shape at the moment, the
 configuration on the website is now approaching where it should be but
-more work is required and is ongoing.
+more work is required and is ongoing.  There is also a mirror at
+http://proftpd.vom.tm/ and the documentation will also become
+availible on http://pdd.sourceforge.net/ soon.
 
 <sect2>Helping with documentation
 
@@ -103,7 +105,7 @@ Then copy the format in Configuration.html and add the new documentation.
 cvs diff -uw Configuration.html > Configuration.html.patch
 </verb></tscreen>
 
-<P>and send it to the devel list and MacGyver.
+<P>and send it to hamster@vom.tm and the devel list.
 
 <sect1>Bug reporting?  
 
@@ -447,19 +449,6 @@ needed.
 <item>GUI based configuration tool
 <item>CDB based authentication
 </itemize>
-
-<sect1>Year 2000 Issues
-<P>There have just been discovered some Y2K issues with the code
-(seven in all) a member of the list currently has a report on this and 
-will be passing information/patches back shortly.  The primary use for
-	  dates within Proftpd are the listing commands so the worst
-	  case is that the listings 'break'.
-
-<P>Proftpd does not have a Y2K certification but generally most Y2K
-	   certifications and assurances actually don't mean much more
-	   than the paper their written on.
-
-<P>There is a more formal Y2k statement on http://www.proftpd.net/docs/
 
 <!-- NEW SECTION -->
 
@@ -887,7 +876,7 @@ process.
 <P>A bug was introduced in 1.2.0rc2 which prevented the PORT command
 working properly and therefore breaking the data socket under certain
 conditions.  The bug was documented as bug 240 and has been fixed in
-CVS. 
+CVS.  A rc3 release is due before the end of Jan 2001.
 
 <sect1>Fatal: unable to determine IP address of
 
@@ -1415,32 +1404,6 @@ absolute statement can be given on the security of the software (this
 is true for every piece of software out there).  A significant amount
 of effort has been put into removing the more 'dangerous' system calls
 which are prone to overflow attacks.
-
-<!--
-<P>There is a known security problem with ALL unix FTP daemons, which
-requires the daemon to retain root privileges even after a client has
-fully authenticated. In ProFTPD versions 1.0.x, a decision was made to
-ignore RFC959's port 20 requirements in the interests of security.
-
-<P>Unfortunately, over time, it became obvious that this was a bad idea.
-Until the RFC is "fixed", this problem will continue to plague unix
-FTP servers.
-
-<P>In ProFTPD versions 1.1.x and higher, the "standard" route was
-taken, retaining root at all times, allowing the daemon to bind to
-port 20 and be completely RFC959 compliant.  The security issue
-remains, however the code is carefully structured to handle this in as
-secure a fashion as possible.
-
-<P>
-You have two options for working around this problem:
-<enum>
-<item>Upgrade to ProFTPD 1.1.x or higher
-<item>Have your FTP clients use passive mode. Passive mode data
-connections originate from the client, and thus do not experience this
-"port 20" problem.
-</enum>
--->
 
 <sect2>What about using Stackguard?
 <P>Stackguard is a gcc variant which can protect programs from
