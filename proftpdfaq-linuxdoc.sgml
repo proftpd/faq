@@ -1438,10 +1438,7 @@ given host.
    in the &lt;VirtualHost&gt; line.
  
 <p>For the main "default" server, however, the controlling of the main
-   interface is more problematic.  There is currently a bug report
-   opened for this issue:
- 
-<p>   http://bugs.proftpd.org/show_bug.cgi?id=1253
+   interface is done using the DefaultAddress configuration directive.
 
 <!-- SECTION BREAK -->
 
