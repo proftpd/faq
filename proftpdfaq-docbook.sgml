@@ -11,12 +11,12 @@
           <address><email>hamster@vom.org.uk</email></address>
 	</affiliation>
     </author>
-    <date>v1.0.3, 19 October 2002</date>
+    <date>19 October 2002</date>
     <copyright>
       <year>1999-2002</year>
       <holder>Mark Lowes</holder>
     </copyright>
-    <releaseinfo>v1.0.2 (CVS $Id$)</releaseinfo>    
+    <releaseinfo>v1.0.3 (CVS $Id$)</releaseinfo>    
     <legalnotice>
       <title>Copyrights and Trademarks</title>
       <para>This document may be reproduced in whole or in part, without fee,
