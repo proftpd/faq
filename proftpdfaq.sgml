@@ -136,27 +136,12 @@ Maintained by: vko@linja.net<newline>
 Location: France<newline>
 
 <P>
-<URL url="ftp://de.samba.org/pub/mirror/ftp.proftpd.net/" name="ftp://de.samba.org/pub/mirror/ftp.proftpd.net/"><newline>
+<URL url="ftp://ftp.wipol.uni-bonn.de/pub/mirror/ftp.proftpd.net/" name="ftp://ftp.wipol.uni-bonn.de/pub/mirror/ftp.proftpd.net/"><newline>
 Location: Germany (Bonn)<newline>
 Maintained by: Noel Koethe<newline>
 
 <P>
-<URL url="ftp://ftp.fh-koblenz.de/pub/ProFTPD/" name="ftp://ftp.fh-koblenz.de/pub/ProFTPD/"><newline>
-Location: Germany<newline>
-Maintained by: Michael Schmidt<newline>
-
-<P>
-<URL url="ftp://ftp.franken.de/pub/Linux/proftpd" name="ftp://ftp.franken.de/pub/Linux/proftpd"><newline>
-Location: Germany (Nuremberg)<newline>
-Maintained by: Harald Welte <newline>
-
-<P>
-<URL url="ftp://ftp.taubenschlag.uni-frankfurt.de/pub/mirror/ftp.proftpd.net/" name="ftp://ftp.taubenschlag.uni-frankfurt.de/pub/mirror/ftp.proftpd.net/"><newline>
-Location: Germany (Frankfurt)<newline>
-Maintained by: Bjoern Krueger<newline>
-
-<P>
-<URL url="ftp://ftp.wipol.uni-bonn.de/pub/mirror/ftp.proftpd.net/" name="ftp://ftp.wipol.uni-bonn.de/pub/mirror/ftp.proftpd.net/"><newline>
+<URL url="ftp://de.samba.org/pub/mirror/ftp.proftpd.net/" name="ftp://de.samba.org/pub/mirror/ftp.proftpd.net/"><newline>
 Location: Germany (Bonn)<newline>
 Maintained by: Noel Koethe<newline>
 
@@ -169,6 +154,21 @@ Maintained by: Adrian Reber<newline>
 <URL url="http://ftp-stud.fht-esslingen.de/pub/Mirrors/ftp.proftpd.net/ " name="http://ftp-stud.fht-esslingen.de/pub/Mirrors/ftp.proftpd.net/ "><newline>
 Location: Germany (Esslingen)<newline>
 Maintained by: Adrian Reber<newline>
+
+<P>
+<URL url="ftp://ftp.taubenschlag.uni-frankfurt.de/pub/mirror/ftp.proftpd.net/" name="ftp://ftp.taubenschlag.uni-frankfurt.de/pub/mirror/ftp.proftpd.net/"><newline>
+Location: Germany (Frankfurt)<newline>
+Maintained by: Bjoern Krueger<newline>
+
+<P>
+<URL url="ftp://ftp.franken.de/pub/Linux/proftpd" name="ftp://ftp.franken.de/pub/Linux/proftpd"><newline>
+Location: Germany (Nuremberg)<newline>
+Maintained by: Harald Welte <newline>
+
+<P>
+<URL url="ftp://ftp.fh-koblenz.de/pub/ProFTPD/" name="ftp://ftp.fh-koblenz.de/pub/ProFTPD/"><newline>
+Location: Germany<newline>
+Maintained by: Michael Schmidt<newline>
 
 <P>
 <URL url="ftp://ftp.fsn.hu/pub/proftpd/" name="ftp://ftp.fsn.hu/pub/proftpd/"><newline>
@@ -194,6 +194,11 @@ Maintained by: Simas Mockevicius<newline>
 Location: Netherlands (Amsterdam)<newline>
 
 <P>
+<URL url="ftp://ftp.truuz.com/mirrors/ftp.proftpd.net/   " name="ftp://ftp.truuz.com/mirrors/ftp.proftpd.net/   "><newline>
+Location: Norway (Oslo)<newline>
+Maintained by: Dag Stenstad<newline>
+
+<P>
 <URL url="ftp://ftp.task.gda.pl/pub/proftpd/" name="ftp://ftp.task.gda.pl/pub/proftpd/"><newline>
 Location: Poland<newline>
 Maintained by: Robert Milkowski<newline>
@@ -209,18 +214,18 @@ Location: UK (London)<newline>
 Maintained by: Mark Lowes<newline>
 
 <P>
-<URL url="ftp://ftp.compsci.lyon.edu/pub/software/unix/servers/ftp/proftpd/" name="ftp://ftp.compsci.lyon.edu/pub/software/unix/servers/ftp/proftpd/"><newline>
+<URL url="ftp://ftp.compsci.lyon.edu/ftp/pub/apps/unix/servers/ftp/proftpd/" name="ftp://ftp.compsci.lyon.edu/ftp/pub/apps/unix/servers/ftp/proftpd/"><newline>
 Location: USA (Batesville, Arkansas)<newline>
 Maintained by: Matt Critcher<newline>
+
+<P>
+<URL url="ftp://ftp.kracked.com/pub/proftpd" name="ftp://ftp.kracked.com/pub/proftpd"><newline>
+Location: USA (Johnson City, TN)<newline>
 
 <P>
 <URL url="ftp://ftp.infoteam.com/pub/proftpd/" name="ftp://ftp.infoteam.com/pub/proftpd/"><newline>
 Location: USA (Lexington, KY)<newline>
 Maintained by: Kenn Martin<newline>
-
-<P>
-<URL url="ftp://ftp.kracked.com/pub/proftpd" name="ftp://ftp.kracked.com/pub/proftpd"><newline>
-Location: USA (Johnson City, TN)<newline>
 
 <P>
 <URL url="ftp://ftp.stikman.com:/pub/proftpd/" name="ftp://ftp.stikman.com:/pub/proftpd/"><newline>
@@ -230,6 +235,8 @@ Location: USA (Los Angeles, CA)<newline>
 <URL url="ftp://ftp.twtelecom.net/pub/proftpd/" name="ftp://ftp.twtelecom.net/pub/proftpd/"><newline>
 Location: USA (Milwaukee, WI)<newline>
 Maintained by: Steve Kaczkowski<newline>
+
+
 
 <sect2>CVS
 
