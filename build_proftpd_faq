@@ -28,13 +28,20 @@ htmldoc --webpage -f proftpdfaq.pdf proftpdfaq-full.html
 echo -n "ps "
 htmldoc --webpage -f proftpdfaq.ps proftpdfaq-full.html
 #
-rm -f *tgz
-echo -n "tgz "
-tar -czvf ${FAQ}.tgz *png *pdf *ps
-echo "done"
-cp ${FAQ}.tgz ${FAQ}* *png *pdf *ps $ROOT/faq/
+#rm -f *tgz
+#echo -n "tgz "
+#tar -czvf ${FAQ}.tgz *png *pdf *ps
+#echo "done"
+#cp ${FAQ}.tgz ${FAQ}* *png *pdf *ps $ROOT/faq/
+##
+#cp -r $ROOT/faq/ $FTP/
 #
-cp -r $ROOT/faq/ $FTP/
+#
+##
+## www.proftpd.org
+##
+mkdir -p $BASE/www.proftpd.org/docs/faq
+cp -v ${FAQ}* *png *pdf *ps $BASE/www.proftpd.org/docs/faq
 #
 # All built
 #
