@@ -871,7 +871,7 @@ proftpd.conf to a group which does exist.
    likely involve reducing the number of groups your users are members of,
    or tuning the NGROUPS_MAX value, if your operating system allows it.
 
-<sect1>Why do I see error messages like these when I logout?
+<sect1>Why do I see PAM error messages like these when I logout?
 <p>
 <tscreen>
 <code>PAM(exit): Permission denied.,
@@ -1729,7 +1729,7 @@ tracking of accesses, and the requesting IP.
 <p>If the operating system supports PAM (Pluggable Authentication Modules)
    proftpd will perform PAM authentication by default.  However, this
    authentication is not "authoritative" by default, meaning that
-   a PAM authentication failure will not necessary cause a login to
+   a PAM authentication failure will not necessarily cause a login to
    fail.  The use of PAM can be configured using the AuthPAM configuration
    directive; the "authoritativeness" of any PAM checks is controlled via
    the AuthPAMAuthoritative configuration directive.
