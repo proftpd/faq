@@ -889,6 +889,13 @@ hostname in the VirtualHost block.  Normally caused by a problem
 with the DNS resolution of the host, check the resolv.conf file
 and that your chosen nameservers are functional.
 
+<sect1>451 [filename]: append/restart not permitted, try again
+
+<P>AllowStoreRestart is disabled by default because it will allow any
+writable file to be corrupted by a malicious user.  It is recommended
+that this option is only used with authenticated users and then only
+in certain directories.
+
 <!-- -------------------- -->
 <!-- Configuration Issues -->
 <!-- -------------------- -->
