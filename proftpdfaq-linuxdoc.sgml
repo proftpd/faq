@@ -388,21 +388,9 @@ http://www.proftpd.org/proftpd-devel-archive/99-10/msg00073.html
 <P>John Pierce &lt;hawkfan@pyrotechnics.com&gt;
 http://www.proftpd.org/proftpd-devel-archive/99-10/msg00112.html
 
-<sect2>Problems with sendfile
-<P>There appear to be a number of problems with sendfile()
-particularly with the directives and features which require accurate
-determination of filesize.  Such as the Rate* functions and
-downloading large files, the best advice at the moment appears to be
-to disable sendfile by default ( --disable-sendfile ).
-
-<P>Sendfile() also appears to be the source of a number of file corruption problems.
-
 <sect1>IPv6
-<P>There is currently no official support for IPv6 within the 1.2.x
-code tree, however there is an <url
-url="http://www.t17.ds.pwr.wroc.pl/~misiek/ipv6/" name="unofficial
-patch"> and more comprehensive support will probably be developed
-during the 1.3.x development cycle.
+<P>IPv6 support first appeared in the 1.2.9rc2 release.  To enable
+IPv6 support, use the --enable-ipv6 configure option.
 
 <sect1>Filename case sensitivity
 

@@ -381,14 +381,6 @@ compiling for 2.0.x on a 2.0.x system. However when compiling on a
 <ulink url="http://www.proftpd.org/proftpd-devel-archive/99-10/msg00073.html">http://www.proftpd.org/proftpd-devel-archive/99-10/msg00073.html</ulink></para>
 	    <para>John Pierce &lt;hawkfan@pyrotechnics.com&gt;
 <ulink url="http://www.proftpd.org/proftpd-devel-archive/99-10/msg00112.html">http://www.proftpd.org/proftpd-devel-archive/99-10/msg00112.html</ulink></para>
-
-	    <bridgehead renderas=sect2>Problems with sendfile</bridgehead>
-	    <para>There appear to be a number of problems with sendfile()
-particularly with the directives and features which require accurate
-determination of filesize.  Such as the Rate* functions and
-downloading large files, the best advice at the moment appears to be
-to disable sendfile by default ( --disable-sendfile ).</para>
-	    <para>Sendfile() also appears to be the source of a number of file corruption problems.</para>
 	  </blockquote>
 	  </answer>
 	</qandaentry>
@@ -397,9 +389,8 @@ to disable sendfile by default ( --disable-sendfile ).</para>
 	    <para>IPv6</para>
 	  </question>
 	  <answer>
-	    <para>There is currently no official support for IPv6 within the 1.2.x
-code tree, however there is an <ulink url="http://www.t17.ds.pwr.wroc.pl/~misiek/ipv6/">http://www.t17.ds.pwr.wroc.pl/~misiek/ipv6/</ulink> and more comprehensive support will probably be developed
-during the 1.3.x development cycle.</para>
+            <para>IPv6 support first appeared in the 1.2.9rc2 release.  To
+            enable IPv6 support, use the --enable-ipv6 configure option.</para>
 	  </answer>
 	</qandaentry>
 	<qandaentry>
